@@ -92,23 +92,27 @@ export default function TurnoverOrderManagement() {
 
       try {  
             let all = {};     
-            if(processObj.body.currentProject !== '')
+            
+            if(processObj)
             {
-              all = await supabase.from('trans').select().match({
-                processPer: processObj.body.name,
-                projectName: processObj.body.currentProject
-              });
+              if(processObj.body.currentProject !== '')
+              {
+                all = await supabase.from('trans').select().match({
+                  processPer: processObj.body.name,
+                  projectName: processObj.body.currentProject
+                });
+              }
+              else if(await processObj.data.name === '管理')
+              {
+                all = await supabase.from('trans').select();
+              }
+              else{
+                all = await supabase.from('trans').select().match({
+                  processPer: processObj.body.name
+                });
+              }
+              setallTrans(all.data);
             }
-            else if(await processObj.data.name === '管理')
-            {
-              all = await supabase.from('trans').select();
-            }
-            else{
-              all = await supabase.from('trans').select().match({
-                processPer: processObj.body.name
-              });
-            }
-            setallTrans(all.data);
 
       } catch (error) {
         console.log(error);

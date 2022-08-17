@@ -58,14 +58,14 @@ const SERVICE_OPTIONS = [
 ];
 
 const TABLE_HEAD = [
-  { id: 'invoiceNumber', label: '周转单号', align: 'left' },
-  { id: 'createDate', label: '创建日期', align: 'left' },
-  { id: 'dueDate', label: '客户代码', align: 'left' },
+  { id: 'invoiceNumber', label: '周转单号', align: 'center' },
+  { id: 'createDate', label: '创建日期', align: 'center' },
+  { id: 'dueDate', label: '客户代码', align: 'center' },
   { id: 'price', label: '终端代码', align: 'center', width: 140 },
   { id: 'sent', label: '周转单类型', align: 'center', width: 140 },
   { id: 'status', label: '周转单状态', align: 'center' },
-  { id: 'processPer', label: '创建人', align: 'left' },
-  { id: '' },
+  { id: 'processPer', label: '创建人', align: 'center' },
+  { id: '' ,align:'center'},
 ];
 
 // ----------------------------------------------------------------------
@@ -88,38 +88,34 @@ export default function TurnoverOrderManagement() {
   useEffect(()=>{
     async function fetchData()
     {
-      //console.log(supabase.auth.user().id);
-      const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();   
-
-      try {  
-            let all = {};  
-
-            if(processObj.body.currentProject !== '')
+        //console.log(supabase.auth.user().id);
+        const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
+        try {
+            let all = {};
+            if(processObj.body.currentProject)
             {
-              all = await supabase.from('trans').select().match({
-                processPer: processObj.body.name,
-                projectName: processObj.body.currentProject
-              });
+                all = await supabase.from('trans').select().match({
+                    processPer: processObj.body.name,
+                    projectName: processObj.body.currentProject
+                });
             }
             else if(await processObj.body.auth_level === '管理')
             {
-              all = await supabase.from('trans').select();
+                all = await supabase.from('trans').select();
             }
             else{
-              all = await supabase.from('trans').select().match({
-                processPer: processObj.body.name
-              });
+                all = await supabase.from('trans').select().match({
+                    processPer: processObj.body.name
+                });
             }
             setallTrans(all.data);
-
-      } catch (error) {
-        console.log(error);
-      }
-
-      console.log(allTrans);
+        } catch (error) {
+            console.log(error);
+        }
+        console.log(allTrans);
     }
     fetchData();
-  },[])
+    },[])
 
   const {
     dense,
@@ -225,11 +221,11 @@ export default function TurnoverOrderManagement() {
             { name: '周转单管理', herf: PATH_DASHBOARD.turnoverManagement },
           ]}
           action={
-            //<NextLink href={PATH_DASHBOARD.invoice.new} passHref>
-            <Button variant="contained" onClick={()=>console.log(allTrans.length)} startIcon={<Iconify icon={'eva:plus-fill'} />}>
+            <NextLink href={PATH_DASHBOARD.invoice.new} passHref>
+            <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
             新建周转单
             </Button>
-            //</NextLink>
+            </NextLink>
           }
         />
         <Card>

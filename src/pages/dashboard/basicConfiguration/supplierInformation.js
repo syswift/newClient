@@ -1,457 +1,463 @@
+import sumBy from 'lodash/sumBy';
+import { useEffect, useState } from 'react';
+// next
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 // @mui
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Input from '@mui/material/Input';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import CloseIcon from '@mui/icons-material/Close';
-import TablePagination from '@mui/material/TablePagination';
-import IconButton from '@mui/material/IconButton';
-
-// routes
-import  {PATH_DASHBOARD}  from '../../../routes/paths';
-// hooks
+import { useTheme } from '@mui/material/styles';
+// @mui
+import {
+  Box,
+  Tab,
+  Tabs,
+  Card,
+  Table,
+  Stack,
+  Switch,
+  Button,
+  Tooltip,
+  Divider,
+  TableBody,
+  Container,
+  IconButton,
+  TableContainer,
+  TablePagination,
+  FormControlLabel,
+} from '@mui/material';
+  // routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
+  // hooks
+import useTabs from '../../../hooks/useTabs';
 import useSettings from '../../../hooks/useSettings';
-// layouts
+import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+  // _mock_
+import { _invoices } from '../../../_mock';
+  // layouts
 import Layout from '../../../layouts';
-// components
+  // components
 import Page from '../../../components/Page';
+import Label from '../../../components/Label';
+import Iconify from '../../../components/Iconify';
+import Scrollbar from '../../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
+// sections
+import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/supplierInformation';
+import { supabase } from '../../../../api';
 
-import React from 'react';
+// ----------------------------------------------------------------------
 
-import PropTypes from 'prop-types';
+const SERVICE_OPTIONS = [
+  'all',
+  'full stack development',
+  'backend development',
+  'ui design',
+  'ui/ux design',
+  'front end development',
+];
+const TABLE_HEAD = [
+  { id: 'supplierCode', label: '供应商代码', align: 'left', width: 100 },
+  { id: 'supplierName', label: '供应商名称', align: 'left', width: 100  },
+  { id: 'companyCode', label: '公司编码', align: 'left' , width: 100 },
+  { id: 'dataState', label: '状态', align: 'center', width: 100 },
+  { id: 'province', label: '省', align: 'center', width: 50 },
+  { id: 'city', label: '市', align: 'center', width: 50  },
+  { id: 'district', label: '区', align: 'left', width: 50  },
+  { id: 'address', label: '地址', align: 'center', width: 100  },
+  { id: 'country', label: '国家', align: 'left', width: 50  },
+  { id: 'countryCode', label: '国家代码', align: 'center', width: 80  },
+  { id: 'contact1', label: '联系人1', align: 'left' , width: 80 },
+  { id: 'position1', label: '职位1', align: 'center' , width: 80 },
+  { id: 'phone1', label: '联系方式1', align: 'left' , width: 80 },
+  { id: 'email1', label: '邮箱1', align: 'center' , width: 80 },
+  { id: 'contact2', label: '联系人2', align: 'left' , width: 80 },
+  { id: 'position2', label: '职位2', align: 'center', width: 80  },
+  { id: 'phone2', label: '联系方式2', align: 'left', width: 80  },
+  { id: 'email2', label: '邮箱2', align: 'center', width: 80  },
+  { id: '' , width: 100 },
+];
 
+// ----------------------------------------------------------------------
 
 SupplierInformation.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+  return <Layout>{page}</Layout>;
 };
+
 // ----------------------------------------------------------------------
+
 export default function SupplierInformation() {
-    const { themeStretch } = useSettings();
-    // 弹窗
-    // privateRoute();
-    const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-        '& .MuiDialogContent-root': {
-            padding: theme.spacing(2),
-        },
-        '& .MuiDialogActions-root': {
-            padding: theme.spacing(1),
-        },
-    }));
+  const theme = useTheme();
 
-    const BootstrapDialogTitle = (props) => {
-        const { children, onClose, ...other } = props;
+  const { themeStretch } = useSettings();
 
-        return (
-            <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-                {children}
-                {onClose ? (
-                    <IconButton
-                        aria-label="close"
-                        onClick={onClose}
-                        sx={{
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            // color: (theme) => theme.palette.grey[500],
-                        }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                ) : null}
-            </DialogTitle>
-        );
-    };
+  const { push } = useRouter();
 
-    BootstrapDialogTitle.propTypes = {
-        children: PropTypes.node,
-        onClose: PropTypes.func.isRequired,
-    };
+  const [allTrans, setallTrans] = useState([]);
 
-    function createData(supplierCode, supplierName, companyCode, dataState, province, city, district, address, country, countryCode, contact1, position1, phone1, email1, contact2, position2, phone2, email2) {
-        return { supplierCode, supplierName, companyCode, dataState, province, city, district, address, country, countryCode, contact1, position1, phone1, email1, contact2, position2, phone2, email2 };
-    }
-    function dataStateSet(flag) {
-        if (flag) {
-            return <Button variant="outlined" color="primary">可用</Button>
-        } else {
-            return <Button variant="outlined">暂不可用</Button>
+  useEffect(()=>{
+    async function fetchData()
+    {
+        //console.log(supabase.auth.user().id);
+        const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
+        try {
+            let all = {};
+            if(processObj.body.currentProject)
+            {
+                all = await supabase.from('trans').select().match({
+                    processPer: processObj.body.name,
+                    projectName: processObj.body.currentProject
+                });
+            }
+            else if(await processObj.body.auth_level === '管理')
+            {
+                all = await supabase.from('trans').select();
+            }
+            else{
+                all = await supabase.from('trans').select().match({
+                    processPer: processObj.body.name
+                });
+            }
+            setallTrans(all.data);
+        } catch (error) {
+            console.log(error);
         }
+        console.log(allTrans);
     }
-    const onSubmit = () => {
+    fetchData();
+    },[])
 
-    }
-    const rows = [
-        createData('FC_AH_00001', '芜湖固美', 'FC_AH_00001', true, '', '', '', '', '', '', '', '', '', '', '', '', ''),
-    ];
+  const {
+    dense,
+    page,
+    order,
+    orderBy,
+    rowsPerPage,
+    setPage,
+    //
+    selected,
+    setSelected,
+    onSelectRow,
+    onSelectAllRows,
+    //
+    onSort,
+    onChangeDense,
+    onChangePage,
+    onChangeRowsPerPage,
+  } = useTable({ defaultOrderBy: 'createDate' });
 
-    // const useStyles = makeStyles((theme) => ({
-    //     margin: {
-    //         margin: theme.spacing(1),
-    //     },
-    //     extendedIcon: {
-    //         marginRight: theme.spacing(1),
-    //     },
-    // }));
-    // 按钮组件
-    // const classes = useStyles();
-    // 弹窗
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    // 表格
-    const columns = [
-        { id: 'supplierCode', label: '供应商代码', minWidth: 100 },
-        { id: 'supplierName', label: '供应商名称', minWidth: 100 },
-        { id: 'companyCode', label: '公司编码', minWidth: 100 },
-        { id: 'dataState', label: '状态', minWidth: 100 },
-        { id: 'province', label: '省', minWidth: 50 },
-        { id: 'city', label: '市', minWidth: 50 },
-        { id: 'district', label: '区', minWidth: 50 },
-        { id: 'address', label: '地址', minWidth: 100 },
-        { id: 'country', label: '国家', minWidth: 50 },
-        { id: 'countryCode', label: '国家代码', minWidth: 80 },
-        { id: 'contact1', label: '联系人1', minWidth: 80 },
-        { id: 'position1', label: '职位1', minWidth: 80 },
-        { id: 'phone1', label: '联系方式1', minWidth: 80 },
-        { id: 'email1', label: '邮箱1', minWidth: 80 },
-        { id: 'contact2', label: '联系人2', minWidth: 80 },
-        { id: 'position2', label: '职位2', minWidth: 80 },
-        { id: 'phone2', label: '联系方式2', minWidth: 80 },
-        { id: 'email2', label: '邮箱2', minWidth: 80 },
-    ];
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(6);
+  const [filterName, setFilterName] = useState('');
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+  const [filterService, setFilterService] = useState('all');
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
+  const [filterStartDate, setFilterStartDate] = useState(null);
 
-return (
+  const [filterEndDate, setFilterEndDate] = useState(null);
+
+  const { currentTab: filterStatus, onChangeTab: onFilterStatus } = useTabs('all');
+
+  const handleFilterName = (filterName) => {
+    setFilterName(filterName);
+    setPage(0);
+  };
+
+  const handleFilterService = (event) => {
+    setFilterService(event.target.value);
+  };
+
+  const handleDeleteRow = (id) => {
+    const deleteRow = allTrans.filter((row) => row.id !== id);
+    setSelected([]);
+    setallTrans(deleteRow);
+  };
+
+  const handleDeleteRows = (selected) => {
+    const deleteRows = allTrans.filter((row) => !selected.includes(row.id));
+    setSelected([]);
+    setallTrans(deleteRows);
+  };
+
+  const handleEditRow = (id) => {
+    push(PATH_DASHBOARD.invoice.edit(id));
+  };
+
+  const handleViewRow = (id) => {
+    push(PATH_DASHBOARD.invoice.view(id));
+  };
+
+  const dataFiltered = applySortFilter({
+    allTrans,
+    comparator: getComparator(order, orderBy),
+    filterName,
+    filterService,
+    filterStatus,
+    filterStartDate,
+    filterEndDate,
+  });
+
+  const denseHeight = dense ? 56 : 76;
+
+  const isNotFound =
+    (!dataFiltered.length && !!filterName) ||
+    (!dataFiltered.length && !!filterStatus) ||
+    (!dataFiltered.length && !!filterService) ||
+    (!dataFiltered.length && !!filterEndDate) ||
+    (!dataFiltered.length && !!filterStartDate);
+
+  const getLengthByStatus = (status) => allTrans.filter((item) => item.status === status).length;
+
+  const getTotalPriceByStatus = (status) =>
+    sumBy(
+      allTrans.filter((item) => item.status === status),
+      'totalPrice'
+    );
+
+  const getPercentByStatus = (status) => (getLengthByStatus(status) / allTrans.length) * 100;
+
+  const TABS = [
+    { value: 'all', label: '全部', color: 'info', count: allTrans.length },
+    { value: 'paid', label: '正常', color: 'success', count: getLengthByStatus('paid') },
+    { value: 'unpaid', label: '暂不可用', color: 'warning', count: getLengthByStatus('paid') },
+  ];
+
+  return (
     <Page title="供应商信息">
-    <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-        heading="供应商信息"
-        links={[
+          heading="供应商信息"
+          links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '基础配置' },
-            { name: '供应商信息' },
-        ]}
+            { name: '基础配置', herf: PATH_DASHBOARD.basicConfiguration.supplierInformation },
+            { name: '供应商信息'},
+          ]}
+          action={
+            <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
+                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+                    新增供应商
+                </Button>
+            </NextLink>
+          }
         />
         <Card>
-            <div>
-                <table>
-                    <br />
-                    <tr>
-                        <td style={{ width: '10%', textAlign: 'right' }}>供应商代码:</td>
-                        <td style={{ width: '2%' }} />
-                        <td style={{ width: '10%' }}>
-                            <Input placeholder="请输入供应商代码" inputProps={{ 'aria-label': 'description' }} />
-                        </td>
-                        <td style={{ width: '10%', textAlign: 'right' }}>供应商名称:</td>
-                        <td style={{ width: '2%' }} />
-                        <td style={{ width: '10%' }}>
-                            <Input placeholder="请输入供应商名称" inputProps={{ 'aria-label': 'description' }} />
-                        </td>
-                        <td style={{ width: '10%', textAlign: 'right' }}>联系人:</td>
-                        <td style={{ width: '2%' }} />
-                        <td style={{ width: '10%' }}>
-                            <Input placeholder="请输入联系人" inputProps={{ 'aria-label': 'description' }} />
-                        </td>
-                        <td style={{ width: '10%', textAlign: 'right' }}>联系方式:</td>
-                        <td style={{ width: '2%' }} />
-                        <td style={{ width: '10%' }}>
-                            <Input placeholder="请输入联系方式" inputProps={{ 'aria-label': 'description' }} />
-                        </td>
-                        <td />
-                    </tr>
-                    <br />
-                    <tr>
-                        <td style={{ width: '10%', textAlign: 'right' }}>状态:</td>
-                        <td style={{ width: '2%' }} />
-                        <td style={{ width: '10%' }}>
-                            <Select labelId="turnoverTypeLabel" id="turnoverTypeSelect" style={{ width: '100%' }}>
-                                <MenuItem value="正向周转">可用</MenuItem>
-                                <MenuItem value="逆向周转">暂不可用</MenuItem>
-                            </Select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div>
-                <center>
-                    <br />
-                    <form id="sinsertForm" autoComplete="on" onSubmit={onSubmit}>
-                        <span>
-                            <Button variant="contained" onClick={handleClickOpen} size="medium" color="primary">
-                                + 新增供应商
-                            </Button>
-                            <BootstrapDialog
-                                onClose={handleClose}
-                                aria-labelledby="customized-dialog-title"
-                                open={open}>
-                                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                                    新增供应商
-                                </BootstrapDialogTitle>
-                                <DialogContent dividers>
-                                    <table>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                *供应商代码:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                *状态:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                *供应商名称:
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%' }}>
-                                                <Input placeholder="请输入供应商代码" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%' }}>
-                                                <Select labelId="turnoverTypeLabel" id="turnoverTypeSelect" style={{ width: '100%' }}>
-                                                    <MenuItem value="可用">可用</MenuItem>
-                                                    <MenuItem value="暂不可用">暂不可用</MenuItem>
-                                                </Select>
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%' }}>
-                                                <Input placeholder="请输入供应商名称" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                *公司编码:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                省:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                市:
-                                            </td>
-                                        </tr>
-                                        <tr style={{ width: '100%' }}>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入公司编码" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入省" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                区:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td colSpan="2" style={{ width: '60%', textAlign: 'left' }}>
-                                                地址:
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td colSpan="2" style={{ width: '100%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入地址" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                邮编:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                国家:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                国家代码:
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                联系人1:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                职位1:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                联系方式1:
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="4" style={{ width: '100%', textAlign: 'left' }}>
-                                                邮箱1:
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="4" style={{ width: '100%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                联系人2:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                职位2:
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                联系方式2:
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                            <td style={{ width: '3%' }} />
-                                            <td style={{ width: '30%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="2" style={{ width: '60%', textAlign: 'left' }}>
-                                                邮箱2:
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="2" style={{ width: '100%', textAlign: 'left' }}>
-                                                <Input placeholder="请输入" inputProps={{ 'aria-label': 'description' }} />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button autoFocus variant="contained" onClick={handleClickOpen} size="medium" color="primary" style={{ margin: 'auto' }}>
-                                        提交
-                                    </Button>
-                                </DialogActions>
-                            </BootstrapDialog>
-                        </span>
-                        &emsp;&emsp;
-                        <span>
-                            <Button variant="outlined" color="primary">
-                                查询
-                            </Button>
-                        </span>
-                    </form>
-                    <br />
-                    <br />
-                </center>
-            </div>
-            {/* 一张表 */}
-            <TableContainer component={Paper} sx={{maxHeight: '500px'}}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}>
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                            {columns.map((column) => {
-                                const value = row[column.id];
-                                return (
-                                <TableCell key={column.id} align={column.align}>
-                                    {typeof value === 'boolean' ? dataStateSet(value) : value}
-                                </TableCell>
-                                );
-                            })}
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+          <Tabs
+            allowScrollButtonsMobile
+            variant="scrollable"
+            scrollButtons="auto"
+            value={filterStatus}
+            onChange={onFilterStatus}
+            sx={{ px: 2, bgcolor: 'background.neutral' }}
+          >
+            {TABS.map((tab) => (
+              <Tab
+                disableRipple
+                key={tab.value}
+                value={tab.value}
+                icon={<Label color={tab.color}> {tab.count} </Label>}
+                label={tab.label}
+              />
+            ))}
+          </Tabs>
+
+          <Divider />
+
+          <TransTableToolbar
+            filterName={filterName}
+            filterService={filterService}
+            filterStartDate={filterStartDate}
+            filterEndDate={filterEndDate}
+            onFilterName={handleFilterName}
+            onFilterService={handleFilterService}
+            onFilterStartDate={(newValue) => {
+              setFilterStartDate(newValue);
+            }}
+            onFilterEndDate={(newValue) => {
+              setFilterEndDate(newValue);
+            }}
+            optionsService={SERVICE_OPTIONS}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
+              {selected.length > 0 && (
+                <TableSelectedActions
+                  dense={dense}
+                  numSelected={selected.length}
+                  rowCount={allTrans.length}
+                  onSelectAllRows={(checked) =>
+                    onSelectAllRows(
+                      checked,
+                      allTrans.map((row) => row.id)
+                    )
+                  }
+                  actions={
+                    <Stack spacing={1} direction="row">
+                      <Tooltip title="Sent">
+                        <IconButton color="primary">
+                          <Iconify icon={'ic:round-send'} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Download">
+                        <IconButton color="primary">
+                          <Iconify icon={'eva:download-outline'} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Print">
+                        <IconButton color="primary">
+                          <Iconify icon={'eva:printer-fill'} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Delete">
+                        <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
+                          <Iconify icon={'eva:trash-2-outline'} />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  }
+                />
+              )}
+
+              <Table size={dense ? 'small' : 'medium'}>
+                <TableHeadCustom
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={allTrans.length}
+                  numSelected={selected.length}
+                  onSort={onSort}
+                  onSelectAllRows={(checked) =>
+                    onSelectAllRows(
+                      checked,
+                      allTrans.map((row) => row.id)
+                    )
+                  }
+                />
+
+                <TableBody>
+                  {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                    <TransTableRow
+                      key={row.id}
+                      row={row}
+                      selected={selected.includes(row.id)}
+                      onSelectRow={() => onSelectRow(row.id)}
+                      onViewRow={() => handleViewRow(row.id)}
+                      onEditRow={() => handleEditRow(row.id)}
+                      onDeleteRow={() => handleDeleteRow(row.id)}
+                    />
+                  ))}
+
+                  <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, allTrans.length)} />
+
+                  <TableNoData isNotFound={isNotFound} />
+                </TableBody>
+              </Table>
             </TableContainer>
+          </Scrollbar>
+
+          <Box sx={{ position: 'relative' }}>
             <TablePagination
-                rowsPerPageOptions={[6, 10, 20]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={dataFiltered.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={onChangePage}
+              onRowsPerPageChange={onChangeRowsPerPage}
             />
+
+            <FormControlLabel
+              control={<Switch checked={dense} onChange={onChangeDense} />}
+              label="紧凑"
+              sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+            />
+          </Box>
         </Card>
-    </Container>
+      </Container>
     </Page>
-);
+  );
 }
-  
+
+// ----------------------------------------------------------------------
+
+function applySortFilter({
+  allTrans,
+  comparator,
+  filterName,
+  filterStatus,
+  filterService,
+  filterStartDate,
+  filterEndDate,
+}) {
+  const stabilizedThis = allTrans.map((el, index) => [el, index]);
+
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+
+  allTrans = stabilizedThis.map((el) => el[0]);
+
+  if (filterName) {
+    allTrans = allTrans.filter(
+      (item) =>
+        item.invoiceNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.invoiceTo.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+    );
+  }
+
+  if (filterStatus !== 'all') {
+    allTrans = allTrans.filter((item) => item.status === filterStatus);
+  }
+
+  if (filterService !== 'all') {
+    allTrans = allTrans.filter((item) => item.items.some((c) => c.service === filterService));
+  }
+
+  if (filterStartDate && filterEndDate) {
+    allTrans = allTrans.filter(
+      (item) =>
+        item.createDate.getTime() >= filterStartDate.getTime() && item.createDate.getTime() <= filterEndDate.getTime()
+    );
+  }
+
+  return allTrans;
+}
+
+/*
+export async function getServerSideProps() {
+
+  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
+  let allTrans = [];
+
+  try {       
+        if(processObj.body.currentProject !== '')
+        {
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name,
+            projectName: processObj.body.currentProject
+          });
+        }
+        else if(await processObj.data.name === '管理')
+        {
+          allTrans = await supabase.from('trans').select();
+        }
+        else{
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name
+          });
+        }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  console.log(allTrans);
+
+  return {
+    props: {allTrans}, // will be passed to the page component as props
+  }
+}
+*/

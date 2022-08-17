@@ -64,6 +64,7 @@ export const PATH_DASHBOARD = {
     terminalCustomerInformation: path(ROOTS_DASHBOARD, '/basicConfiguration/terminalCustomerInformation'),
     turnoverBoxInformation: path(ROOTS_DASHBOARD, '/basicConfiguration/turnoverBoxInformation'),
     priceinformation: path(ROOTS_DASHBOARD, '/basicConfiguration/priceinformation'),
+    newCustomer: path(ROOTS_DASHBOARD, '/basicConfiguration/newCustomer'),
   },
   // 周转管理
   turnoverManagement: {
@@ -79,12 +80,13 @@ export const PATH_DASHBOARD = {
   // 结算管理
   settlementManagement: {
     root: path(ROOTS_DASHBOARD, '/settlementManagement'),
-    settlementManagement1: path(ROOTS_DASHBOARD, '/settlementManagement/settlementManagement1'),
+    settlementManagement1: path(ROOTS_DASHBOARD, '/settlementManagement/settlementManagement'),
   },
   // 工单管理
   workOrderManagement: {
     root: path(ROOTS_DASHBOARD, '/workOrderManagement'),
-    workOrderManagement1: path(ROOTS_DASHBOARD, '/workOrderManagement/workOrderManagement1'),
+    workOrderManagement1: path(ROOTS_DASHBOARD, '/workOrderManagement/workOrderManagement'),
+    newWorkOrder: path(ROOTS_DASHBOARD, '/workOrderManagement/newWorkOrder'),
   },
   // 报表管理
   reportManagement: {
@@ -97,6 +99,7 @@ export const PATH_DASHBOARD = {
     fileUpload: path(ROOTS_DASHBOARD, '/systemManagement/fileUpload'),
     fileDownload: path(ROOTS_DASHBOARD, '/systemManagement/fileDownload'),
     userManagement: path(ROOTS_DASHBOARD, '/systemManagement/userManagement'),
+    changeUserInformation: path(ROOTS_DASHBOARD, '/systemManagement/changeUserInformation'),
   },
   //--------------------------------------------------------------------------//
   user: {

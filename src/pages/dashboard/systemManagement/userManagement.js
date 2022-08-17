@@ -1,246 +1,444 @@
+import sumBy from 'lodash/sumBy';
+import { useEffect, useState } from 'react';
+// next
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+// @mui
+import { useTheme } from '@mui/material/styles';
 // @mui
 import {
-    Card,
-    Container,
-  } from '@mui/material';
+  Box,
+  Tab,
+  Tabs,
+  Card,
+  Table,
+  Stack,
+  Switch,
+  Button,
+  Tooltip,
+  Divider,
+  TableBody,
+  Container,
+  IconButton,
+  TableContainer,
+  TablePagination,
+  FormControlLabel,
+} from '@mui/material';
   // routes
-  import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
   // hooks
-  import useSettings from '../../../hooks/useSettings';
+import useTabs from '../../../hooks/useTabs';
+import useSettings from '../../../hooks/useSettings';
+import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+  // _mock_
+import { _invoices } from '../../../_mock';
   // layouts
-  import Layout from '../../../layouts';
+import Layout from '../../../layouts';
   // components
-  import Page from '../../../components/Page';
-  import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-  import React from 'react';
-import windowsData from '../../../../globalData'
+import Page from '../../../components/Page';
+import Label from '../../../components/Label';
+import Iconify from '../../../components/Iconify';
+import Scrollbar from '../../../components/Scrollbar';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
+// sections
+import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/userManagement';
+import { supabase } from '../../../../api';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Button from '@mui/material/Button';
+// ----------------------------------------------------------------------
 
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import { styled } from '@mui/material/styles';
-import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Input from '@mui/material/Input';
+const SERVICE_OPTIONS = [
+  'all',
+  'full stack development',
+  'backend development',
+  'ui design',
+  'ui/ux design',
+  'front end development',
+];
 
-  UserManagement.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
-  };
-  // ----------------------------------------------------------------------
-  
-  export default function UserManagement() {
-    // const { themeStretch } = useSettings();
-    // 表格内容
-    const columns = [
-        { id: 'id', label: 'ID', align:'center', minWidth: 170 },
-        { id: 'userName', label: '用户名', align:'center', minWidth: 100 },
-        { id: 'userType', label: '用户类型', align:'center', minWidth: 100 },
-        { id: 'password', label: '密码', align:'center', minWidth: 100 },
-        { id: 'email', label: '注册邮箱', align:'center', minWidth: 100 },
-        { id: 'operation', label: '操作', align:'center', minWidth: 100 }
-    ];
-    function createData(id, userName, userType,password, email,operation) {
-        return { id, userName, userType,password, email,operation};
-    }
-    const rows = [
-        createData('1', 'test1', '管理', '123456', '1123456@qq.com',false),
-        createData('2', 'test2',  '运营','123456', '2123456@qq.com',true),
-        createData('3', 'test3',  '运营','123456', '3123456@qq.com',true),
-        createData('4', 'test4',  '运营','123456', '4123456@qq.com',true),
-        createData('5', 'test5',  '运营','123456', '5123456@qq.com',true),
-        createData('6', 'test6',  '运营','123456', '6123456@qq.com',true),
-        createData('7', 'test7',  '运营','123456', '7123456@qq.com',true),
-        createData('8', 'test8',  '运营','123456', '8123456@qq.com',true),
-        createData('9', 'test9',  '运营','123456', '9123456@qq.com',true),
-        createData('10', 'test10',  '运营','123456', '10123456@qq.com',true),
-        createData('11', 'test11',  '运营','123456', '11123456@qq.com',true),
-    ];
+const TABLE_HEAD = [
+  { id: 'id', label: 'ID', align: 'center' },
+  { id: 'userName', label: '用户名', align: 'center' },
+  { id: 'userType', label: '用户类型', align: 'center' },
+  { id: 'password', label: '密码', align: 'center', width: 140 },
+  { id: 'email', label: '注册邮箱', align: 'center', width: 140 },
+  { id: '',label:'操作', align: 'center' },
+];
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+// ----------------------------------------------------------------------
 
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-    };
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = (userName,userType,password,email) => {
-        windowsData.userName=userName,
-        windowsData.userType=userType,
-        windowsData.password=password,
-        windowsData.email=email,
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    // 弹窗
-    const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-        '& .MuiDialogContent-root': {
-            padding: theme.spacing(2),
-        },
-        '& .MuiDialogActions-root': {
-            padding: theme.spacing(1),
-        },
-    }));
+UserManagement.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 
-    const BootstrapDialogTitle = (props) => {
-        const { children, onClose, ...other } = props;
+// ----------------------------------------------------------------------
 
-        return (
-            <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-                {children}
-                {onClose ? (
-                    <IconButton
-                        aria-label="close"
-                        onClick={onClose}
-                        sx={{
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            // color: (theme) => theme.palette.grey[500],
-                        }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                ) : null}
-            </DialogTitle>
-        );
-    };
+export default function UserManagement() {
+  const theme = useTheme();
 
-    BootstrapDialogTitle.propTypes = {
-        children: PropTypes.node,
-        onClose: PropTypes.func.isRequired,
-    };
-    function dataManageSet(flag,row) {
-        if (flag) {
-            return (
-                <div>
-                    <Button variant="outlined" color="primary" onClick={()=>{handleClickOpen(row.userName,row.userType,row.password,row.email)}}>编辑</Button>
-                    <BootstrapDialog
-                        onClose={handleClose}
-                        aria-labelledby="customized-dialog-title"
-                        open={open}
-                        >
-                        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                            信息编辑
-                        </BootstrapDialogTitle>
-                        <DialogContent dividers>
-                            <table style={{ minWidth: '565px'}}>
-                                <tr>
-                                    <td style={{ width: '20%', textAlign: 'left' }}>
-                                        用户名:
-                                    </td>
-                                    <td style={{ width: '30%', textAlign: 'center'}}>
-                                        <Input placeholder={windowsData.userName} id="userName" inputProps={{ 'aria-label': 'description' }} />
-                                    </td>
-                                    <td style={{ width: '20%', textAlign: 'left' }}>
-                                        用户类型:
-                                    </td>
-                                    <td style={{ width: '30%', textAlign: 'center'}}>
-                                        <Input placeholder={windowsData.userType} id="userType" inputProps={{ 'aria-label': 'description' }} />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: '20%', textAlign: 'left' }}>
-                                        密码:
-                                    </td>
-                                    <td style={{ width: '30%', textAlign: 'center'}}>
-                                        <Input placeholder={windowsData.password} id="password" inputProps={{ 'aria-label': 'description' }} />
-                                    </td>
-                                    <td style={{ width: '20%', textAlign: 'left' }}>
-                                        注册邮箱:
-                                    </td>
-                                    <td style={{ width: '30%', textAlign: 'center'}}>
-                                        <Input placeholder={windowsData.email} id="email" inputProps={{ 'aria-label': 'description' }} />
-                                    </td>
-                                </tr>
-                            </table>
-                            <br /><br />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button autoFocus variant="contained" onClick={handleClickOpen} size="medium" color="primary">
-                                提交
-                            </Button>
-                        </DialogActions>
-                    </BootstrapDialog>
-                </div>
-            )
-        } else {
-            return <Button variant="outlined" disabled>编辑</Button>
+  const { themeStretch } = useSettings();
+
+  const { push } = useRouter();
+
+  const [allTrans, setallTrans] = useState([]);
+
+  useEffect(()=>{
+    async function fetchData()
+    {
+        //console.log(supabase.auth.user().id);
+        const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
+        try {
+            let all = {};
+            if(processObj.body.currentProject)
+            {
+                all = await supabase.from('trans').select().match({
+                    processPer: processObj.body.name,
+                    projectName: processObj.body.currentProject
+                });
+            }
+            else if(await processObj.body.auth_level === '管理')
+            {
+                all = await supabase.from('trans').select();
+            }
+            else{
+                all = await supabase.from('trans').select().match({
+                    processPer: processObj.body.name
+                });
+            }
+            setallTrans(all.data);
+        } catch (error) {
+            console.log(error);
         }
+        console.log(allTrans);
     }
-    return (
-      <Page title="用户管理">
-        {/* <Container maxWidth={themeStretch ? false : 'lg'}> */}
-        <Container maxWidth={ 400 }>
-          <HeaderBreadcrumbs
-            heading="用户管理"
-            links={[
-              { name: '主页', href: PATH_DASHBOARD.root },
-              { name: '系统管理' },
-              { name: '用户管理' },
-            ]}
+    fetchData();
+    },[])
+
+  const {
+    dense,
+    page,
+    order,
+    orderBy,
+    rowsPerPage,
+    setPage,
+    //
+    selected,
+    setSelected,
+    onSelectRow,
+    onSelectAllRows,
+    //
+    onSort,
+    onChangeDense,
+    onChangePage,
+    onChangeRowsPerPage,
+  } = useTable({ defaultOrderBy: 'createDate' });
+
+  const [filterName, setFilterName] = useState('');
+
+  const [filterService, setFilterService] = useState('all');
+
+  const [filterStartDate, setFilterStartDate] = useState(null);
+
+  const [filterEndDate, setFilterEndDate] = useState(null);
+
+  const { currentTab: filterStatus, onChangeTab: onFilterStatus } = useTabs('all');
+
+  const handleFilterName = (filterName) => {
+    setFilterName(filterName);
+    setPage(0);
+  };
+
+  const handleFilterService = (event) => {
+    setFilterService(event.target.value);
+  };
+
+  const handleDeleteRow = (id) => {
+    const deleteRow = allTrans.filter((row) => row.id !== id);
+    setSelected([]);
+    setallTrans(deleteRow);
+  };
+
+  const handleDeleteRows = (selected) => {
+    const deleteRows = allTrans.filter((row) => !selected.includes(row.id));
+    setSelected([]);
+    setallTrans(deleteRows);
+  };
+
+  const handleEditRow = (id) => {
+    push(PATH_DASHBOARD.invoice.edit(id));
+  };
+
+  const handleViewRow = (id) => {
+    push(PATH_DASHBOARD.invoice.view(id));
+  };
+
+  const dataFiltered = applySortFilter({
+    allTrans,
+    comparator: getComparator(order, orderBy),
+    filterName,
+    filterService,
+    filterStatus,
+    filterStartDate,
+    filterEndDate,
+  });
+
+  const denseHeight = dense ? 56 : 76;
+
+  const isNotFound =
+    (!dataFiltered.length && !!filterName) ||
+    (!dataFiltered.length && !!filterStatus) ||
+    (!dataFiltered.length && !!filterService) ||
+    (!dataFiltered.length && !!filterEndDate) ||
+    (!dataFiltered.length && !!filterStartDate);
+
+  const getLengthByStatus = (status) => allTrans.filter((item) => item.status === status).length;
+
+  const getTotalPriceByStatus = (status) =>
+    sumBy(
+      allTrans.filter((item) => item.status === status),
+      'totalPrice'
+    );
+
+  const getPercentByStatus = (status) => (getLengthByStatus(status) / allTrans.length) * 100;
+
+  const TABS = [
+    { value: 'all', label: '全部', color: 'info', count: allTrans.length },
+    { value: 'paid', label: '管理', color: 'success', count: getLengthByStatus('paid') },
+    { value: 'unpaid', label: '运营', color: 'warning', count: getLengthByStatus('paid') },
+  ];
+
+  return (
+    <Page title="用户管理">
+      <Container maxWidth={themeStretch ? false : 'lg'}>
+        <HeaderBreadcrumbs
+          heading="用户管理"
+          links={[
+            { name: '主页', href: PATH_DASHBOARD.root },
+            { name: '系统管理', herf: PATH_DASHBOARD.systemManagement.userManagement },
+            { name: '用户管理', herf: PATH_DASHBOARD.systemManagement.userManagement },
+          ]}
+        />
+        <Card>
+          <Tabs
+            allowScrollButtonsMobile
+            variant="scrollable"
+            scrollButtons="auto"
+            value={filterStatus}
+            onChange={onFilterStatus}
+            sx={{ px: 2, bgcolor: 'background.neutral' }}
+          >
+            {TABS.map((tab) => (
+              <Tab
+                disableRipple
+                key={tab.value}
+                value={tab.value}
+                icon={<Label color={tab.color}> {tab.count} </Label>}
+                label={tab.label}
+              />
+            ))}
+          </Tabs>
+
+          <Divider />
+
+          <TransTableToolbar
+            filterName={filterName}
+            filterService={filterService}
+            filterStartDate={filterStartDate}
+            filterEndDate={filterEndDate}
+            onFilterName={handleFilterName}
+            onFilterService={handleFilterService}
+            onFilterStartDate={(newValue) => {
+              setFilterStartDate(newValue);
+            }}
+            onFilterEndDate={(newValue) => {
+              setFilterEndDate(newValue);
+            }}
+            optionsService={SERVICE_OPTIONS}
           />
-          <Card>
-            <TableContainer>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                key={column.id}
-                                align={column.align}
-                                style={{ minWidth: column.minWidth }}
-                                >
-                                {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                            {columns.map((column) => {
-                                const value = row[column.id];
-                                return(
-                                    <TableCell key={column.id} align={column.align}>
-                                        {typeof value === 'boolean' ? dataManageSet(value,row) : value}
-                                    </TableCell>
-                                )
-                            })}
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
+              {selected.length > 0 && (
+                <TableSelectedActions
+                  dense={dense}
+                  numSelected={selected.length}
+                  rowCount={allTrans.length}
+                  onSelectAllRows={(checked) =>
+                    onSelectAllRows(
+                      checked,
+                      allTrans.map((row) => row.id)
+                    )
+                  }
+                  actions={
+                    <Stack spacing={1} direction="row">
+                      <Tooltip title="Sent">
+                        <IconButton color="primary">
+                          <Iconify icon={'ic:round-send'} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Download">
+                        <IconButton color="primary">
+                          <Iconify icon={'eva:download-outline'} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Print">
+                        <IconButton color="primary">
+                          <Iconify icon={'eva:printer-fill'} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Delete">
+                        <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
+                          <Iconify icon={'eva:trash-2-outline'} />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  }
+                />
+              )}
+
+              <Table size={dense ? 'small' : 'medium'}>
+                <TableHeadCustom
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={allTrans.length}
+                  numSelected={selected.length}
+                  onSort={onSort}
+                  onSelectAllRows={(checked) =>
+                    onSelectAllRows(
+                      checked,
+                      allTrans.map((row) => row.id)
+                    )
+                  }
+                />
+
+                <TableBody>
+                  {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                    <TransTableRow
+                      key={row.id}
+                      row={row}
+                      selected={selected.includes(row.id)}
+                      onSelectRow={() => onSelectRow(row.id)}
+                      onViewRow={() => handleViewRow(row.id)}
+                      onEditRow={() => handleEditRow(row.id)}
+                      onDeleteRow={() => handleDeleteRow(row.id)}
+                    />
+                  ))}
+
+                  <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, allTrans.length)} />
+
+                  <TableNoData isNotFound={isNotFound} />
+                </TableBody>
+              </Table>
             </TableContainer>
+          </Scrollbar>
+
+          <Box sx={{ position: 'relative' }}>
             <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={dataFiltered.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={onChangePage}
+              onRowsPerPageChange={onChangeRowsPerPage}
             />
-          </Card>
-        </Container>
-      </Page>
+
+            <FormControlLabel
+              control={<Switch checked={dense} onChange={onChangeDense} />}
+              label="紧凑"
+              sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+            />
+          </Box>
+        </Card>
+      </Container>
+    </Page>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+function applySortFilter({
+  allTrans,
+  comparator,
+  filterName,
+  filterStatus,
+  filterService,
+  filterStartDate,
+  filterEndDate,
+}) {
+  const stabilizedThis = allTrans.map((el, index) => [el, index]);
+
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+
+  allTrans = stabilizedThis.map((el) => el[0]);
+
+  if (filterName) {
+    allTrans = allTrans.filter(
+      (item) =>
+        item.invoiceNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.invoiceTo.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
-  
+
+  if (filterStatus !== 'all') {
+    allTrans = allTrans.filter((item) => item.status === filterStatus);
+  }
+
+  if (filterService !== 'all') {
+    allTrans = allTrans.filter((item) => item.items.some((c) => c.service === filterService));
+  }
+
+  if (filterStartDate && filterEndDate) {
+    allTrans = allTrans.filter(
+      (item) =>
+        item.createDate.getTime() >= filterStartDate.getTime() && item.createDate.getTime() <= filterEndDate.getTime()
+    );
+  }
+
+  return allTrans;
+}
+
+/*
+export async function getServerSideProps() {
+
+  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
+  let allTrans = [];
+
+  try {       
+        if(processObj.body.currentProject !== '')
+        {
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name,
+            projectName: processObj.body.currentProject
+          });
+        }
+        else if(await processObj.data.name === '管理')
+        {
+          allTrans = await supabase.from('trans').select();
+        }
+        else{
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name
+          });
+        }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  console.log(allTrans);
+
+  return {
+    props: {allTrans}, // will be passed to the page component as props
+  }
+}
+*/

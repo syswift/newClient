@@ -1,5 +1,5 @@
 import sumBy from 'lodash/sumBy';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -44,6 +44,7 @@ import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } fr
 // sections
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
 import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/list';
+import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------
 
@@ -62,7 +63,8 @@ const TABLE_HEAD = [
   { id: 'dueDate', label: '客户代码', align: 'left' },
   { id: 'price', label: '终端代码', align: 'center', width: 140 },
   { id: 'sent', label: '周转单类型', align: 'center', width: 140 },
-  { id: 'status', label: '周转单状态', align: 'left' },
+  { id: 'status', label: '周转单状态', align: 'center' },
+  { id: 'processPer', label: '创建人', align: 'left' },
   { id: '' },
 ];
 
@@ -73,13 +75,49 @@ TurnoverOrderManagement.getLayout = function getLayout(page) {
 };
 
 // ----------------------------------------------------------------------
-  
+
 export default function TurnoverOrderManagement() {
   const theme = useTheme();
 
   const { themeStretch } = useSettings();
 
   const { push } = useRouter();
+
+  const [allTrans, setallTrans] = useState([]);
+
+  useEffect(()=>{
+    async function fetchData()
+    {
+      const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();   
+
+      try {  
+            let all = {};     
+            if(processObj.body.currentProject !== '')
+            {
+              all = await supabase.from('trans').select().match({
+                processPer: processObj.body.name,
+                projectName: processObj.body.currentProject
+              });
+            }
+            else if(await processObj.data.name === '管理')
+            {
+              all = await supabase.from('trans').select();
+            }
+            else{
+              all = await supabase.from('trans').select().match({
+                processPer: processObj.body.name
+              });
+            }
+            setallTrans(all.data);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+      console.log(allTrans);
+    }
+    fetchData();
+  },[])
 
   const {
     dense,
@@ -99,8 +137,6 @@ export default function TurnoverOrderManagement() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: 'createDate' });
-
-  const [tableData, setTableData] = useState(_invoices);
 
   const [filterName, setFilterName] = useState('');
 
@@ -122,15 +158,15 @@ export default function TurnoverOrderManagement() {
   };
 
   const handleDeleteRow = (id) => {
-    const deleteRow = tableData.filter((row) => row.id !== id);
+    const deleteRow = allTrans.filter((row) => row.id !== id);
     setSelected([]);
-    setTableData(deleteRow);
+    setallTrans(deleteRow);
   };
 
   const handleDeleteRows = (selected) => {
-    const deleteRows = tableData.filter((row) => !selected.includes(row.id));
+    const deleteRows = allTrans.filter((row) => !selected.includes(row.id));
     setSelected([]);
-    setTableData(deleteRows);
+    setallTrans(deleteRows);
   };
 
   const handleEditRow = (id) => {
@@ -142,7 +178,7 @@ export default function TurnoverOrderManagement() {
   };
 
   const dataFiltered = applySortFilter({
-    tableData,
+    allTrans,
     comparator: getComparator(order, orderBy),
     filterName,
     filterService,
@@ -160,18 +196,18 @@ export default function TurnoverOrderManagement() {
     (!dataFiltered.length && !!filterEndDate) ||
     (!dataFiltered.length && !!filterStartDate);
 
-  const getLengthByStatus = (status) => tableData.filter((item) => item.status === status).length;
+  const getLengthByStatus = (status) => allTrans.filter((item) => item.status === status).length;
 
   const getTotalPriceByStatus = (status) =>
     sumBy(
-      tableData.filter((item) => item.status === status),
+      allTrans.filter((item) => item.status === status),
       'totalPrice'
     );
 
-  const getPercentByStatus = (status) => (getLengthByStatus(status) / tableData.length) * 100;
+  const getPercentByStatus = (status) => (getLengthByStatus(status) / allTrans.length) * 100;
 
   const TABS = [
-    { value: 'all', label: '全部', color: 'info', count: tableData.length },
+    { value: 'all', label: '全部', color: 'info', count: allTrans.length },
     { value: 'paid', label: '完成', color: 'success', count: getLengthByStatus('paid') },
     { value: 'unpaid', label: '新增', color: 'warning', count: getLengthByStatus('paid') },
   ];
@@ -187,11 +223,11 @@ export default function TurnoverOrderManagement() {
             { name: '周转单管理', herf: PATH_DASHBOARD.turnoverManagement },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.invoice.new} passHref>
-              <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                  新建周转单
-              </Button>
-            </NextLink>
+            //<NextLink href={PATH_DASHBOARD.invoice.new} passHref>
+            <Button variant="contained" onClick={()=>console.log(allTrans.length)} startIcon={<Iconify icon={'eva:plus-fill'} />}>
+            新建周转单
+            </Button>
+            //</NextLink>
           }
         />
         <Card>
@@ -238,11 +274,11 @@ export default function TurnoverOrderManagement() {
                 <TableSelectedActions
                   dense={dense}
                   numSelected={selected.length}
-                  rowCount={tableData.length}
+                  rowCount={allTrans.length}
                   onSelectAllRows={(checked) =>
                     onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      allTrans.map((row) => row.id)
                     )
                   }
                   actions={
@@ -280,13 +316,13 @@ export default function TurnoverOrderManagement() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={tableData.length}
+                  rowCount={allTrans.length}
                   numSelected={selected.length}
                   onSort={onSort}
                   onSelectAllRows={(checked) =>
                     onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      allTrans.map((row) => row.id)
                     )
                   }
                 />
@@ -304,7 +340,7 @@ export default function TurnoverOrderManagement() {
                     />
                   ))}
 
-                  <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />
+                  <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, allTrans.length)} />
 
                   <TableNoData isNotFound={isNotFound} />
                 </TableBody>
@@ -325,7 +361,7 @@ export default function TurnoverOrderManagement() {
 
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
-              label="Dense"
+              label="紧凑"
               sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
             />
           </Box>
@@ -338,7 +374,7 @@ export default function TurnoverOrderManagement() {
 // ----------------------------------------------------------------------
 
 function applySortFilter({
-  tableData,
+  allTrans,
   comparator,
   filterName,
   filterStatus,
@@ -346,7 +382,7 @@ function applySortFilter({
   filterStartDate,
   filterEndDate,
 }) {
-  const stabilizedThis = tableData.map((el, index) => [el, index]);
+  const stabilizedThis = allTrans.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -354,10 +390,10 @@ function applySortFilter({
     return a[1] - b[1];
   });
 
-  tableData = stabilizedThis.map((el) => el[0]);
+  allTrans = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    tableData = tableData.filter(
+    allTrans = allTrans.filter(
       (item) =>
         item.invoiceNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
         item.invoiceTo.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
@@ -365,19 +401,55 @@ function applySortFilter({
   }
 
   if (filterStatus !== 'all') {
-    tableData = tableData.filter((item) => item.status === filterStatus);
+    allTrans = allTrans.filter((item) => item.status === filterStatus);
   }
 
   if (filterService !== 'all') {
-    tableData = tableData.filter((item) => item.items.some((c) => c.service === filterService));
+    allTrans = allTrans.filter((item) => item.items.some((c) => c.service === filterService));
   }
 
   if (filterStartDate && filterEndDate) {
-    tableData = tableData.filter(
+    allTrans = allTrans.filter(
       (item) =>
         item.createDate.getTime() >= filterStartDate.getTime() && item.createDate.getTime() <= filterEndDate.getTime()
     );
   }
 
-  return tableData;
+  return allTrans;
 }
+
+/*
+export async function getServerSideProps() {
+
+  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
+  let allTrans = [];
+
+  try {       
+        if(processObj.body.currentProject !== '')
+        {
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name,
+            projectName: processObj.body.currentProject
+          });
+        }
+        else if(await processObj.data.name === '管理')
+        {
+          allTrans = await supabase.from('trans').select();
+        }
+        else{
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name
+          });
+        }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  console.log(allTrans);
+
+  return {
+    props: {allTrans}, // will be passed to the page component as props
+  }
+}
+*/

@@ -5,12 +5,12 @@ import NextLink from 'next/link';
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container } from '@mui/material';
 // layouts
-import Layout from '../../../template/Minimal_JavaScript_v3.5.0/nextjs_JS/src/layouts';
+import Layout from '../layouts';
 // components
-import Page from '../../../template/Minimal_JavaScript_v3.5.0/nextjs_JS/src/components/Page';
-import { MotionContainer, varBounce } from '../../../template/Minimal_JavaScript_v3.5.0/nextjs_JS/src/components/animate';
+import Page from '../components/Page';
+import { MotionContainer, varBounce } from '../components/animate';
 // assets
-import { ForbiddenIllustration } from '../../../template/Minimal_JavaScript_v3.5.0/nextjs_JS/src/assets';
+import { ForbiddenIllustration } from '../assets';
 
 // ----------------------------------------------------------------------
 

@@ -1667,7 +1667,7 @@
   dependencies:
     "cross-fetch" "^3.1.0"
 
-"@supabase/supabase-js@latest":
+"@supabase/supabase-js@^1.35.6":
   "integrity" "sha512-KDRXRr+kdGwruIUizZPALbe5YccMYFVyZJf1sFWKLncaLYSFiM6iKFnqCrNeQ4JFoZZiICkiTl1FUuai62jVpg=="
   "resolved" "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-1.35.6.tgz"
   "version" "1.35.6"

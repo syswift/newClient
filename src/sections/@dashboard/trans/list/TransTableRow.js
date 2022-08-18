@@ -76,13 +76,13 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
           color={
-            (transState === '完成' && 'success') ||
-            (transState === '新增' && 'warning') ||
+            (transState === false && 'success') ||
+            (transState === true && 'warning') ||
             'default'
           }
           sx={{ textTransform: 'capitalize' }}
         >
-          {transState}
+          {transState === true ? '新增' : '完成'}
         </Label>
       </TableCell>
 

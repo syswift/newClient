@@ -134,7 +134,7 @@ export default function TurnoverOrderManagement() {
     onChangeDense,
     onChangePage,
     onChangeRowsPerPage,
-  } = useTable({ defaultOrderBy: 'createDate' });
+  } = useTable({ defaultOrderBy: 'processPer' });
 
   const [filterName, setFilterName] = useState('');
 
@@ -194,7 +194,7 @@ export default function TurnoverOrderManagement() {
     (!dataFiltered.length && !!filterEndDate) ||
     (!dataFiltered.length && !!filterStartDate);
 
-  const getLengthByStatus = (status) => allTrans.filter((item) => item.status === status).length;
+  const getLengthByStatus = (status) => allTrans.filter((item) => item.transState === status).length;
 
   const getTotalPriceByStatus = (status) =>
     sumBy(
@@ -204,10 +204,10 @@ export default function TurnoverOrderManagement() {
 
   const getPercentByStatus = (status) => (getLengthByStatus(status) / allTrans.length) * 100;
 
-  const TABS = [
+  const TABS = [    //filter的值
     { value: 'all', label: '全部', color: 'info', count: allTrans.length },
-    { value: 'paid', label: '完成', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: '新增', color: 'warning', count: getLengthByStatus('paid') },
+    { value: '完成', label: '完成', color: 'success', count: getLengthByStatus(false) },
+    { value: '新增', label: '新增', color: 'warning', count: getLengthByStatus(true) },
   ];
 
   return (
@@ -398,8 +398,10 @@ function applySortFilter({
     );
   }
 
+  //console.log(filterStatus);
+
   if (filterStatus !== 'all') {
-    allTrans = allTrans.filter((item) => item.status === filterStatus);
+    allTrans = allTrans.filter((item) => (item.transState === true ? '新增' : '完成') === filterStatus);
   }
 
   if (filterService !== 'all') {
@@ -415,39 +417,3 @@ function applySortFilter({
 
   return allTrans;
 }
-
-/*
-export async function getServerSideProps() {
-
-  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
-  let allTrans = [];
-
-  try {       
-        if(processObj.body.currentProject !== '')
-        {
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name,
-            projectName: processObj.body.currentProject
-          });
-        }
-        else if(await processObj.data.name === '管理')
-        {
-          allTrans = await supabase.from('trans').select();
-        }
-        else{
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name
-          });
-        }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  console.log(allTrans);
-
-  return {
-    props: {allTrans}, // will be passed to the page component as props
-  }
-}
-*/

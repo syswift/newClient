@@ -70,6 +70,7 @@ export const PATH_DASHBOARD = {
   turnoverManagement: {
     root: path(ROOTS_DASHBOARD, '/turnoverManagement'),
     turnoverOrderManagement: path(ROOTS_DASHBOARD, '/turnoverManagement/turnoverOrderManagement'),
+    new: path(ROOTS_DASHBOARD, '/turnoverManagement/new')
   },
   // 库存管理
   inventoryManagement: {

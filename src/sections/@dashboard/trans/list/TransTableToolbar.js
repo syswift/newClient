@@ -33,7 +33,9 @@ export default function TransTableToolbar({
   onFilterEndDate,
 }) {
   return (
+    
     <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+      {/*
       <TextField
         fullWidth
         select
@@ -83,6 +85,7 @@ export default function TransTableToolbar({
           textTransform: 'capitalize',
         }}
       >
+      
         {optionsService.map((option) => (
           <MenuItem
             key={option}
@@ -132,12 +135,12 @@ export default function TransTableToolbar({
           </MenuItem>
         ))}
       </TextField>
-
+      */}
       <TextField
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="输入周转单号或者创建人进行搜索"
+        placeholder="输入任意信息进行搜索"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

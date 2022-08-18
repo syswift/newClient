@@ -277,7 +277,7 @@ export default function SupplierInformation() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
+            <TableContainer sx={{ minWidth: 2000, position: 'relative', overflow:'unset' }}>
               {selected.length > 0 && (
                 <TableSelectedActions
                   dense={dense}

@@ -9,6 +9,7 @@ export * from './_others';
 export * from './_booking';
 export * from './_banking';
 export * from './_invoice';
+export * from './_trans';
 export * from './_ecommerce';
 export * from './_analytics';
 export * from './_countries';

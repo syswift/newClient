@@ -45,6 +45,7 @@ import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } fr
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
 import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/list';
 import { supabase } from '../../../../api';
+import * as ReactDOM from 'react-dom';
 
 // ----------------------------------------------------------------------
 
@@ -103,10 +104,49 @@ export default function TurnoverOrderManagement() {
             }
             setallTrans(all.data);
 
+            /*
+            //get all customer
+            let all2 = {};
+
+            if(processObj.body.currentProject)
+            {
+              all2 = await supabase.from('customer').select().match({
+                processPer: processObj.body.name,
+                projectName: processObj.body.currentProject
+              });
+            }
+            else if(await processObj.body.auth_level === '管理')
+            {
+              all2 = await supabase.from('customer').select();
+            }
+            else{
+              all2 = await supabase.from('customer').select().match({
+                processPer: processObj.body.name
+              });
+            }
+
+            for(const cus of all2.data)
+            {
+                CUSTOMER_OPTIONS.push(cus.customerId);
+            }*/
+
+            
+            for(const tran of allTrans)
+            {
+              if(!CUSTOMER_OPTIONS.find(el => el === tran.customerId))
+              {
+                CUSTOMER_OPTIONS.push(tran.customerId);
+              }
+            }
+            
+            console.log(CUSTOMER_OPTIONS);
+
+            const element = document.getElementById('temp')
+            //console.log(allTrans);
+
         } catch (error) {
             console.log(error);
-        }
-        console.log(allTrans);
+        }        
     }
     fetchData();
     },[])
@@ -215,7 +255,7 @@ export default function TurnoverOrderManagement() {
             { name: '周转单管理', herf: PATH_DASHBOARD.turnoverManagement },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.invoice.new} passHref>
+            <NextLink href={PATH_DASHBOARD.turnoverManagement.new} passHref>
             <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
             新建周转单
             </Button>
@@ -389,7 +429,10 @@ function applySortFilter({
     allTrans = allTrans.filter(
       (item) =>
         item.transId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.processPer.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.processPer.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.customerId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.termId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.transType.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

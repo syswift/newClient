@@ -48,14 +48,7 @@ import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------
 
-const SERVICE_OPTIONS = [
-  'all',
-  'full stack development',
-  'backend development',
-  'ui design',
-  'ui/ux design',
-  'front end development',
-];
+const CUSTOMER_OPTIONS = [];
 
 const TABLE_HEAD = [
   { id: 'invoiceNumber', label: '周转单号', align: 'center' },
@@ -109,6 +102,7 @@ export default function TurnoverOrderManagement() {
                 });
             }
             setallTrans(all.data);
+
         } catch (error) {
             console.log(error);
         }
@@ -263,7 +257,7 @@ export default function TurnoverOrderManagement() {
             onFilterEndDate={(newValue) => {
               setFilterEndDate(newValue);
             }}
-            optionsService={SERVICE_OPTIONS}
+            optionsService={CUSTOMER_OPTIONS}
           />
 
           <Scrollbar>
@@ -390,11 +384,12 @@ function applySortFilter({
 
   allTrans = stabilizedThis.map((el) => el[0]);
 
+  //搜索框
   if (filterName) {
     allTrans = allTrans.filter(
       (item) =>
-        item.invoiceNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.invoiceTo.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.transId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.processPer.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

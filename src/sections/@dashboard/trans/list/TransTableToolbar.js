@@ -3,6 +3,7 @@ import { Stack, InputAdornment, TextField, MenuItem } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 // components
 import Iconify from '../../../../components/Iconify';
+import Router from 'next/router';
 
 // ----------------------------------------------------------------------
 
@@ -136,7 +137,7 @@ export default function TransTableToolbar({
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="输入周转单号进行搜索"
+        placeholder="输入周转单号或者创建人进行搜索"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

@@ -1,14 +1,15 @@
 // form
 import { useFormContext, Controller } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 // @mui
 import { DatePicker } from '@mui/x-date-pickers';
 import { Stack, TextField, MenuItem } from '@mui/material';
 // components
 import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
-
+import PropTypes from 'prop-types';
+import {fetchCusId} from '../../../../../api/fetchCusId';
+import {fetchTermId} from '../../../../../api/fetchTermId';
 // ----------------------------------------------------------------------
-
-const STATUS_OPTIONS = ['paid', 'unpaid', 'overdue', 'draft'];
 
 // ----------------------------------------------------------------------
 
@@ -17,9 +18,41 @@ export default function InvoiceNewEditStatusDate() {
 
   const values = watch();
 
+  //后端数据存放
+  const [CUSID_STATUS, setCUSID_STATUS] = useState([]);
+  const [TERMID_STATUS, setTERMID_STATUS] = useState([]);
+  const TRANS_TYPE = ['正向周转','逆向周转'];
+
+  useEffect(()=>{
+    async function fetchData()
+    {     
+     
+      const all = await fetchCusId(); //客户代码
+      const all2 = await fetchTermId(); //终端代码
+      let temp = [];
+
+      for(const cus of all.data)
+      {
+          console.log(cus.customerId);
+          temp.push(cus.customerId);
+      }
+      setCUSID_STATUS(temp);
+      temp = [];
+
+      for(const term of all2.data)
+      {
+          console.log(term.termId);
+          temp.push(term.termId);
+      }
+      setTERMID_STATUS(temp);
+    }
+    fetchData();
+    },[])
+
+  
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} sx={{ p: 3, bgcolor: 'background.neutral' }}>
-      <RHFTextField name="invoiceNumber" label="周转单号" value={`INV-${values.invoiceNumber}`} />
+      <RHFTextField name="invoiceNumber" label="周转单号" value={`RT`} />
 
       <RHFSelect
         fullWidth
@@ -28,7 +61,7 @@ export default function InvoiceNewEditStatusDate() {
         InputLabelProps={{ shrink: true }}
         SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
       >
-        {STATUS_OPTIONS.map((option) => (
+        {CUSID_STATUS.map((option) => (
           <MenuItem
             key={option}
             value={option}
@@ -52,7 +85,7 @@ export default function InvoiceNewEditStatusDate() {
         InputLabelProps={{ shrink: true }}
         SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
       >
-        {STATUS_OPTIONS.map((option) => (
+        {TERMID_STATUS.map((option) => (
           <MenuItem
             key={option}
             value={option}
@@ -76,7 +109,7 @@ export default function InvoiceNewEditStatusDate() {
         InputLabelProps={{ shrink: true }}
         SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
       >
-        {STATUS_OPTIONS.map((option) => (
+        {TRANS_TYPE.map((option) => (
           <MenuItem
             key={option}
             value={option}

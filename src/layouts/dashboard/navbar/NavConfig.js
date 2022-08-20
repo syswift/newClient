@@ -101,7 +101,7 @@ const navConfig = [
         path: PATH_DASHBOARD.reportManagement.root,
         icon: ICONS.user,
         children: [
-          { title: '工单管理', path: PATH_DASHBOARD.reportManagement.reportManagement1 },
+          { title: '报表管理', path: PATH_DASHBOARD.reportManagement.reportManagement },
         ],
       },
       // 系统管理

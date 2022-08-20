@@ -128,8 +128,7 @@ export default function TurnoverOrderManagement() {
             for(const cus of all2.data)
             {
                 CUSTOMER_OPTIONS.push(cus.customerId);
-            }*/
-
+            }
             
             for(const tran of allTrans)
             {
@@ -139,9 +138,7 @@ export default function TurnoverOrderManagement() {
               }
             }
             
-            console.log(CUSTOMER_OPTIONS);
-
-            const element = document.getElementById('temp')
+            console.log(CUSTOMER_OPTIONS);*/
             //console.log(allTrans);
 
         } catch (error) {
@@ -251,7 +248,7 @@ export default function TurnoverOrderManagement() {
           heading="周转单管理"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '周转管理', herf: PATH_DASHBOARD.turnoverManagement },
+            { name: '周转管理', herf: PATH_DASHBOARD.root },
             { name: '周转单管理', herf: PATH_DASHBOARD.turnoverManagement },
           ]}
           action={

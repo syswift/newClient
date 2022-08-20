@@ -209,14 +209,14 @@ export default function TurnoverBoxInformation() {
   ];
 
   return (
-    <Page title="供应商信息">
+    <Page title="周转箱管理">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="供应商信息"
+          heading="周转箱管理"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
             { name: '基础配置', herf: PATH_DASHBOARD.basicConfiguration.supplierInformation },
-            { name: '供应商信息'},
+            { name: '周转箱管理'},
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
@@ -413,39 +413,3 @@ function applySortFilter({
 
   return allTrans;
 }
-
-/*
-export async function getServerSideProps() {
-
-  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
-  let allTrans = [];
-
-  try {       
-        if(processObj.body.currentProject !== '')
-        {
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name,
-            projectName: processObj.body.currentProject
-          });
-        }
-        else if(await processObj.data.name === '管理')
-        {
-          allTrans = await supabase.from('trans').select();
-        }
-        else{
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name
-          });
-        }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  console.log(allTrans);
-
-  return {
-    props: {allTrans}, // will be passed to the page component as props
-  }
-}
-*/

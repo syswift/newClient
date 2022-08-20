@@ -56,7 +56,7 @@ export default function InvoiceNewEditStatusDate() {
 
       <RHFSelect
         fullWidth
-        name="status"
+        name="cusid"
         label="客户代码"
         InputLabelProps={{ shrink: true }}
         SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
@@ -80,7 +80,7 @@ export default function InvoiceNewEditStatusDate() {
 
       <RHFSelect
         fullWidth
-        name="status"
+        name="termid"
         label="终端代码"
         InputLabelProps={{ shrink: true }}
         SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
@@ -104,7 +104,7 @@ export default function InvoiceNewEditStatusDate() {
 
       <RHFSelect
         fullWidth
-        name="status"
+        name="type"
         label="周转单类型"
         InputLabelProps={{ shrink: true }}
         SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}

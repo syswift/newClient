@@ -221,7 +221,7 @@ export default function TurnoverBoxInformation() {
           action={
             <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
                 <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增供应商
+                    新增周转箱
                 </Button>
             </NextLink>
           }

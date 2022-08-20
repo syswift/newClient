@@ -12,30 +12,26 @@ const INPUT_WIDTH = 160;
 TransTableToolbar.propTypes = {
   filterName: PropTypes.string,
   filterService: PropTypes.string,
-  filterEndDate: PropTypes.instanceOf(Date),
-  filterStartDate: PropTypes.instanceOf(Date),
+  filterTerm: PropTypes.string,
   onFilterName: PropTypes.func,
-  onFilterEndDate: PropTypes.func,
   onFilterService: PropTypes.func,
-  onFilterStartDate: PropTypes.func,
+  onFilterTerm: PropTypes.func,
   optionsService: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default function TransTableToolbar({
   optionsService,
-  filterStartDate,
-  filterEndDate,
   filterName,
   filterService,
+  filterTerm,
   onFilterName,
   onFilterService,
-  onFilterStartDate,
-  onFilterEndDate,
+  onFilterTerm,
 }) {
   return (
     
     <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-      {/*
+      { /*
       <TextField
         fullWidth
         select
@@ -73,8 +69,8 @@ export default function TransTableToolbar({
         fullWidth
         select
         label="终端代码"
-        value={filterService}
-        onChange={onFilterService}
+        value={filterTerm}
+        onChange={onFilterTerm}
         SelectProps={{
           MenuProps: {
             sx: { '& .MuiPaper-root': { maxHeight: 260 } },
@@ -102,7 +98,7 @@ export default function TransTableToolbar({
           </MenuItem>
         ))}
       </TextField>
-
+           
       <TextField
         fullWidth
         select
@@ -134,8 +130,7 @@ export default function TransTableToolbar({
             {option}
           </MenuItem>
         ))}
-      </TextField>
-      */}
+          </TextField>*/}
       <TextField
         fullWidth
         value={filterName}

@@ -65,6 +65,7 @@ const navConfig = [
         icon: ICONS.user,
         children: [
           { title: '周转单管理', path: PATH_DASHBOARD.turnoverManagement.turnoverOrderManagement },
+          { title: '新建周转单', path: PATH_DASHBOARD.turnoverManagement.new },
         ],
       },
       // 库存管理

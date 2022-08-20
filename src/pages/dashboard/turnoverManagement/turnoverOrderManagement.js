@@ -46,6 +46,8 @@ import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalyti
 import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/list';
 import { supabase } from '../../../../api';
 import * as ReactDOM from 'react-dom';
+import { fetchCusId } from '../../../../api/fetchCusId';
+import {fetchTermId} from '../../../../api/fetchTermId';
 
 // ----------------------------------------------------------------------
 
@@ -105,41 +107,26 @@ export default function TurnoverOrderManagement() {
             setallTrans(all.data);
 
             /*
-            //get all customer
-            let all2 = {};
 
-            if(processObj.body.currentProject)
-            {
-              all2 = await supabase.from('customer').select().match({
-                processPer: processObj.body.name,
-                projectName: processObj.body.currentProject
-              });
-            }
-            else if(await processObj.body.auth_level === '管理')
-            {
-              all2 = await supabase.from('customer').select();
-            }
-            else{
-              all2 = await supabase.from('customer').select().match({
-                processPer: processObj.body.name
-              });
-            }
+            const all1 = await fetchCusId(); //客户代码
+            const all2 = await fetchTermId(); //终端代码
+            let temp = [];
 
-            for(const cus of all2.data)
+            for(const cus of all1.data)
             {
-                CUSTOMER_OPTIONS.push(cus.customerId);
+                console.log(cus.customerId);
+                temp.push(cus.customerId);
             }
-            
-            for(const tran of allTrans)
+            setFilterService(temp);
+            temp = [];
+
+            for(const term of all2.data)
             {
-              if(!CUSTOMER_OPTIONS.find(el => el === tran.customerId))
-              {
-                CUSTOMER_OPTIONS.push(tran.customerId);
-              }
+                console.log(term.termId);
+                temp.push(term.termId);
             }
-            
-            console.log(CUSTOMER_OPTIONS);*/
-            //console.log(allTrans);
+            setFilterTerm(temp);
+            */
 
         } catch (error) {
             console.log(error);
@@ -171,6 +158,8 @@ export default function TurnoverOrderManagement() {
 
   const [filterService, setFilterService] = useState('all');
 
+  const [filterTerm, setFilterTerm] = useState('all');
+
   const [filterStartDate, setFilterStartDate] = useState(null);
 
   const [filterEndDate, setFilterEndDate] = useState(null);
@@ -184,6 +173,10 @@ export default function TurnoverOrderManagement() {
 
   const handleFilterService = (event) => {
     setFilterService(event.target.value);
+  };
+
+  const handleFilterTerm = (event) => {
+    setFilterTerm(event.target.value);
   };
 
   const handleDeleteRow = (id) => {
@@ -284,16 +277,10 @@ export default function TurnoverOrderManagement() {
           <TransTableToolbar
             filterName={filterName}
             filterService={filterService}
-            filterStartDate={filterStartDate}
-            filterEndDate={filterEndDate}
+            filterTerm={filterTerm}
             onFilterName={handleFilterName}
             onFilterService={handleFilterService}
-            onFilterStartDate={(newValue) => {
-              setFilterStartDate(newValue);
-            }}
-            onFilterEndDate={(newValue) => {
-              setFilterEndDate(newValue);
-            }}
+            onFilterTerm={handleFilterTerm}
             optionsService={CUSTOMER_OPTIONS}
           />
 

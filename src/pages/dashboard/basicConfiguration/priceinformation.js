@@ -27,7 +27,7 @@ import {
             heading="价格信息"
             links={[
               { name: '主页', href: PATH_DASHBOARD.root },
-              { name: '基础配置' },
+              { name: '基础配置', href: PATH_DASHBOARD.basicConfiguration.priceinformation },
               { name: '价格信息' },
             ]}
           />

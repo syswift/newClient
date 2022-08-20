@@ -27,7 +27,7 @@ import {
             heading="报表管理"
             links={[
               { name: '主页', href: PATH_DASHBOARD.root },
-              { name: '报表管理' },
+              { name: '报表管理', href: PATH_DASHBOARD.reportManagement.reportManagement},
               { name: '报表管理' },
             ]}
           />

@@ -222,6 +222,40 @@ export default function InventoryQuery() {
             { name: '库存查询', herf: PATH_DASHBOARD.inventoryManagement.inventoryQuery },
           ]}
         />
+        <Card sx={{ mb: 3 }}>
+          <Scrollbar>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              sx={{ py: 2 }}
+            >
+              <InvoiceAnalytic
+                title="合计"
+                total={allTrans.length}
+                percent={100}
+                price={sumBy(allTrans, 'totalPrice')}
+                icon="ic:round-receipt"
+                color={theme.palette.info.main}
+              />
+              <InvoiceAnalytic
+                title="正常库存"
+                total={getLengthByStatus('paid')}
+                percent={getPercentByStatus('paid')}
+                price={getTotalPriceByStatus('paid')}
+                icon="eva:checkmark-circle-2-fill"
+                color={theme.palette.success.main}
+              />
+              <InvoiceAnalytic
+                title="非正常库存"
+                total={getLengthByStatus('unpaid')}
+                percent={getPercentByStatus('unpaid')}
+                price={getTotalPriceByStatus('unpaid')}
+                icon="eva:clock-fill"
+                color={theme.palette.warning.main}
+              />
+            </Stack>
+          </Scrollbar>
+        </Card>
         <Card>
           <Tabs
             allowScrollButtonsMobile

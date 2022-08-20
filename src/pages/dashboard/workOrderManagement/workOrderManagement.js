@@ -216,7 +216,7 @@ export default function WorkOrderManagement() {
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
             { name: '工单管理', herf: PATH_DASHBOARD.workOrderManagement.workOrderManagement1 },
-            { name: '工单管理'},
+            { name: '工单管理',},
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.workOrderManagement.newWorkOrder} passHref>
@@ -226,6 +226,40 @@ export default function WorkOrderManagement() {
             </NextLink>
           }
         />
+        <Card sx={{ mb: 3 }}>
+          <Scrollbar>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              sx={{ py: 2 }}
+            >
+              <InvoiceAnalytic
+                title="合计"
+                total={allTrans.length}
+                percent={100}
+                price={sumBy(allTrans, 'totalPrice')}
+                icon="ic:round-receipt"
+                color={theme.palette.info.main}
+              />
+              <InvoiceAnalytic
+                title="正常"
+                total={getLengthByStatus('paid')}
+                percent={getPercentByStatus('paid')}
+                price={getTotalPriceByStatus('paid')}
+                icon="eva:checkmark-circle-2-fill"
+                color={theme.palette.success.main}
+              />
+              <InvoiceAnalytic
+                title="暂不可用"
+                total={getLengthByStatus('unpaid')}
+                percent={getPercentByStatus('unpaid')}
+                price={getTotalPriceByStatus('unpaid')}
+                icon="eva:clock-fill"
+                color={theme.palette.warning.main}
+              />
+            </Stack>
+          </Scrollbar>
+        </Card>
         <Card>
           <Tabs
             allowScrollButtonsMobile

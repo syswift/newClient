@@ -46,8 +46,6 @@ import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalyti
 import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/list';
 import { supabase } from '../../../../api';
 import * as ReactDOM from 'react-dom';
-import { fetchCusId } from '../../../../api/fetchCusId';
-import {fetchTermId} from '../../../../api/fetchTermId';
 
 // ----------------------------------------------------------------------
 
@@ -107,26 +105,41 @@ export default function TurnoverOrderManagement() {
             setallTrans(all.data);
 
             /*
+            //get all customer
+            let all2 = {};
 
-            const all1 = await fetchCusId(); //客户代码
-            const all2 = await fetchTermId(); //终端代码
-            let temp = [];
-
-            for(const cus of all1.data)
+            if(processObj.body.currentProject)
             {
-                console.log(cus.customerId);
-                temp.push(cus.customerId);
+              all2 = await supabase.from('customer').select().match({
+                processPer: processObj.body.name,
+                projectName: processObj.body.currentProject
+              });
             }
-            setFilterService(temp);
-            temp = [];
-
-            for(const term of all2.data)
+            else if(await processObj.body.auth_level === '管理')
             {
-                console.log(term.termId);
-                temp.push(term.termId);
+              all2 = await supabase.from('customer').select();
             }
-            setFilterTerm(temp);
-            */
+            else{
+              all2 = await supabase.from('customer').select().match({
+                processPer: processObj.body.name
+              });
+            }
+
+            for(const cus of all2.data)
+            {
+                CUSTOMER_OPTIONS.push(cus.customerId);
+            }
+            
+            for(const tran of allTrans)
+            {
+              if(!CUSTOMER_OPTIONS.find(el => el === tran.customerId))
+              {
+                CUSTOMER_OPTIONS.push(tran.customerId);
+              }
+            }
+            
+            console.log(CUSTOMER_OPTIONS);*/
+            //console.log(allTrans);
 
         } catch (error) {
             console.log(error);
@@ -158,8 +171,6 @@ export default function TurnoverOrderManagement() {
 
   const [filterService, setFilterService] = useState('all');
 
-  const [filterTerm, setFilterTerm] = useState('all');
-
   const [filterStartDate, setFilterStartDate] = useState(null);
 
   const [filterEndDate, setFilterEndDate] = useState(null);
@@ -173,10 +184,6 @@ export default function TurnoverOrderManagement() {
 
   const handleFilterService = (event) => {
     setFilterService(event.target.value);
-  };
-
-  const handleFilterTerm = (event) => {
-    setFilterTerm(event.target.value);
   };
 
   const handleDeleteRow = (id) => {
@@ -252,6 +259,40 @@ export default function TurnoverOrderManagement() {
             </NextLink>
           }
         />
+        <Card sx={{ mb: 3 }}>
+          <Scrollbar>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              sx={{ py: 2 }}
+            >
+              <InvoiceAnalytic
+                title="合计"
+                total={allTrans.length}
+                percent={100}
+                price={sumBy(allTrans, 'totalPrice')}
+                icon="ic:round-receipt"
+                color={theme.palette.info.main}
+              />
+              <InvoiceAnalytic
+                title="完成"
+                total={getLengthByStatus('paid')}
+                percent={getPercentByStatus('paid')}
+                price={getTotalPriceByStatus('paid')}
+                icon="eva:checkmark-circle-2-fill"
+                color={theme.palette.success.main}
+              />
+              <InvoiceAnalytic
+                title="新增"
+                total={getLengthByStatus('unpaid')}
+                percent={getPercentByStatus('unpaid')}
+                price={getTotalPriceByStatus('unpaid')}
+                icon="eva:clock-fill"
+                color={theme.palette.warning.main}
+              />
+            </Stack>
+          </Scrollbar>
+        </Card>
         <Card>
           <Tabs
             allowScrollButtonsMobile
@@ -277,10 +318,16 @@ export default function TurnoverOrderManagement() {
           <TransTableToolbar
             filterName={filterName}
             filterService={filterService}
-            filterTerm={filterTerm}
+            filterStartDate={filterStartDate}
+            filterEndDate={filterEndDate}
             onFilterName={handleFilterName}
             onFilterService={handleFilterService}
-            onFilterTerm={handleFilterTerm}
+            onFilterStartDate={(newValue) => {
+              setFilterStartDate(newValue);
+            }}
+            onFilterEndDate={(newValue) => {
+              setFilterEndDate(newValue);
+            }}
             optionsService={CUSTOMER_OPTIONS}
           />
 

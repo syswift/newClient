@@ -209,23 +209,57 @@ export default function TurnoverBoxInformation() {
   ];
 
   return (
-    <Page title="周转箱管理">
+    <Page title="周转箱信息">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="周转箱管理"
+          heading="周转箱信息"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '基础配置', herf: PATH_DASHBOARD.basicConfiguration.supplierInformation },
-            { name: '周转箱管理'},
+            { name: '基础配置', herf: PATH_DASHBOARD.basicConfiguration.turnoverBoxInformation },
+            { name: '周转箱信息'},
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
                 <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增周转箱
+                    新增供应商
                 </Button>
             </NextLink>
           }
         />
+        <Card sx={{ mb: 3 }}>
+          <Scrollbar>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              sx={{ py: 2 }}
+            >
+              <InvoiceAnalytic
+                title="合计"
+                total={allTrans.length}
+                percent={100}
+                price={sumBy(allTrans, 'totalPrice')}
+                icon="ic:round-receipt"
+                color={theme.palette.info.main}
+              />
+              <InvoiceAnalytic
+                title="在库"
+                total={getLengthByStatus('paid')}
+                percent={getPercentByStatus('paid')}
+                price={getTotalPriceByStatus('paid')}
+                icon="eva:checkmark-circle-2-fill"
+                color={theme.palette.success.main}
+              />
+              <InvoiceAnalytic
+                title="不在库"
+                total={getLengthByStatus('unpaid')}
+                percent={getPercentByStatus('unpaid')}
+                price={getTotalPriceByStatus('unpaid')}
+                icon="eva:clock-fill"
+                color={theme.palette.warning.main}
+              />
+            </Stack>
+          </Scrollbar>
+        </Card>
         <Card>
           <Tabs
             allowScrollButtonsMobile
@@ -413,3 +447,39 @@ function applySortFilter({
 
   return allTrans;
 }
+
+/*
+export async function getServerSideProps() {
+
+  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
+  let allTrans = [];
+
+  try {       
+        if(processObj.body.currentProject !== '')
+        {
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name,
+            projectName: processObj.body.currentProject
+          });
+        }
+        else if(await processObj.data.name === '管理')
+        {
+          allTrans = await supabase.from('trans').select();
+        }
+        else{
+          allTrans = await supabase.from('trans').select().match({
+            processPer: processObj.body.name
+          });
+        }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  console.log(allTrans);
+
+  return {
+    props: {allTrans}, // will be passed to the page component as props
+  }
+}
+*/

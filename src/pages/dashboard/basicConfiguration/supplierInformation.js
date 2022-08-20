@@ -231,13 +231,47 @@ export default function SupplierInformation() {
             { name: '供应商信息'},
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
+            <NextLink href={PATH_DASHBOARD.basicConfiguration.newSupplier} passHref>
                 <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
                     新增供应商
                 </Button>
             </NextLink>
           }
         />
+        <Card sx={{ mb: 3 }}>
+          <Scrollbar>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              sx={{ py: 2 }}
+            >
+              <InvoiceAnalytic
+                title="合计"
+                total={allTrans.length}
+                percent={100}
+                price={sumBy(allTrans, 'totalPrice')}
+                icon="ic:round-receipt"
+                color={theme.palette.info.main}
+              />
+              <InvoiceAnalytic
+                title="正常"
+                total={getLengthByStatus('paid')}
+                percent={getPercentByStatus('paid')}
+                price={getTotalPriceByStatus('paid')}
+                icon="eva:checkmark-circle-2-fill"
+                color={theme.palette.success.main}
+              />
+              <InvoiceAnalytic
+                title="暂不可用"
+                total={getLengthByStatus('unpaid')}
+                percent={getPercentByStatus('unpaid')}
+                price={getTotalPriceByStatus('unpaid')}
+                icon="eva:clock-fill"
+                color={theme.palette.warning.main}
+              />
+            </Stack>
+          </Scrollbar>
+        </Card>
         <Card>
           <Tabs
             allowScrollButtonsMobile

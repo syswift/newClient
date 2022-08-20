@@ -43,7 +43,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/supplierInformation';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/basicConfiguration/';
 import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------
@@ -277,7 +277,7 @@ export default function SupplierInformation() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 2000, position: 'relative', overflow:'unset' }}>
+            <TableContainer sx={{ minWidth: 2000, position: 'relative' , overflow:'unset'}}>
               {selected.length > 0 && (
                 <TableSelectedActions
                   dense={dense}

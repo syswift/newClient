@@ -65,12 +65,12 @@ export const PATH_DASHBOARD = {
     turnoverBoxInformation: path(ROOTS_DASHBOARD, '/basicConfiguration/turnoverBoxInformation'),
     priceinformation: path(ROOTS_DASHBOARD, '/basicConfiguration/priceinformation'),
     newCustomer: path(ROOTS_DASHBOARD, '/basicConfiguration/newCustomer'),
+    newSupplier: path(ROOTS_DASHBOARD, '/basicConfiguration/newSupplier'),
   },
   // 周转管理
   turnoverManagement: {
     root: path(ROOTS_DASHBOARD, '/turnoverManagement'),
     turnoverOrderManagement: path(ROOTS_DASHBOARD, '/turnoverManagement/turnoverOrderManagement'),
-    new: path(ROOTS_DASHBOARD, '/turnoverManagement/new')
   },
   // 库存管理
   inventoryManagement: {

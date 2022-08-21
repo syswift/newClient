@@ -29,7 +29,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
 
   const theme = useTheme();
 
-  const { supplierCode, supplierName, companyCode, dataState, province, city, district, address, country, countryCode, contact1, position1, phone1, email1, contact2, position2, phone2, email2 } = row;
+  const { termId, termName, companyCode, status, province, city, district, address, country, countryCode, contact1, position1, phone1, email1, contact2, position2, phone2, email2 } = row;
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -47,20 +47,20 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="left">{supplierCode}</TableCell>
-      <TableCell align="left">{supplierName}</TableCell>
+      <TableCell align="left">{termId}</TableCell>
+      <TableCell align="left">{termName}</TableCell>
       <TableCell align="left">{companyCode}</TableCell>
       <TableCell align="center">
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
           color={
-            (dataState === '正常' && 'success') ||
-            (dataState === '暂不可用' && 'warning') ||
+            (status === true && 'success') ||
+            (status === false && 'warning') ||
             'default'
           }
           sx={{ textTransform: 'capitalize' }}
         >
-          {dataState}
+          {status === true ? '正常' : '暂不可用'}
         </Label>
       </TableCell>
       <TableCell align="center">{province}</TableCell>

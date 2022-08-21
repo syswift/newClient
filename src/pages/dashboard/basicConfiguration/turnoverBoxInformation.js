@@ -57,12 +57,10 @@ const SERVICE_OPTIONS = [
   'front end development',
 ];
 const TABLE_HEAD = [
-  { id: 'ID', label: '编号', align: 'center' },
-  { id: 'putDate', label: '入库时间', align: 'center' },
-  { id: 'outDate', label: '出库时间', align: 'center' },
-  { id: 'inWarehouse', label: '是否在库', align: 'center', width: 140 },
-  { id: 'sentDate', label: '租期', align: 'center', width: 140 },
-  { id: 'status', label: '类别', align: 'center' },
+  { id: 'boxId', label: '编号', align: 'center' },
+  { id: 'createDate', label: '创建时间', align: 'center' },
+  { id: 'supId', label: '供应商', align: 'center' },
+  { id: 'boxName', label: '箱子名称', align: 'center' },
   { id: '' },
 ];
 
@@ -89,23 +87,9 @@ export default function TurnoverBoxInformation() {
         //console.log(supabase.auth.user().id);
         const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
         try {
-            let all = {};
-            if(processObj.body.currentProject)
-            {
-                all = await supabase.from('trans').select().match({
-                    processPer: processObj.body.name,
-                    projectName: processObj.body.currentProject
-                });
-            }
-            else if(await processObj.body.auth_level === '管理')
-            {
-                all = await supabase.from('trans').select();
-            }
-            else{
-                all = await supabase.from('trans').select().match({
-                    processPer: processObj.body.name
-                });
-            }
+
+            const all = await supabase.from('boxInfo').select();
+
             setallTrans(all.data);
         } catch (error) {
             console.log(error);
@@ -204,8 +188,8 @@ export default function TurnoverBoxInformation() {
 
   const TABS = [
     { value: 'all', label: '全部', color: 'info', count: allTrans.length },
-    { value: 'paid', label: '在库', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: '不在库', color: 'warning', count: getLengthByStatus('paid') },
+    { value: 'all', label: '可用', color: 'success', count: allTrans.length },
+    { value: 'unpaid', label: '不可用', color: 'warning', count: getLengthByStatus('paid') },
   ];
 
   return (
@@ -242,15 +226,15 @@ export default function TurnoverBoxInformation() {
                 color={theme.palette.info.main}
               />
               <InvoiceAnalytic
-                title="在库"
-                total={getLengthByStatus('paid')}
-                percent={getPercentByStatus('paid')}
+                title="可用"
+                total={allTrans.length}
+                percent={100}
                 price={getTotalPriceByStatus('paid')}
                 icon="eva:checkmark-circle-2-fill"
                 color={theme.palette.success.main}
               />
               <InvoiceAnalytic
-                title="不在库"
+                title="不可用"
                 total={getLengthByStatus('unpaid')}
                 percent={getPercentByStatus('unpaid')}
                 price={getTotalPriceByStatus('unpaid')}
@@ -425,8 +409,10 @@ function applySortFilter({
   if (filterName) {
     allTrans = allTrans.filter(
       (item) =>
-        item.invoiceNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.invoiceTo.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.boxId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.supplierId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.boxName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.created_at.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
@@ -447,39 +433,3 @@ function applySortFilter({
 
   return allTrans;
 }
-
-/*
-export async function getServerSideProps() {
-
-  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
-  let allTrans = [];
-
-  try {       
-        if(processObj.body.currentProject !== '')
-        {
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name,
-            projectName: processObj.body.currentProject
-          });
-        }
-        else if(await processObj.data.name === '管理')
-        {
-          allTrans = await supabase.from('trans').select();
-        }
-        else{
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name
-          });
-        }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  console.log(allTrans);
-
-  return {
-    props: {allTrans}, // will be passed to the page component as props
-  }
-}
-*/

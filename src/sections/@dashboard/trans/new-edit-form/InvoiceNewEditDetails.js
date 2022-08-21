@@ -1,29 +1,27 @@
 import sum from 'lodash/sum';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // form
 import { useFormContext, useFieldArray } from 'react-hook-form';
 // @mui
-import { Box, Stack, Button, Divider, Typography, InputAdornment, MenuItem } from '@mui/material';
+import { Box, Stack, Button, Divider, Typography, InputAdornment, MenuItem,
+         Card, CardHeader, CardContent} from '@mui/material';
 // utils
 import { fNumber, fCurrency } from '../../../../utils/formatNumber';
 // components
 import Iconify from '../../../../components/Iconify';
 import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import { fetchBox } from '../../../../../api/fetchBox';
+import { UploadSingleFile } from '../../../../components/upload';
 
 // ----------------------------------------------------------------------
-
-const SERVICE_OPTIONS = [
-  { id: 1, name: 'full stack development', price: 90.99 },
-  { id: 2, name: 'backend development', price: 80.99 },
-  { id: 3, name: 'ui design', price: 70.99 },
-  { id: 4, name: 'ui/ux design', price: 60.99 },
-  { id: 5, name: 'front end development', price: 40.99 },
-];
 
 // ----------------------------------------------------------------------
 
 export default function InvoiceNewEditDetails() {
   const { control, setValue, watch, resetField } = useFormContext();
+
+  const [SERVICE_OPTIONS, setSERVICE_OPTIONS] = useState([]);
+  const [file, setFile] = useState(null);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -40,7 +38,33 @@ export default function InvoiceNewEditDetails() {
 
   useEffect(() => {
     setValue('totalPrice', totalPrice);
+
+    async function fetchData()
+    {     
+     
+      const all = await fetchBox(); //箱子代码
+      let temp = [];
+
+      for(const cus of all.data)
+      {
+          temp.push(cus.boxId);
+      }
+      setSERVICE_OPTIONS(temp);
+      //console.log(SERVICE_OPTIONS);
+    }
+    fetchData();
   }, [setValue, totalPrice]);
+
+  const handleDropSingleFile = useCallback((acceptedFiles) => {
+    const file1 = acceptedFiles[0];
+    if (file1) {
+      setFile(
+        Object.assign(file1, {
+          preview: URL.createObjectURL(file1),
+        })
+      );
+    }
+  }, []);
 
   const handleAdd = () => {
     append({
@@ -127,9 +151,9 @@ export default function InvoiceNewEditDetails() {
 
                 {SERVICE_OPTIONS.map((option) => (
                   <MenuItem
-                    key={option.id}
-                    value={option.name}
-                    onClick={() => handleSelectService(index, option.name)}
+                    key={option}
+                    value={option}
+                    onClick={() => handleSelectService(index, option)}
                     sx={{
                       mx: 1,
                       my: 0.5,
@@ -138,7 +162,7 @@ export default function InvoiceNewEditDetails() {
                       textTransform: 'capitalize',
                     }}
                   >
-                    {option.name}
+                    {option}
                   </MenuItem>
                 ))}
               </RHFSelect>
@@ -184,12 +208,12 @@ export default function InvoiceNewEditDetails() {
 
       <Stack spacing={2} sx={{ mt: 3 }}>
 
-        <Stack direction="row" justifyContent="flex-end">
-          <Typography variant="h6">总周转箱数量 :</Typography>
-          <Typography variant="h6" sx={{ textAlign: 'right', width: 120 }}>
-            {totalquantity}
-          </Typography>
-        </Stack>
+      <Card>
+      <CardHeader title="合同上传" />
+            <CardContent>
+                <UploadSingleFile file={file} onDrop={handleDropSingleFile} />
+            </CardContent>
+      </Card>
       </Stack>
     </Box>
   );

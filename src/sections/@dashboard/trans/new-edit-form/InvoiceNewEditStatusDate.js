@@ -52,7 +52,7 @@ export default function InvoiceNewEditStatusDate() {
   
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} sx={{ p: 3, bgcolor: 'background.neutral' }}>
-      <RHFTextField name="invoiceNumber" label="周转单号" value={`RT`} />
+      <RHFTextField name="transId" label="周转单号" value={`RT`} />
 
       <RHFSelect
         fullWidth

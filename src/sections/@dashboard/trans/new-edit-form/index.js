@@ -41,16 +41,11 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
 
   const defaultValues = useMemo(
     () => ({
-      invoiceNumber: currentInvoice?.invoiceNumber || '17099',
-      createDate: currentInvoice?.createDate || new Date(),
-      dueDate: currentInvoice?.dueDate || null,
-      taxes: currentInvoice?.taxes || 0,
-      status: currentInvoice?.status || 'draft',
-      discount: currentInvoice?.discount || 0,
-      invoiceFrom: currentInvoice?.invoiceFrom || _invoiceAddressFrom[0],
-      invoiceTo: currentInvoice?.invoiceTo || null,
+      transId: currentInvoice?.transId || '',
+      customerId: currentInvoice?.cusid || '',
+      termId: currentInvoice?.termid || '',
+      transType: currentInvoice?.type || '',
       items: currentInvoice?.items || [{ title: '', description: '', service: '', quantity: 1, price: 0, total: 0 }],
-      totalPrice: currentInvoice?.totalPrice || 0,
     }),
     [currentInvoice]
   );
@@ -126,7 +121,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
           loading={loadingSave && isSubmitting}
           onClick={handleSubmit(handleSaveAsDraft)}
         >
-          Save as Draft
+          保存为草稿
         </LoadingButton>
 
         <LoadingButton
@@ -135,7 +130,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
           loading={loadingSend && isSubmitting}
           onClick={handleSubmit(handleCreateAndSend)}
         >
-          {isEdit ? 'Update' : 'Create'} & Send
+          {isEdit ? '更新' : '创建'} & 发送
         </LoadingButton>
       </Stack>
     </FormProvider>

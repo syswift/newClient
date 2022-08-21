@@ -104,17 +104,17 @@ export default function TerminalCustomerInformation() {
             let all = {};
             if(processObj.body.currentProject)
             {
-                all = await supabase.from('trans').select().match({
+                all = await supabase.from('terminal').select().match({
                     processPer: processObj.body.name,
                     projectName: processObj.body.currentProject
                 });
             }
             else if(await processObj.body.auth_level === '管理')
             {
-                all = await supabase.from('trans').select();
+                all = await supabase.from('terminal').select();
             }
             else{
-                all = await supabase.from('trans').select().match({
+                all = await supabase.from('terminal').select().match({
                     processPer: processObj.body.name
                 });
             }
@@ -216,8 +216,8 @@ export default function TerminalCustomerInformation() {
 
   const TABS = [
     { value: 'all', label: '全部', color: 'info', count: allTrans.length },
-    { value: 'paid', label: '正常', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: '暂不可用', color: 'warning', count: getLengthByStatus('paid') },
+    { value: true, label: '正常', color: 'success', count: getLengthByStatus(true) },
+    { value: false, label: '暂不可用', color: 'warning', count: getLengthByStatus(false) },
   ];
 
   return (
@@ -255,17 +255,17 @@ export default function TerminalCustomerInformation() {
               />
               <InvoiceAnalytic
                 title="正常"
-                total={getLengthByStatus('paid')}
-                percent={getPercentByStatus('paid')}
-                price={getTotalPriceByStatus('paid')}
+                total={getLengthByStatus(true)}
+                percent={getPercentByStatus(true)}
+                price={getTotalPriceByStatus(true)}
                 icon="eva:checkmark-circle-2-fill"
                 color={theme.palette.success.main}
               />
               <InvoiceAnalytic
                 title="暂不可用"
-                total={getLengthByStatus('unpaid')}
-                percent={getPercentByStatus('unpaid')}
-                price={getTotalPriceByStatus('unpaid')}
+                total={getLengthByStatus(false)}
+                percent={getPercentByStatus(false)}
+                price={getTotalPriceByStatus(false)}
                 icon="eva:clock-fill"
                 color={theme.palette.warning.main}
               />
@@ -437,8 +437,8 @@ function applySortFilter({
   if (filterName) {
     allTrans = allTrans.filter(
       (item) =>
-        item.invoiceNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.invoiceTo.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.termId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.termName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

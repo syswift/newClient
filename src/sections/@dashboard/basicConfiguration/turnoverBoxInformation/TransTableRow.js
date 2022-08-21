@@ -29,7 +29,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
 
   const theme = useTheme();
 
-  const { ID, putDate, outDate, inWarehouse, sentDate, status } = row;
+  const { boxId, created_at, supplierId, boxName } = row;
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -47,24 +47,10 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="center">{ID}</TableCell>
-      <TableCell align="center">{putDate}</TableCell>
-      <TableCell align="center">{outDate}</TableCell>
-      <TableCell align="center">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (inWarehouse === '在库' && 'success') ||
-            (inWarehouse === '不在库' && 'warning') ||
-            'default'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {inWarehouse}
-        </Label>
-      </TableCell>
-      <TableCell align="center">{sentDate}</TableCell>
-      <TableCell align="center">{status}</TableCell>
+      <TableCell align="center">{boxId}</TableCell>
+      <TableCell align="center">{created_at}</TableCell>
+      <TableCell align="center">{supplierId}</TableCell>
+      <TableCell align="center">{boxName}</TableCell>
       <TableCell align="center">
         <TableMoreMenu
           open={openMenu}

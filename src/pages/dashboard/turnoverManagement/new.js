@@ -10,7 +10,7 @@ import Layout from '../../../layouts';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import  TransNewEditForm from '../../../sections/@dashboard/trans/new-edit-form';
+import  InvoiceNewEditForm from '../../../sections/@dashboard/trans/new-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ export default function InvoiceCreate() {
           ]}
         />
 
-        <TransNewEditForm />
+        <InvoiceNewEditForm />
       </Container>
     </Page>
   );

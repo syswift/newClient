@@ -33,6 +33,7 @@ export default function TransTableToolbar({
 }) {
   return (
     <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+      {/*
       <TextField
         fullWidth
         select
@@ -97,6 +98,7 @@ export default function TransTableToolbar({
           </MenuItem>
         ))}
       </TextField>
+      */}
 
       <TextField
         fullWidth

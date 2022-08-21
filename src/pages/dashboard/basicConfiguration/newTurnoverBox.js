@@ -16,6 +16,7 @@ import Layout from '../../../layouts';
 // components
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import { supabase } from '../../../../api';
 
 
 NewTurnoverBox.getLayout = function getLayout(page) {
@@ -25,6 +26,28 @@ NewTurnoverBox.getLayout = function getLayout(page) {
 
 export default function NewTurnoverBox() {
   const { themeStretch } = useSettings();
+
+  const onSubmit = async () => {
+    const boxId = document.getElementById('ID').value;
+    const boxName = document.getElementById('name').value;
+    const supId = document.getElementById('sup').value;
+
+    //console.log(boxId,boxName,supId);
+
+    try {
+      const error = await supabase.from('boxInfo').insert({
+        boxId: boxId,
+        supplierId: supId,
+        boxName: boxName
+      });
+
+      if(error) throw error;
+      else alert('创建成功');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   return (
     <Page title="新增周转箱">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -38,6 +61,7 @@ export default function NewTurnoverBox() {
         />
         <Card>
           <br />
+          <form autoComplete="on" onSubmit={onSubmit}>
           <Box
               sx={{
                 display: 'grid',
@@ -47,26 +71,21 @@ export default function NewTurnoverBox() {
                 p: 3
               }}
             >
-              <TextField name="ID" label="编号" />
-              <TextField name="putDate" label="入库时间" />
+              <TextField id="ID" label="编号" />
 
-              <TextField name="outDate" label="出库时间" />
-              <Select name="inWarehouse" label="是否在库" placeholder="">
-                <MenuItem value='在库'>在库</MenuItem>
-                <MenuItem value='不在库'>不在库</MenuItem>
-              </Select>
+              <TextField id="name" label="名称" />
 
-              <TextField name="sentDate" label="租期" />
-              <TextField name="status" label="类别" />
+              <TextField id="sup" label="供应商id" />
             </Box>
 
-            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
+            <Stack alignItems="flex-end" sx={{ mt: 3,mx: 3}}>
               <Button type="submit" variant="contained">
                 {'提交'}
               </Button>
             </Stack>
-            <br />
-        </Card>
+          </form>
+        <br />
+        </Card>    
       </Container>
     </Page>
   );

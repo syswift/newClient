@@ -18,19 +18,19 @@ export default function BlockContent() {
 
       <Box sx={{ p: 3 }}>
         <Typography gutterBottom variant="h5">
-          Drop or Select file
+          拖拽或选择文件
         </Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Drop files here or click&nbsp;
+          拖拽文件到这 或 点击&nbsp;
           <Typography
             variant="body2"
             component="span"
             sx={{ color: 'primary.main', textDecoration: 'underline' }}
           >
-            browse
+            浏览
           </Typography>
-          &nbsp;thorough your machine
+          &nbsp;你的电脑
         </Typography>
       </Box>
     </Stack>

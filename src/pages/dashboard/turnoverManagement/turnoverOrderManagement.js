@@ -277,17 +277,17 @@ export default function TurnoverOrderManagement() {
               />
               <InvoiceAnalytic
                 title="完成"
-                total={getLengthByStatus('paid')}
-                percent={getPercentByStatus('paid')}
-                price={getTotalPriceByStatus('paid')}
+                total={getLengthByStatus(false)}
+                percent={getPercentByStatus(false)}
+                price={getTotalPriceByStatus(false)}
                 icon="eva:checkmark-circle-2-fill"
                 color={theme.palette.success.main}
               />
               <InvoiceAnalytic
                 title="新增"
-                total={getLengthByStatus('unpaid')}
-                percent={getPercentByStatus('unpaid')}
-                price={getTotalPriceByStatus('unpaid')}
+                total={getLengthByStatus(true)}
+                percent={getPercentByStatus(true)}
+                price={getTotalPriceByStatus(true)}
                 icon="eva:clock-fill"
                 color={theme.palette.warning.main}
               />

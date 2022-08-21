@@ -33,7 +33,7 @@ export default function InvoiceNewEditStatusDate() {
 
       for(const cus of all.data)
       {
-          console.log(cus.customerId);
+          //console.log(cus.customerId);
           temp.push(cus.customerId);
       }
       setCUSID_STATUS(temp);
@@ -41,7 +41,7 @@ export default function InvoiceNewEditStatusDate() {
 
       for(const term of all2.data)
       {
-          console.log(term.termId);
+          //console.log(term.termId);
           temp.push(term.termId);
       }
       setTERMID_STATUS(temp);

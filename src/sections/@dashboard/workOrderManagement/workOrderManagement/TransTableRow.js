@@ -29,7 +29,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
 
   const theme = useTheme();
 
-  const { jobNumber, customerCode, jobState, jobType, jobAddition, createTime} = row;
+  const { gongdanId, customerId, status, type, beizhu, created_at} = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -48,24 +48,24 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="center">{jobNumber}</TableCell>
-      <TableCell align="center">{customerCode}</TableCell>
-      <TableCell align="center">{jobState}</TableCell>
+      <TableCell align="center">{gongdanId}</TableCell>
+      <TableCell align="center">{customerId}</TableCell>
+      <TableCell align="center">{type}</TableCell>
       <TableCell align="center">
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
           color={
-            (jobType === '完成' && 'success') ||
-            (jobType === '新增' && 'warning') ||
+            (status === true && 'success') ||
+            (status === false && 'warning') ||
             'default'
           }
           sx={{ textTransform: 'capitalize' }}
         >
-          {jobType}
+          {status === true ? '完成' : '进行中'}
         </Label>
       </TableCell>
-      <TableCell align="center">{jobAddition}</TableCell>
-      <TableCell align="center">{createTime}</TableCell>
+      <TableCell align="center">{beizhu}</TableCell>
+      <TableCell align="center">{created_at}</TableCell>
       <TableCell align="right">
         <TableMoreMenu
           open={openMenu}

@@ -57,12 +57,12 @@ const SERVICE_OPTIONS = [
   'front end development',
 ];
 const TABLE_HEAD = [
-  { id: 'jobNumber', label: '工单单号', align: 'center', width: 100 },
-  { id: 'customerCode', label: '客户代码', align: 'center', width: 100  },
-  { id: 'jobState', label: '工单状态', align: 'center' , width: 100 },
-  { id: 'jobType', label: '工单类型', align: 'center', width: 100 },
-  { id: 'jobAddition', label: '工单备注', align: 'center', width: 50 },
-  { id: 'createTime', label: '创建时间', align: 'center', width: 50  },
+  { id: 'gongdanId', label: '工单单号', align: 'center', width: 100 },
+  { id: 'customerId', label: '客户代码', align: 'center', width: 100  },
+  { id: 'status', label: '工单状态', align: 'center' , width: 100 },
+  { id: 'type', label: '工单类型', align: 'center', width: 100 },
+  { id: 'beizhu', label: '工单备注', align: 'center', width: 50 },
+  { id: 'createdAt', label: '创建时间', align: 'center', width: 50  },
   { id: '' , width: 100 },
 ];
 
@@ -92,17 +92,17 @@ export default function WorkOrderManagement() {
             let all = {};
             if(processObj.body.currentProject)
             {
-                all = await supabase.from('trans').select().match({
+                all = await supabase.from('gongdan').select().match({
                     processPer: processObj.body.name,
                     projectName: processObj.body.currentProject
                 });
             }
             else if(await processObj.body.auth_level === '管理')
             {
-                all = await supabase.from('trans').select();
+                all = await supabase.from('gongdan').select();
             }
             else{
-                all = await supabase.from('trans').select().match({
+                all = await supabase.from('gongdan').select().match({
                     processPer: processObj.body.name
                 });
             }
@@ -204,8 +204,8 @@ export default function WorkOrderManagement() {
 
   const TABS = [
     { value: 'all', label: '全部', color: 'info', count: allTrans.length },
-    { value: 'paid', label: '正常', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: '暂不可用', color: 'warning', count: getLengthByStatus('paid') },
+    { value: true, label: '完成', color: 'success', count: getLengthByStatus(true) },
+    { value: false, label: '进行中', color: 'warning', count: getLengthByStatus(false) },
   ];
 
   return (
@@ -242,18 +242,18 @@ export default function WorkOrderManagement() {
                 color={theme.palette.info.main}
               />
               <InvoiceAnalytic
-                title="正常"
-                total={getLengthByStatus('paid')}
-                percent={getPercentByStatus('paid')}
-                price={getTotalPriceByStatus('paid')}
+                title="完成"
+                total={getLengthByStatus(true)}
+                percent={getPercentByStatus(true)}
+                price={getTotalPriceByStatus(true)}
                 icon="eva:checkmark-circle-2-fill"
                 color={theme.palette.success.main}
               />
               <InvoiceAnalytic
-                title="暂不可用"
-                total={getLengthByStatus('unpaid')}
-                percent={getPercentByStatus('unpaid')}
-                price={getTotalPriceByStatus('unpaid')}
+                title="进行中"
+                total={getLengthByStatus(false)}
+                percent={getPercentByStatus(false)}
+                price={getTotalPriceByStatus(false)}
                 icon="eva:clock-fill"
                 color={theme.palette.warning.main}
               />

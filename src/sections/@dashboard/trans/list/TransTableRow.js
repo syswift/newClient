@@ -62,9 +62,9 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
         </Stack>
       </TableCell>
 
-      <TableCell align="left">{createTime}</TableCell>
+      <TableCell align="center">{createTime}</TableCell>
 
-      <TableCell align="left">{customerId}</TableCell>
+      <TableCell align="center">{customerId}</TableCell>
 
       <TableCell align="center">{termId}</TableCell>
 
@@ -86,7 +86,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
         </Label>
       </TableCell>
 
-      <TableCell align="left">{processPer}</TableCell>
+      <TableCell align="center">{processPer}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

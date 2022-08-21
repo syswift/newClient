@@ -29,8 +29,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
 
   const theme = useTheme();
 
-  const { jobNumber, customerCode, jobState, jobType, jobAddition, createTime} = row;
-
+  const { goodsName, goodsCode, goodsNumber, goodsPrice } = row;
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -48,24 +47,10 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="center">{jobNumber}</TableCell>
-      <TableCell align="center">{customerCode}</TableCell>
-      <TableCell align="center">{jobState}</TableCell>
-      <TableCell align="center">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (jobType === '完成' && 'success') ||
-            (jobType === '新增' && 'warning') ||
-            'default'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {jobType}
-        </Label>
-      </TableCell>
-      <TableCell align="center">{jobAddition}</TableCell>
-      <TableCell align="center">{createTime}</TableCell>
+      <TableCell align="center">{goodsName}</TableCell>
+      <TableCell align="center">{goodsCode}</TableCell>
+      <TableCell align="center">{goodsNumber}</TableCell>
+      <TableCell align="center">{goodsPrice}</TableCell>
       <TableCell align="right">
         <TableMoreMenu
           open={openMenu}

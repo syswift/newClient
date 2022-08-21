@@ -63,10 +63,12 @@ export const PATH_DASHBOARD = {
     supplierInformation: path(ROOTS_DASHBOARD, '/basicConfiguration/supplierInformation'),
     terminalCustomerInformation: path(ROOTS_DASHBOARD, '/basicConfiguration/terminalCustomerInformation'),
     turnoverBoxInformation: path(ROOTS_DASHBOARD, '/basicConfiguration/turnoverBoxInformation'),
-    priceinformation: path(ROOTS_DASHBOARD, '/basicConfiguration/priceinformation'),
+    priceInformation: path(ROOTS_DASHBOARD, '/basicConfiguration/priceInformation'),
     newCustomer: path(ROOTS_DASHBOARD, '/basicConfiguration/newCustomer'),
     newSupplier: path(ROOTS_DASHBOARD, '/basicConfiguration/newSupplier'),
     newTerminalCustomer: path(ROOTS_DASHBOARD, '/basicConfiguration/newTerminalCustomer'),
+    newPrice: path(ROOTS_DASHBOARD, '/basicConfiguration/newPrice'),
+    newTurnoverBox: path(ROOTS_DASHBOARD, '/basicConfiguration/newTurnoverBox'),
     bindingTerminal: path(ROOTS_DASHBOARD, '/basicConfiguration/bindingTerminal'),
   },
   // 周转管理
@@ -74,18 +76,21 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/turnoverManagement'),
     turnoverManagement: path(ROOTS_DASHBOARD, '/turnoverManagement/turnoverOrderManagement'),
     turnoverOrderManagement: path(ROOTS_DASHBOARD, '/turnoverManagement/turnoverOrderManagement'),
-    new: path(ROOTS_DASHBOARD, '/turnoverManagement/new')
+    new: path(ROOTS_DASHBOARD, '/turnoverManagement/new'),
+    viewTurnoverOrder: path(ROOTS_DASHBOARD, '/turnoverManagement/viewTurnoverOrder'),
   },
   // 库存管理
   inventoryManagement: {
     root: path(ROOTS_DASHBOARD, '/inventoryManagement'),
     supplierSupply: path(ROOTS_DASHBOARD, '/inventoryManagement/supplierSupply'),
     inventoryQuery: path(ROOTS_DASHBOARD, '/inventoryManagement/inventoryQuery'),
+    newSupply: path(ROOTS_DASHBOARD, '/inventoryManagement/newSupply'),
   },
   // 结算管理
   settlementManagement: {
     root: path(ROOTS_DASHBOARD, '/settlementManagement'),
     settlementManagement1: path(ROOTS_DASHBOARD, '/settlementManagement/settlementManagement'),
+    newSettlement: path(ROOTS_DASHBOARD, '/settlementManagement/newSettlement'),
   },
   // 工单管理
   workOrderManagement: {
@@ -97,6 +102,7 @@ export const PATH_DASHBOARD = {
   reportManagement: {
     root: path(ROOTS_DASHBOARD, '/reportManagement'),
     reportManagement: path(ROOTS_DASHBOARD, '/reportManagement/reportManagement'),
+    newReport: path(ROOTS_DASHBOARD, '/reportManagement/newReport'),
   },
   // 系统管理
   systemManagement: {

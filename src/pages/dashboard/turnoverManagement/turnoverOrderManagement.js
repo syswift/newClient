@@ -202,8 +202,9 @@ export default function TurnoverOrderManagement() {
     push(PATH_DASHBOARD.invoice.edit(id));
   };
 
-  const handleViewRow = (id) => {
-    push(PATH_DASHBOARD.invoice.view(id));
+  const handleViewRow = (row) => {
+    // push(PATH_DASHBOARD.invoice.view(id));
+    push(PATH_DASHBOARD.turnoverManagement.viewTurnoverOrder);
   };
 
   const dataFiltered = applySortFilter({

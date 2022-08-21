@@ -48,10 +48,10 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="left">{customerCode}</TableCell>
-      <TableCell align="left">{terminalCode}</TableCell>
-      <TableCell align="left">{supplierCode}</TableCell>
-      <TableCell align="left">{turnoverBoxCode}</TableCell>
+      <TableCell align="center">{customerCode}</TableCell>
+      <TableCell align="center">{terminalCode}</TableCell>
+      <TableCell align="center">{supplierCode}</TableCell>
+      <TableCell align="center">{turnoverBoxCode}</TableCell>
       <TableCell align="center">
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
@@ -65,9 +65,9 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
           {inventoryType}
         </Label>
       </TableCell>
-      <TableCell align="left">{inventoryNumber}</TableCell>
-      <TableCell align="left">{turnoverBoxNmae}</TableCell>
-      <TableCell align="left">{createTime}</TableCell>
+      <TableCell align="center">{inventoryNumber}</TableCell>
+      <TableCell align="center">{turnoverBoxNmae}</TableCell>
+      <TableCell align="center">{createTime}</TableCell>
       <TableCell align="right">
         <TableMoreMenu
           open={openMenu}

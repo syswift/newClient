@@ -16,27 +16,30 @@ import Layout from '../../../layouts';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 
-import NewTerminalCustomerForm from '../../../sections/@dashboard/basicConfiguration/newTerminalCustomerForm';
-
-NewTerminalCustomer.getLayout = function getLayout(page) {
+NewSupplier.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
+NewSupplier.prototype = {
+    
+}
 // ----------------------------------------------------------------------
 
-export default function NewTerminalCustomer() {
+export default function NewSupplier() {
   const { themeStretch } = useSettings();
   return (
-    <Page title="新增终端客户">
+    <Page title="绑定终端">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="新增终端客户"
+          heading="绑定终端"
           links={[
             { name: '基础配置', href: PATH_DASHBOARD.root },
-            { name: '终端客户信息', href: PATH_DASHBOARD.basicConfiguration.terminalCustomerInformation },
-            { name: '新增终端客户' },
+            { name: '终端客户信息', href: PATH_DASHBOARD.basicConfiguration.customerInformation },
+            { name: '绑定终端' },
           ]}
         />
-        <NewTerminalCustomerForm />
+        <Card>
+            <div>1</div>
+        </Card>
       </Container>
     </Page>
   );

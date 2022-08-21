@@ -43,7 +43,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/turnoverBoxInformation';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/basicConfiguration/turnoverBoxInformation';
 import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------
@@ -219,9 +219,9 @@ export default function TurnoverBoxInformation() {
             { name: '周转箱信息'},
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
+            <NextLink href={PATH_DASHBOARD.basicConfiguration.newTurnoverBox} passHref>
                 <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增供应商
+                    新增周转箱
                 </Button>
             </NextLink>
           }

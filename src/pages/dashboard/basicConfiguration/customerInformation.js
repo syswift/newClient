@@ -43,7 +43,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/customerInformationList';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/basicConfiguration/customerInformationList';
 import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------
@@ -57,23 +57,23 @@ const SERVICE_OPTIONS = [
   'front end development',
 ];
 const TABLE_HEAD = [
-  { id: 'customerCode', label: '客户代码', align: 'left', width: 100 },
-  { id: 'customerName', label: '客户名称', align: 'left', width: 100  },
-  { id: 'companyCode', label: '公司编码', align: 'left' , width: 100 },
+  { id: 'customerCode', label: '客户代码', align: 'center', width: 100 },
+  { id: 'customerName', label: '客户名称', align: 'center', width: 100  },
+  { id: 'companyCode', label: '公司编码', align: 'center' , width: 100 },
   { id: 'dataState', label: '状态', align: 'center', width: 100 },
   { id: 'province', label: '省', align: 'center', width: 50 },
   { id: 'city', label: '市', align: 'center', width: 50  },
-  { id: 'district', label: '区', align: 'left', width: 50  },
+  { id: 'district', label: '区', align: 'center', width: 50  },
   { id: 'address', label: '地址', align: 'center', width: 100  },
-  { id: 'country', label: '国家', align: 'left', width: 50  },
+  { id: 'country', label: '国家', align: 'center', width: 50  },
   { id: 'countryCode', label: '国家代码', align: 'center', width: 80  },
-  { id: 'contact1', label: '联系人1', align: 'left' , width: 80 },
+  { id: 'contact1', label: '联系人1', align: 'center' , width: 80 },
   { id: 'position1', label: '职位1', align: 'center' , width: 80 },
-  { id: 'phone1', label: '联系方式1', align: 'left' , width: 80 },
+  { id: 'phone1', label: '联系方式1', align: 'center' , width: 80 },
   { id: 'email1', label: '邮箱1', align: 'center' , width: 80 },
-  { id: 'contact2', label: '联系人2', align: 'left' , width: 80 },
+  { id: 'contact2', label: '联系人2', align: 'center' , width: 80 },
   { id: 'position2', label: '职位2', align: 'center', width: 80  },
-  { id: 'phone2', label: '联系方式2', align: 'left', width: 80  },
+  { id: 'phone2', label: '联系方式2', align: 'center', width: 80  },
   { id: 'email2', label: '邮箱2', align: 'center', width: 80  },
   { id: '' , width: 100 },
 ];
@@ -182,7 +182,8 @@ export default function CustomerInformation() {
   };
 
   const handleViewRow = (id) => {
-    push(PATH_DASHBOARD.invoice.view(id));
+    // push(PATH_DASHBOARD.invoice.view(id));
+    push(PATH_DASHBOARD.basicConfiguration.bindingTerminal);
   };
 
   const dataFiltered = applySortFilter({
@@ -311,7 +312,7 @@ export default function CustomerInformation() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
+            <TableContainer sx={{ minWidth: 2000, position: 'relative' }}>
               {selected.length > 0 && (
                 <TableSelectedActions
                   dense={dense}

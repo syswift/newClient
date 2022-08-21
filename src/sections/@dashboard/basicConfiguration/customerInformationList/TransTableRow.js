@@ -48,9 +48,9 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="left">{customerCode}</TableCell>
-      <TableCell align="left">{customerName}</TableCell>
-      <TableCell align="left">{companyCode}</TableCell>
+      <TableCell align="center">{customerCode}</TableCell>
+      <TableCell align="center">{customerName}</TableCell>
+      <TableCell align="center">{companyCode}</TableCell>
       <TableCell align="center">
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}

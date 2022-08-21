@@ -43,7 +43,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/inventoryQuery';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/inventoryManagement/inventoryQuery';
 import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------
@@ -58,15 +58,15 @@ const SERVICE_OPTIONS = [
 ];
 
 const TABLE_HEAD = [
-  { id: 'customerCode', label: '客户代码', align: 'left' },
-  { id: 'terminalCode', label: '终端代码', align: 'left' },
-  { id: 'supplierCode', label: '供应商代码', align: 'left' },
+  { id: 'customerCode', label: '客户代码', align: 'center' },
+  { id: 'terminalCode', label: '终端代码', align: 'center' },
+  { id: 'supplierCode', label: '供应商代码', align: 'center' },
   { id: 'turnoverBoxCode', label: '周转箱代码', align: 'center', width: 140 },
   { id: 'inventoryType', label: '库存类型', align: 'center', width: 140 },
   { id: 'inventoryNumber', label: '数量', align: 'center' },
-  { id: 'turnoverBoxNmae', label: '周转箱名称', align: 'left' },
-  { id: 'createTime', label: '操作时间', align: 'left' },
-  { id: '',label:'操作' },
+  { id: 'turnoverBoxNmae', label: '周转箱名称', align: 'center' },
+  { id: 'createTime', label: '操作时间', align: 'center' },
+  { id: '',label:'操作', align: 'center' },
 ];
 
 // ----------------------------------------------------------------------

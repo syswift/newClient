@@ -29,7 +29,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
 
   const theme = useTheme();
 
-  const { jobNumber, customerCode, jobState, jobType, jobAddition, createTime} = row;
+  const { goodsCode, supplierCode, supplierName, companyCode, turnoverBoxCode, turnoverBoxNmae, supplyNumber, createTime } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -48,23 +48,13 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="center">{jobNumber}</TableCell>
-      <TableCell align="center">{customerCode}</TableCell>
-      <TableCell align="center">{jobState}</TableCell>
-      <TableCell align="center">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (jobType === '完成' && 'success') ||
-            (jobType === '新增' && 'warning') ||
-            'default'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {jobType}
-        </Label>
-      </TableCell>
-      <TableCell align="center">{jobAddition}</TableCell>
+      <TableCell align="center">{goodsCode}</TableCell>
+      <TableCell align="center">{supplierCode}</TableCell>
+      <TableCell align="center">{supplierName}</TableCell>
+      <TableCell align="center">{companyCode}</TableCell>
+      <TableCell align="center">{turnoverBoxCode}</TableCell>
+      <TableCell align="center">{turnoverBoxNmae}</TableCell>
+      <TableCell align="center">{supplyNumber}</TableCell>
       <TableCell align="center">{createTime}</TableCell>
       <TableCell align="right">
         <TableMoreMenu
@@ -79,7 +69,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
                   handleCloseMenu();
                 }}>
                 <Iconify icon={'eva:edit-fill'} />
-                  编辑
+                  调整客户库存
               </MenuItem>
             </>
           }

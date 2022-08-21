@@ -43,7 +43,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/userManagement';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/systemManagement/userManagement';
 import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------

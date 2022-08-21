@@ -55,7 +55,7 @@ const navConfig = [
           { title: '供应商信息', path: PATH_DASHBOARD.basicConfiguration.supplierInformation },
           { title: '终端客户信息', path: PATH_DASHBOARD.basicConfiguration.terminalCustomerInformation },
           { title: '周转箱信息', path: PATH_DASHBOARD.basicConfiguration.turnoverBoxInformation },
-          { title: '价格信息', path: PATH_DASHBOARD.basicConfiguration.priceinformation },
+          { title: '价格信息', path: PATH_DASHBOARD.basicConfiguration.priceInformation },
         ],
       },
       // 周转管理
@@ -65,7 +65,6 @@ const navConfig = [
         icon: ICONS.user,
         children: [
           { title: '周转单管理', path: PATH_DASHBOARD.turnoverManagement.turnoverOrderManagement },
-          { title: '新建周转单', path: PATH_DASHBOARD.turnoverManagement.new },
         ],
       },
       // 库存管理

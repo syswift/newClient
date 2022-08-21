@@ -3,7 +3,6 @@ import { Stack, InputAdornment, TextField, MenuItem } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 // components
 import Iconify from '../../../../components/Iconify';
-import Router from 'next/router';
 
 // ----------------------------------------------------------------------
 
@@ -33,13 +32,11 @@ export default function TransTableToolbar({
   onFilterEndDate,
 }) {
   return (
-    
     <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-      {/*
       <TextField
         fullWidth
         select
-        label="客户代码"
+        label="商品代码"
         value={filterService}
         onChange={onFilterService}
         SelectProps={{
@@ -72,7 +69,7 @@ export default function TransTableToolbar({
       <TextField
         fullWidth
         select
-        label="终端代码"
+        label="供应商代码"
         value={filterService}
         onChange={onFilterService}
         SelectProps={{
@@ -85,7 +82,70 @@ export default function TransTableToolbar({
           textTransform: 'capitalize',
         }}
       >
-      
+        {optionsService.map((option) => (
+          <MenuItem
+            key={option}
+            value={option}
+            sx={{
+              mx: 1,
+              my: 0.5,
+              borderRadius: 0.75,
+              typography: 'body2',
+              textTransform: 'capitalize',
+            }}
+          >
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        fullWidth
+        select
+        label="公司编码"
+        value={filterService}
+        onChange={onFilterService}
+        SelectProps={{
+          MenuProps: {
+            sx: { '& .MuiPaper-root': { maxHeight: 260 } },
+          },
+        }}
+        sx={{
+          maxWidth: { md: INPUT_WIDTH },
+          textTransform: 'capitalize',
+        }}
+      >
+        {optionsService.map((option) => (
+          <MenuItem
+            key={option}
+            value={option}
+            sx={{
+              mx: 1,
+              my: 0.5,
+              borderRadius: 0.75,
+              typography: 'body2',
+              textTransform: 'capitalize',
+            }}
+          >
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        fullWidth
+        select
+        label="周转箱代码"
+        value={filterService}
+        onChange={onFilterService}
+        SelectProps={{
+          MenuProps: {
+            sx: { '& .MuiPaper-root': { maxHeight: 260 } },
+          },
+        }}
+        sx={{
+          maxWidth: { md: INPUT_WIDTH },
+          textTransform: 'capitalize',
+        }}
+      >
         {optionsService.map((option) => (
           <MenuItem
             key={option}
@@ -103,44 +163,11 @@ export default function TransTableToolbar({
         ))}
       </TextField>
 
-      <TextField
-        fullWidth
-        select
-        label="周转单类型"
-        value={filterService}
-        onChange={onFilterService}
-        SelectProps={{
-          MenuProps: {
-            sx: { '& .MuiPaper-root': { maxHeight: 260 } },
-          },
-        }}
-        sx={{
-          maxWidth: { md: INPUT_WIDTH },
-          textTransform: 'capitalize',
-        }}
-      >
-        {optionsService.map((option) => (
-          <MenuItem
-            key={option}
-            value={option}
-            sx={{
-              mx: 1,
-              my: 0.5,
-              borderRadius: 0.75,
-              typography: 'body2',
-              textTransform: 'capitalize',
-            }}
-          >
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
-      */}
       <TextField
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="输入任意信息进行搜索"
+        placeholder="输入相关信息进行搜索"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

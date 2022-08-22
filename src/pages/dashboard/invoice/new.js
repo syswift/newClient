@@ -24,14 +24,14 @@ export default function InvoiceCreate() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Invoices: Create a new invoice">
+    <Page title="发票: 创建新发票">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Create a new invoice"
+          heading="创建新发票"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Invoices', href: PATH_DASHBOARD.invoice.list },
-            { name: 'New invoice' },
+            { name: '主页', href: PATH_DASHBOARD.root },
+            { name: '发票', href: PATH_DASHBOARD.invoice.list },
+            { name: '新发票' },
           ]}
         />
 

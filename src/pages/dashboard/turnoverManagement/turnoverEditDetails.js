@@ -5,24 +5,20 @@ import { useFormContext, useFieldArray } from 'react-hook-form';
 // @mui
 import { Box, Stack, Button, Divider, Typography, InputAdornment, MenuItem } from '@mui/material';
 // utils
-import { fNumber, fCurrency } from '../../../../utils/formatNumber';
+import { fNumber, fCurrency } from '../../../utils/formatNumber';
 // components
-import Iconify from '../../../../components/Iconify';
-import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import Iconify from '../../../components/Iconify';
+import { RHFSelect, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
-const SERVICE_OPTIONS = [
-  { id: 1, name: 'full stack development', price: 90.99 },
-  { id: 2, name: 'backend development', price: 80.99 },
-  { id: 3, name: 'ui design', price: 70.99 },
-  { id: 4, name: 'ui/ux design', price: 60.99 },
-  { id: 5, name: 'front end development', price: 40.99 },
+const CUSTOMER_OPTIONS = [
+  
 ];
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceNewEditDetails() {
+export default function TurnoverEditDetails() {
   const { control, setValue, watch, resetField } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -42,12 +38,10 @@ export default function InvoiceNewEditDetails() {
 
   const handleAdd = () => {
     append({
-      title: '',
-      description: '',
-      service: '',
-      quantity: 1,
-      price: 0,
-      total: 0,
+      invoiceNumber: '',
+      dueDate: '',
+      price: '',
+      sent: '',
     });
   };
 
@@ -55,43 +49,43 @@ export default function InvoiceNewEditDetails() {
     remove(index);
   };
 
-  const handleClearService = useCallback(
-    (index) => {
-      resetField(`items[${index}].quantity`);
-      resetField(`items[${index}].price`);
-      resetField(`items[${index}].total`);
-    },
-    [resetField]
-  );
+  // const handleClearService = useCallback(
+  //   (index) => {
+  //     resetField(`items[${index}].quantity`);
+  //     resetField(`items[${index}].price`);
+  //     resetField(`items[${index}].total`);
+  //   },
+  //   [resetField]
+  // );
 
-  const handleSelectService = useCallback(
-    (index, option) => {
-      setValue(`items[${index}].price`, SERVICE_OPTIONS.find((service) => service.name === option)?.price);
-      setValue(`items[${index}].total`, values.items.map((item) => item.quantity * item.price)[index]);
-    },
-    [setValue, values.items]
-  );
+  // const handleSelectService = useCallback(
+  //   (index, option) => {
+  //     setValue(`items[${index}].price`, CUSTOMER_OPTIONS.find((service) => service.name === option)?.price);
+  //     setValue(`items[${index}].total`, values.items.map((item) => item.quantity * item.price)[index]);
+  //   },
+  //   [setValue, values.items]
+  // );
 
-  const handleChangeQuantity = useCallback(
-    (event, index) => {
-      setValue(`items[${index}].quantity`, Number(event.target.value));
-      setValue(`items[${index}].total`, values.items.map((item) => item.quantity * item.price)[index]);
-    },
-    [setValue, values.items]
-  );
+  // const handleChangeQuantity = useCallback(
+  //   (event, index) => {
+  //     setValue(`items[${index}].quantity`, Number(event.target.value));
+  //     setValue(`items[${index}].total`, values.items.map((item) => item.quantity * item.price)[index]);
+  //   },
+  //   [setValue, values.items]
+  // );
 
-  const handleChangePrice = useCallback(
-    (event, index) => {
-      setValue(`items[${index}].price`, Number(event.target.value));
-      setValue(`items[${index}].total`, values.items.map((item) => item.quantity * item.price)[index]);
-    },
-    [setValue, values.items]
-  );
+  // const handleChangePrice = useCallback(
+  //   (event, index) => {
+  //     setValue(`items[${index}].price`, Number(event.target.value));
+  //     setValue(`items[${index}].total`, values.items.map((item) => item.quantity * item.price)[index]);
+  //   },
+  //   [setValue, values.items]
+  // );
 
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-        订单详情:
+        Details:
       </Typography>
 
       <Stack divider={<Divider flexItem sx={{ borderStyle: 'dashed' }} />} spacing={3}>
@@ -100,27 +94,27 @@ export default function InvoiceNewEditDetails() {
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
               <RHFTextField
                 size="small"
-                name={`items[${index}].title`}
-                label="标题"
+                name={`items[${index}].invoiceNumber`}
+                label="周转单号"
                 InputLabelProps={{ shrink: true }}
               />
 
               <RHFTextField
                 size="small"
-                name={`items[${index}].description`}
-                label="描述"
+                name={`items[${index}].dueDate`}
+                label="客户代码"
                 InputLabelProps={{ shrink: true }}
               />
 
               <RHFSelect
-                name={`items[${index}].service`}
+                name={`items[${index}].price`}
                 size="small"
-                label="分类"
+                label="终端代码"
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
                 sx={{ maxWidth: { md: 160 } }}
               >
-                <MenuItem
+                {/* <MenuItem
                   value=""
                   onClick={() => handleClearService(index)}
                   sx={{
@@ -136,7 +130,7 @@ export default function InvoiceNewEditDetails() {
 
                 <Divider />
 
-                {SERVICE_OPTIONS.map((option) => (
+                {CUSTOMER_OPTIONS.map((option) => (
                   <MenuItem
                     key={option.id}
                     value={option.name}
@@ -151,45 +145,19 @@ export default function InvoiceNewEditDetails() {
                   >
                     {option.name}
                   </MenuItem>
-                ))}
+                ))} */}
               </RHFSelect>
 
-              <RHFTextField
+              <RHFSelect
+                name={`items[${index}].sent`}
                 size="small"
-                type="number"
-                name={`items[${index}].quantity`}
-                label="数量"
-                placeholder="0"
-                onChange={(event) => handleChangeQuantity(event, index)}
+                label="周转单类型"
                 InputLabelProps={{ shrink: true }}
-                sx={{ maxWidth: { md: 96 } }}
-              />
-
-              <RHFTextField
-                size="small"
-                type="number"
-                name={`items[${index}].price`}
-                label="单价"
-                placeholder="0"
-                onChange={(event) => handleChangePrice(event, index)}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-                sx={{ maxWidth: { md: 96 } }}
-              />
-
-              <RHFTextField
-                disabled
-                size="small"
-                name={`items[${index}].total`}
-                label="总价"
-                placeholder="0"
-                value={fNumber(totalOnRow[index])}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-                sx={{ maxWidth: { md: 96 } }}
-              />
+                SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
+                sx={{ maxWidth: { md: 160 } }}
+              >
+                {}
+              </RHFSelect>
             </Stack>
 
             <Button
@@ -198,7 +166,7 @@ export default function InvoiceNewEditDetails() {
               startIcon={<Iconify icon="eva:trash-2-outline" />}
               onClick={() => handleRemove(index)}
             >
-              删除
+              Remove
             </Button>
           </Stack>
         ))}
@@ -212,13 +180,13 @@ export default function InvoiceNewEditDetails() {
         alignItems={{ xs: 'flex-start', md: 'center' }}
       >
         <Button size="small" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleAdd} sx={{ flexShrink: 0 }}>
-          添加新账单
+          Add new detail
         </Button>
 
-        <Stack spacing={2} justifyContent="flex-end" direction={{ xs: 'column', md: 'row' }} sx={{ width: 1 }}>
+        {/* <Stack spacing={2} justifyContent="flex-end" direction={{ xs: 'column', md: 'row' }} sx={{ width: 1 }}>
           <RHFTextField
             size="small"
-            label="折扣"
+            label="Discount"
             name="discount"
             onChange={(event) => setValue('discount', Number(event.target.value))}
             sx={{ maxWidth: { md: 200 } }}
@@ -226,41 +194,41 @@ export default function InvoiceNewEditDetails() {
 
           <RHFTextField
             size="small"
-            label="税收"
+            label="Taxes"
             name="taxes"
             onChange={(event) => setValue('taxes', Number(event.target.value))}
             sx={{ maxWidth: { md: 200 } }}
           />
-        </Stack>
+        </Stack> */}
       </Stack>
 
-      <Stack spacing={2} sx={{ mt: 3 }}>
+      {/* <Stack spacing={2} sx={{ mt: 3 }}>
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>原价 :</Typography>
+          <Typography>Subtotal :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120 }}>{fCurrency(sum(totalOnRow))}</Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>折扣 :</Typography>
+          <Typography>Discount :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120, ...(values.discount && { color: 'error.main' }) }}>
             {values.discount ? `- ${fCurrency(values.discount)}` : '-'}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>税额 :</Typography>
+          <Typography>Taxes :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120 }}>
             {values.taxes ? fCurrency(values.taxes) : '-'}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography variant="h6">总价 :</Typography>
+          <Typography variant="h6">Total price :</Typography>
           <Typography variant="h6" sx={{ textAlign: 'right', width: 120 }}>
             {fCurrency(totalPrice)}
           </Typography>
         </Stack>
-      </Stack>
+      </Stack> */}
     </Box>
   );
 }

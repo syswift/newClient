@@ -42,11 +42,11 @@ export default function InvoiceNewEditAddress() {
       <Stack sx={{ width: 1 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
           <Typography variant="h6" sx={{ color: 'text.disabled' }}>
-            From:
+            发票来源:
           </Typography>
 
           <Button size="small" startIcon={<Iconify icon="eva:edit-fill" />} onClick={onOpenFrom}>
-            Change
+            修改
           </Button>
 
           <InvoiceAddressListDialog
@@ -64,7 +64,7 @@ export default function InvoiceNewEditAddress() {
       <Stack sx={{ width: 1 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
           <Typography variant="h6" sx={{ color: 'text.disabled' }}>
-            To:
+            接收信息:
           </Typography>
 
           <Button
@@ -72,7 +72,7 @@ export default function InvoiceNewEditAddress() {
             startIcon={<Iconify icon={invoiceTo ? 'eva:edit-fill' : 'eva:plus-fill'} />}
             onClick={onOpenTo}
           >
-            {invoiceTo ? 'Change' : 'Add'}
+            {invoiceTo ? '修改' : '新增'}
           </Button>
 
           <InvoiceAddressListDialog
@@ -111,7 +111,7 @@ function AddressInfo({ name, address, phone }) {
       <Typography variant="body2" sx={{ mt: 1, mb: 0.5 }}>
         {address}
       </Typography>
-      <Typography variant="body2">Phone: {phone}</Typography>
+      <Typography variant="body2">电话: {phone}</Typography>
     </>
   );
 }

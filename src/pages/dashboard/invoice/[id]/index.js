@@ -34,14 +34,14 @@ export default function InvoiceDetails() {
   const invoice = _invoices.find((invoice) => invoice.id === id);
 
   return (
-    <Page title="Invoice: View">
+    <Page title="发票: 查询">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Invoice Details"
+          heading="发票详情"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: '主页', href: PATH_DASHBOARD.root },
             {
-              name: 'Invoices',
+              name: '发票',
               href: PATH_DASHBOARD.invoice.root,
             },
             { name: `INV-${invoice?.invoiceNumber}` || '' },

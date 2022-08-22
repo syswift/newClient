@@ -35,9 +35,9 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
   const [loadingSend, setLoadingSend] = useState(false);
 
   const NewUserSchema = Yup.object().shape({
-    createDate: Yup.string().nullable().required('Create date is required'),
-    dueDate: Yup.string().nullable().required('Due date is required'),
-    invoiceTo: Yup.mixed().nullable().required('Invoice to is required'),
+    createDate: Yup.string().nullable().required('输入开始日期'),
+    dueDate: Yup.string().nullable().required('输入截止日期'),
+    invoiceTo: Yup.mixed().nullable().required('输入发票信息'),
   });
 
   const defaultValues = useMemo(
@@ -128,7 +128,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
           loading={loadingSave && isSubmitting}
           onClick={handleSubmit(handleSaveAsDraft)}
         >
-          Save as Draft
+          存为草稿
         </LoadingButton>
 
         <LoadingButton
@@ -137,7 +137,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
           loading={loadingSend && isSubmitting}
           onClick={handleSubmit(handleCreateAndSend)}
         >
-          {isEdit ? 'Update' : 'Create'} & Send
+          {isEdit ? '更新' : '创建  '} & 上传
         </LoadingButton>
       </Stack>
     </FormProvider>

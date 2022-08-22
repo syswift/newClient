@@ -36,7 +36,7 @@ export default function InvoiceTableToolbar({
       <TextField
         fullWidth
         select
-        label="Service type"
+        label="分类类型"
         value={filterService}
         onChange={onFilterService}
         SelectProps={{
@@ -67,7 +67,7 @@ export default function InvoiceTableToolbar({
       </TextField>
 
       <DatePicker
-        label="Start date"
+        label="开始日期"
         value={filterStartDate}
         onChange={onFilterStartDate}
         renderInput={(params) => (
@@ -82,7 +82,7 @@ export default function InvoiceTableToolbar({
       />
 
       <DatePicker
-        label="End date"
+        label="结束日期"
         value={filterEndDate}
         onChange={onFilterEndDate}
         renderInput={(params) => (
@@ -100,7 +100,7 @@ export default function InvoiceTableToolbar({
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="Search client or invoice number..."
+        placeholder="查询用户名或发票号"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

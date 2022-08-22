@@ -34,13 +34,13 @@ export default function InvoiceEdit() {
   const currentInvoice = _invoices.find((invoice) => invoice.id === id);
 
   return (
-    <Page title="Invoice: Edit">
+    <Page title="发票: 编辑">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Edit invoice"
+          heading="编辑发票"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Invoices', href: PATH_DASHBOARD.invoice.list },
+            { name: '主页', href: PATH_DASHBOARD.root },
+            { name: '发票', href: PATH_DASHBOARD.invoice.list },
             { name: `INV-${currentInvoice?.invoiceNumber}` || '' },
           ]}
         />

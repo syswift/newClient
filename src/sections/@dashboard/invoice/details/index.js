@@ -91,32 +91,32 @@ export default function InvoiceDetails({ invoice }) {
 
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Invoice from
+              发票来源
             </Typography>
             <Typography variant="body2">{invoiceFrom.name}</Typography>
             <Typography variant="body2">{invoiceFrom.address}</Typography>
-            <Typography variant="body2">Phone: {invoiceFrom.phone}</Typography>
+            <Typography variant="body2">电话: {invoiceFrom.phone}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Invoice to
+              接收信息
             </Typography>
             <Typography variant="body2">{invoiceTo.name}</Typography>
             <Typography variant="body2">{invoiceTo.address}</Typography>
-            <Typography variant="body2">Phone: {invoiceTo.phone}</Typography>
+            <Typography variant="body2">电话: {invoiceTo.phone}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              date create
+              创建日期
             </Typography>
             <Typography variant="body2">{fDate(createDate)}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Due date
+              截止日期
             </Typography>
             <Typography variant="body2">{fDate(dueDate)}</Typography>
           </Grid>
@@ -133,10 +133,10 @@ export default function InvoiceDetails({ invoice }) {
               >
                 <TableRow>
                   <TableCell width={40}>#</TableCell>
-                  <TableCell align="left">Description</TableCell>
-                  <TableCell align="left">Qty</TableCell>
-                  <TableCell align="right">Unit price</TableCell>
-                  <TableCell align="right">Total</TableCell>
+                  <TableCell align="left">详情</TableCell>
+                  <TableCell align="left">数量</TableCell>
+                  <TableCell align="right">单价</TableCell>
+                  <TableCell align="right">总价</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -167,7 +167,7 @@ export default function InvoiceDetails({ invoice }) {
                   <TableCell colSpan={3} />
                   <TableCell align="right">
                     <Box sx={{ mt: 2 }} />
-                    <Typography>Subtotal</Typography>
+                    <Typography>原价</Typography>
                   </TableCell>
                   <TableCell align="right" width={120}>
                     <Box sx={{ mt: 2 }} />
@@ -178,7 +178,7 @@ export default function InvoiceDetails({ invoice }) {
                 <RowResultStyle>
                   <TableCell colSpan={3} />
                   <TableCell align="right">
-                    <Typography>Discount</Typography>
+                    <Typography>折扣</Typography>
                   </TableCell>
                   <TableCell align="right" width={120}>
                     <Typography sx={{ color: 'error.main' }}>{discount && fCurrency(-discount)}</Typography>
@@ -188,7 +188,7 @@ export default function InvoiceDetails({ invoice }) {
                 <RowResultStyle>
                   <TableCell colSpan={3} />
                   <TableCell align="right">
-                    <Typography>Taxes</Typography>
+                    <Typography>税额</Typography>
                   </TableCell>
                   <TableCell align="right" width={120}>
                     <Typography>{taxes && fCurrency(taxes)}</Typography>
@@ -198,7 +198,7 @@ export default function InvoiceDetails({ invoice }) {
                 <RowResultStyle>
                   <TableCell colSpan={3} />
                   <TableCell align="right">
-                    <Typography variant="h6">Total</Typography>
+                    <Typography variant="h6">总价</Typography>
                   </TableCell>
                   <TableCell align="right" width={140}>
                     <Typography variant="h6">{fCurrency(totalPrice)}</Typography>

@@ -24,7 +24,7 @@ export default function InvoiceNewEditStatusDate() {
       <RHFSelect
         fullWidth
         name="status"
-        label="Status"
+        label="状态"
         InputLabelProps={{ shrink: true }}
         SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
       >
@@ -50,7 +50,7 @@ export default function InvoiceNewEditStatusDate() {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <DatePicker
-            label="Date create"
+            label="创建日期"
             value={field.value}
             onChange={(newValue) => {
               field.onChange(newValue);
@@ -65,7 +65,7 @@ export default function InvoiceNewEditStatusDate() {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <DatePicker
-            label="Due date"
+            label="截止日期"
             value={field.value}
             onChange={(newValue) => {
               field.onChange(newValue);

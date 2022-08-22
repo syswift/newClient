@@ -92,24 +92,8 @@ export default function InventoryQuery() {
         //console.log(supabase.auth.user().id);
         const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
         try {
-            let all = {};
-            if(processObj.body.currentProject)
-            {
-                all = await supabase.from('trans').select().match({
-                    processPer: processObj.body.name,
-                    projectName: processObj.body.currentProject
-                });
-            }
-            else if(await processObj.body.auth_level === '管理')
-            {
-                all = await supabase.from('trans').select();
-            }
-            else{
-                all = await supabase.from('trans').select().match({
-                    processPer: processObj.body.name
-                });
-            }
-            setallTrans(all.data);
+          const all = await supabase.from('box_storage').select();
+          setallTrans(all.data);
         } catch (error) {
             console.log(error);
         }
@@ -421,8 +405,14 @@ function applySortFilter({
   if (filterName) {
     allTrans = allTrans.filter(
       (item) =>
-        item.invoiceNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.invoiceTo.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.customerId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.termId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.providerId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.boxId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.boxType.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.amount.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.boxName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.created_at.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

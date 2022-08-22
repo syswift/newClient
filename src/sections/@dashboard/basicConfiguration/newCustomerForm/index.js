@@ -16,18 +16,18 @@ import { _invoiceAddressFrom } from '../../../../_mock';
 // components
 import { FormProvider } from '../../../../components/hook-form';
 //
-import InvoiceNewEditDetails from './InvoiceNewEditDetails';
-import InvoiceNewEditAddress from './InvoiceNewEditAddress';
-import InvoiceNewEditStatusDate from './InvoiceNewEditStatusDate';
+import CustomerFormMandatory from './customerFormMandatory';
+import CustomerFormOptional1 from './customerFormOptional1';
+import CustomerFormOptional2 from './CustomerFormOptional2';
 
 // ----------------------------------------------------------------------
 
-InvoiceNewEditForm.propTypes = {
+NewCustomerForm.propTypes = {
   isEdit: PropTypes.bool,
   currentInvoice: PropTypes.object,
 };
 
-export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
+export default function NewCustomerForm({ isEdit, currentInvoice }) {
   const { push } = useRouter();
 
   const [loadingSave, setLoadingSave] = useState(false);
@@ -113,9 +113,9 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
   return (
     <FormProvider methods={methods}>
       <Card>
-        <InvoiceNewEditAddress />
-        <InvoiceNewEditStatusDate />
-        <InvoiceNewEditDetails />
+        <CustomerFormMandatory />
+        <CustomerFormOptional1 />
+        <CustomerFormOptional2 />
       </Card>
 
       <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ mt: 3 }}>

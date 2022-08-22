@@ -16,7 +16,7 @@
   import Page from '../../../components/Page';
   import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 
-  import InvoiceNewEditForm from '../../../sections/@dashboard/basicConfiguration/newCustomerForm';
+  import NewCustomerForm from '../../../sections/@dashboard/basicConfiguration/newCustomerForm';
   
   NewCustomer.getLayout = function getLayout(page) {
     return <Layout>{page}</Layout>;
@@ -36,7 +36,7 @@
               { name: '新增客户' },
             ]}
           />
-          <InvoiceNewEditForm />
+          <NewCustomerForm />
         </Container>
       </Page>
     );

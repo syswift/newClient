@@ -91,7 +91,7 @@ export default function InvoiceNewEditDetails() {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-        订单详情:
+        Details:
       </Typography>
 
       <Stack divider={<Divider flexItem sx={{ borderStyle: 'dashed' }} />} spacing={3}>
@@ -101,21 +101,21 @@ export default function InvoiceNewEditDetails() {
               <RHFTextField
                 size="small"
                 name={`items[${index}].title`}
-                label="标题"
+                label="Title"
                 InputLabelProps={{ shrink: true }}
               />
 
               <RHFTextField
                 size="small"
                 name={`items[${index}].description`}
-                label="描述"
+                label="Description"
                 InputLabelProps={{ shrink: true }}
               />
 
               <RHFSelect
                 name={`items[${index}].service`}
                 size="small"
-                label="分类"
+                label="Service"
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
                 sx={{ maxWidth: { md: 160 } }}
@@ -158,7 +158,7 @@ export default function InvoiceNewEditDetails() {
                 size="small"
                 type="number"
                 name={`items[${index}].quantity`}
-                label="数量"
+                label="Quantity"
                 placeholder="0"
                 onChange={(event) => handleChangeQuantity(event, index)}
                 InputLabelProps={{ shrink: true }}
@@ -169,7 +169,7 @@ export default function InvoiceNewEditDetails() {
                 size="small"
                 type="number"
                 name={`items[${index}].price`}
-                label="单价"
+                label="Price"
                 placeholder="0"
                 onChange={(event) => handleChangePrice(event, index)}
                 InputProps={{
@@ -182,7 +182,7 @@ export default function InvoiceNewEditDetails() {
                 disabled
                 size="small"
                 name={`items[${index}].total`}
-                label="总价"
+                label="Total"
                 placeholder="0"
                 value={fNumber(totalOnRow[index])}
                 InputProps={{
@@ -198,7 +198,7 @@ export default function InvoiceNewEditDetails() {
               startIcon={<Iconify icon="eva:trash-2-outline" />}
               onClick={() => handleRemove(index)}
             >
-              删除
+              Remove
             </Button>
           </Stack>
         ))}
@@ -212,13 +212,13 @@ export default function InvoiceNewEditDetails() {
         alignItems={{ xs: 'flex-start', md: 'center' }}
       >
         <Button size="small" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleAdd} sx={{ flexShrink: 0 }}>
-          添加新账单
+          Add new detail
         </Button>
 
         <Stack spacing={2} justifyContent="flex-end" direction={{ xs: 'column', md: 'row' }} sx={{ width: 1 }}>
           <RHFTextField
             size="small"
-            label="折扣"
+            label="Discount"
             name="discount"
             onChange={(event) => setValue('discount', Number(event.target.value))}
             sx={{ maxWidth: { md: 200 } }}
@@ -226,7 +226,7 @@ export default function InvoiceNewEditDetails() {
 
           <RHFTextField
             size="small"
-            label="税收"
+            label="Taxes"
             name="taxes"
             onChange={(event) => setValue('taxes', Number(event.target.value))}
             sx={{ maxWidth: { md: 200 } }}
@@ -236,26 +236,26 @@ export default function InvoiceNewEditDetails() {
 
       <Stack spacing={2} sx={{ mt: 3 }}>
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>原价 :</Typography>
+          <Typography>Subtotal :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120 }}>{fCurrency(sum(totalOnRow))}</Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>折扣 :</Typography>
+          <Typography>Discount :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120, ...(values.discount && { color: 'error.main' }) }}>
             {values.discount ? `- ${fCurrency(values.discount)}` : '-'}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>税额 :</Typography>
+          <Typography>Taxes :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120 }}>
             {values.taxes ? fCurrency(values.taxes) : '-'}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography variant="h6">总价 :</Typography>
+          <Typography variant="h6">Total price :</Typography>
           <Typography variant="h6" sx={{ textAlign: 'right', width: 120 }}>
             {fCurrency(totalPrice)}
           </Typography>

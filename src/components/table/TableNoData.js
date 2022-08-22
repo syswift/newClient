@@ -16,7 +16,7 @@ export default function TableNoData({ isNotFound }) {
       {isNotFound ? (
         <TableCell colSpan={12}>
           <EmptyContent
-            title="No Data"
+            title="没有数据"
             sx={{
               '& span.MuiBox-root': { height: 160 },
             }}

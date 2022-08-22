@@ -41,14 +41,14 @@ export default function InvoicePDF({ invoice }) {
 
         <View style={[styles.gridContainer, styles.mb40]}>
           <View style={styles.col6}>
-            <Text style={[styles.overline, styles.mb8]}>发票来源</Text>
+            <Text style={[styles.overline, styles.mb8]}>Invoice from</Text>
             <Text style={styles.body1}>{invoiceFrom.name}</Text>
             <Text style={styles.body1}>{invoiceFrom.address}</Text>
             <Text style={styles.body1}>{invoiceFrom.phone}</Text>
           </View>
 
           <View style={styles.col6}>
-            <Text style={[styles.overline, styles.mb8]}>接收信息</Text>
+            <Text style={[styles.overline, styles.mb8]}>Invoice to</Text>
             <Text style={styles.body1}>{invoiceTo.name}</Text>
             <Text style={styles.body1}>{invoiceTo.address}</Text>
             <Text style={styles.body1}>{invoiceTo.phone}</Text>
@@ -57,16 +57,16 @@ export default function InvoicePDF({ invoice }) {
 
         <View style={[styles.gridContainer, styles.mb40]}>
           <View style={styles.col6}>
-            <Text style={[styles.overline, styles.mb8]}>创建日期</Text>
+            <Text style={[styles.overline, styles.mb8]}>Date create</Text>
             <Text style={styles.body1}>{fDate(createDate)}</Text>
           </View>
           <View style={styles.col6}>
-            <Text style={[styles.overline, styles.mb8]}>截止日期</Text>
+            <Text style={[styles.overline, styles.mb8]}>Due date</Text>
             <Text style={styles.body1}>{fDate(dueDate)}</Text>
           </View>
         </View>
 
-        <Text style={[styles.overline, styles.mb8]}>发票详情</Text>
+        <Text style={[styles.overline, styles.mb8]}>Invoice Details</Text>
 
         <View style={styles.table}>
           <View style={styles.tableHeader}>
@@ -76,19 +76,19 @@ export default function InvoicePDF({ invoice }) {
               </View>
 
               <View style={styles.tableCell_2}>
-                <Text style={styles.subtitle2}>发票详情</Text>
+                <Text style={styles.subtitle2}>Description</Text>
               </View>
 
               <View style={styles.tableCell_3}>
-                <Text style={styles.subtitle2}>数量</Text>
+                <Text style={styles.subtitle2}>Qty</Text>
               </View>
 
               <View style={styles.tableCell_3}>
-                <Text style={styles.subtitle2}>单价</Text>
+                <Text style={styles.subtitle2}>Unit price</Text>
               </View>
 
               <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text style={styles.subtitle2}>总价</Text>
+                <Text style={styles.subtitle2}>Total</Text>
               </View>
             </View>
           </View>
@@ -124,7 +124,7 @@ export default function InvoicePDF({ invoice }) {
               <View style={styles.tableCell_2} />
               <View style={styles.tableCell_3} />
               <View style={styles.tableCell_3}>
-                <Text>原价</Text>
+                <Text>Subtotal</Text>
               </View>
               <View style={[styles.tableCell_3, styles.alignRight]}>
                 <Text>{fCurrency(subTotalPrice)}</Text>
@@ -136,7 +136,7 @@ export default function InvoicePDF({ invoice }) {
               <View style={styles.tableCell_2} />
               <View style={styles.tableCell_3} />
               <View style={styles.tableCell_3}>
-                <Text>折扣</Text>
+                <Text>Discount</Text>
               </View>
               <View style={[styles.tableCell_3, styles.alignRight]}>
                 <Text>{fCurrency(-discount)}</Text>
@@ -148,7 +148,7 @@ export default function InvoicePDF({ invoice }) {
               <View style={styles.tableCell_2} />
               <View style={styles.tableCell_3} />
               <View style={styles.tableCell_3}>
-                <Text>税额</Text>
+                <Text>Taxes</Text>
               </View>
               <View style={[styles.tableCell_3, styles.alignRight]}>
                 <Text>{fCurrency(taxes)}</Text>
@@ -160,7 +160,7 @@ export default function InvoicePDF({ invoice }) {
               <View style={styles.tableCell_2} />
               <View style={styles.tableCell_3} />
               <View style={styles.tableCell_3}>
-                <Text style={styles.h4}>总价</Text>
+                <Text style={styles.h4}>Total</Text>
               </View>
               <View style={[styles.tableCell_3, styles.alignRight]}>
                 <Text style={styles.h4}>{fCurrency(totalPrice)}</Text>

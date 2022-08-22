@@ -101,7 +101,7 @@ export default function InvoiceTableRow({ row, selected, onSelectRow, onViewRow,
                 sx={{ color: 'error.main' }}
               >
                 <Iconify icon={'eva:trash-2-outline'} />
-                删除
+                Delete
               </MenuItem>
 
               <MenuItem
@@ -111,7 +111,7 @@ export default function InvoiceTableRow({ row, selected, onSelectRow, onViewRow,
                 }}
               >
                 <Iconify icon={'eva:eye-fill'} />
-                查看
+                View
               </MenuItem>
 
               <MenuItem
@@ -121,7 +121,7 @@ export default function InvoiceTableRow({ row, selected, onSelectRow, onViewRow,
                 }}
               >
                 <Iconify icon={'eva:edit-fill'} />
-                编辑
+                Edit
               </MenuItem>
             </>
           }

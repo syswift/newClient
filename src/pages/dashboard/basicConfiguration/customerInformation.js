@@ -1,4 +1,4 @@
-import sumBy from 'lodash/sumBy';
+import sumBy from 'lodash/sumBy';0
 import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
@@ -69,11 +69,11 @@ const TABLE_HEAD = [
   { id: 'countryCode', label: '国家代码', align: 'center', width: 80  },
   { id: 'contact1', label: '联系人1', align: 'center' , width: 80 },
   { id: 'position1', label: '职位1', align: 'center' , width: 80 },
-  { id: 'phone1', label: '联系方式1', align: 'center' , width: 80 },
+  { id: 'phone1', label: '联系方式1', align: 'center' , width: 100 },
   { id: 'email1', label: '邮箱1', align: 'center' , width: 80 },
   { id: 'contact2', label: '联系人2', align: 'center' , width: 80 },
   { id: 'position2', label: '职位2', align: 'center', width: 80  },
-  { id: 'phone2', label: '联系方式2', align: 'center', width: 80  },
+  { id: 'phone2', label: '联系方式2', align: 'center', width: 100  },
   { id: 'email2', label: '邮箱2', align: 'center', width: 80  },
   { id: '' , width: 100 },
 ];
@@ -178,7 +178,7 @@ export default function CustomerInformation() {
   };
 
   const handleEditRow = (id) => {
-    push(PATH_DASHBOARD.invoice.edit(id));
+    push(PATH_DASHBOARD.basicConfiguration.editCustomer(id));
   };
 
   const handleViewRow = (id) => {
@@ -239,7 +239,7 @@ export default function CustomerInformation() {
             </NextLink>
           }
         />
-                <Card sx={{ mb: 3 }}>
+        <Card sx={{ mb: 3 }}>
           <Scrollbar>
             <Stack
               direction="row"

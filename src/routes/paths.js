@@ -70,6 +70,7 @@ export const PATH_DASHBOARD = {
     newPrice: path(ROOTS_DASHBOARD, '/basicConfiguration/newPrice'),
     newTurnoverBox: path(ROOTS_DASHBOARD, '/basicConfiguration/newTurnoverBox'),
     bindingTerminal:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/bindingTerminal/${id}`),
+    editCustomer:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/editCustomer/${id}`),
   },
   // 周转管理
   turnoverManagement: {
@@ -78,13 +79,13 @@ export const PATH_DASHBOARD = {
     turnoverOrderManagement: path(ROOTS_DASHBOARD, '/turnoverManagement/turnoverOrderManagement'),
     new: path(ROOTS_DASHBOARD, '/turnoverManagement/new'),
     viewTurnoverOrder: path(ROOTS_DASHBOARD, '/turnoverManagement/viewTurnoverOrder'),
+    supplierSupply: path(ROOTS_DASHBOARD, '/turnoverManagement/supplierSupply'),
+    newSupply: path(ROOTS_DASHBOARD, '/turnoverManagement/newSupply'),
   },
   // 库存管理
   inventoryManagement: {
     root: path(ROOTS_DASHBOARD, '/inventoryManagement'),
-    supplierSupply: path(ROOTS_DASHBOARD, '/inventoryManagement/supplierSupply'),
     inventoryQuery: path(ROOTS_DASHBOARD, '/inventoryManagement/inventoryQuery'),
-    newSupply: path(ROOTS_DASHBOARD, '/inventoryManagement/newSupply'),
   },
   // 结算管理
   settlementManagement: {

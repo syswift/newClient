@@ -23,6 +23,10 @@ import {
   TableContainer,
   TablePagination,
   FormControlLabel,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
 } from '@mui/material';
   // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -218,13 +222,13 @@ export default function WorkOrderManagement() {
             { name: '工单管理', herf: PATH_DASHBOARD.workOrderManagement.workOrderManagement1 },
             { name: '工单管理',},
           ]}
-          action={
-            <NextLink href={PATH_DASHBOARD.workOrderManagement.newWorkOrder} passHref>
-                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增工单
-                </Button>
-            </NextLink>
-          }
+          // action={
+          //   <NextLink href={PATH_DASHBOARD.workOrderManagement.newWorkOrder} passHref>
+          //       <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+          //           新增工单
+          //       </Button>
+          //   </NextLink>
+          // }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -260,6 +264,35 @@ export default function WorkOrderManagement() {
             </Stack>
           </Scrollbar>
         </Card>
+
+        <Card sx={{ mb: 3,p:3}}>
+          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
+            新增工单信息
+          </Typography>
+          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
+          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+            <TextField name="jobNumber" label="工单单号" fullWidth/>
+            <TextField name="customerCode" label="客户名称" fullWidth/>
+            <Select name="dataState" label="工单状态" placeholder="" fullWidth>
+              <MenuItem value='完成'>完成</MenuItem>
+              <MenuItem value='新增'>新增</MenuItem>
+            </Select>
+          </Stack>
+          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+            <Select name="jobType" label="工单类型" placeholder="" fullWidth>
+              <MenuItem value='正常'>正常</MenuItem>
+              <MenuItem value='报废'>报废</MenuItem>
+            </Select>
+            <TextField name="jobAddition" label="工单备注" fullWidth/>
+            <TextField name="createTime" label="创建时间" fullWidth/>
+          </Stack>
+          <Stack alignItems="flex-end" sx={{ mt: 1 }}>
+            <Button type="submit" variant="contained">
+              {'提交'}
+            </Button>
+          </Stack>
+        </Card>
+
         <Card>
           <Tabs
             allowScrollButtonsMobile

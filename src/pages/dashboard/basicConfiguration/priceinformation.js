@@ -23,6 +23,8 @@ import {
   TableContainer,
   TablePagination,
   FormControlLabel,
+  Typography,
+  TextField
 } from '@mui/material';
   // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -61,7 +63,7 @@ const TABLE_HEAD = [
   { id: 'goodsCode', label: '商品代码', align: 'center', width: 200  },
   { id: 'goodsNumber', label: '商品数量', align: 'center' , width: 200 },
   { id: 'goodsPrice', label: '商品单价', align: 'center', width: 200 },
-  { id: '',label: '操作' , width: 200 },
+  { id: '',label: '操作', align: 'center', width: 200 },
 ];
 
 // ----------------------------------------------------------------------
@@ -216,13 +218,13 @@ export default function PriceInformation() {
             { name: '基础配置', herf: PATH_DASHBOARD.basicConfiguration.priceinformation },
             { name: '价格信息'},
           ]}
-          action={
-            <NextLink href={PATH_DASHBOARD.basicConfiguration.newPrice} passHref>
-                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增价格信息
-                </Button>
-            </NextLink>
-          }
+          // action={
+          //   <NextLink href={PATH_DASHBOARD.basicConfiguration.newPrice} passHref>
+          //       <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+          //           新增价格信息
+          //       </Button>
+          //   </NextLink>
+          // }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -258,6 +260,23 @@ export default function PriceInformation() {
             </Stack>
           </Scrollbar>
         </Card>
+
+        <Card sx={{ mb: 3,p:3}}>
+          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
+            新增价格信息
+          </Typography>
+          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
+          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+            <TextField name="goodsName" label="商品名称" />
+            <TextField name="goodsCode" label="商品代码" />
+            <TextField name="goodsNumber" label="商品数量" />
+            <TextField name="goodsPrice" label="商品单价" /> 
+            <Button variant="contained">
+                提交新增
+            </Button>
+          </Stack>
+        </Card>
+
         <Card>
           <Tabs
             allowScrollButtonsMobile

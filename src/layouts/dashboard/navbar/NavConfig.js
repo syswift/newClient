@@ -30,7 +30,7 @@ const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'general',
+    subheader: '常规',
     items: [
       { title: '控制台1', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: '控制台2', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
@@ -42,7 +42,7 @@ const navConfig = [
 
   // MANAGEMENT
   {
-    subheader: 'management',
+    subheader: '管理',
     items: [
       //-------------------------------------------新增-------------------------------------------------//
       // 基础配置
@@ -65,6 +65,7 @@ const navConfig = [
         icon: ICONS.user,
         children: [
           { title: '周转单管理', path: PATH_DASHBOARD.turnoverManagement.turnoverOrderManagement },
+          { title: '供应商来货', path: PATH_DASHBOARD.turnoverManagement.supplierSupply },
         ],
       },
       // 库存管理
@@ -73,7 +74,6 @@ const navConfig = [
         path: PATH_DASHBOARD.inventoryManagement.root,
         icon: ICONS.user,
         children: [
-          { title: '供应商来货', path: PATH_DASHBOARD.inventoryManagement.supplierSupply },
           { title: '库存查询', path: PATH_DASHBOARD.inventoryManagement.inventoryQuery },
         ],
       },

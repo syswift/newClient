@@ -18,12 +18,12 @@ import Layout from '../../../layouts';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 
-NewCustomer.getLayout = function getLayout(page) {
+NewWorkOrder.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 // ----------------------------------------------------------------------
 
-export default function NewCustomer() {
+export default function NewWorkOrder() {
   const { themeStretch } = useSettings();
   return (
     <Page title="新增工单">

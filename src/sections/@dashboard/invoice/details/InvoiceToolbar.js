@@ -38,13 +38,13 @@ export default function InvoiceToolbar({ invoice }) {
         sx={{ mb: 5 }}
       >
         <Stack direction="row" spacing={1}>
-          <Tooltip title="编辑">
+          <Tooltip title="Edit">
             <IconButton onClick={handleEdit}>
               <Iconify icon={'eva:edit-fill'} />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="查询">
+          <Tooltip title="View">
             <IconButton onClick={onOpen}>
               <Iconify icon={'eva:eye-fill'} />
             </IconButton>
@@ -56,7 +56,7 @@ export default function InvoiceToolbar({ invoice }) {
             style={{ textDecoration: 'none' }}
           >
             {({ loading }) => (
-              <Tooltip title="下载">
+              <Tooltip title="Download">
                 <IconButton>
                   {loading ? <CircularProgress size={24} color="inherit" /> : <Iconify icon={'eva:download-fill'} />}
                 </IconButton>
@@ -64,19 +64,19 @@ export default function InvoiceToolbar({ invoice }) {
             )}
           </PDFDownloadLink>
 
-          <Tooltip title="打印">
+          <Tooltip title="Print">
             <IconButton>
               <Iconify icon={'eva:printer-fill'} />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="发送">
+          <Tooltip title="Send">
             <IconButton>
               <Iconify icon={'ic:round-send'} />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="分享">
+          <Tooltip title="Share">
             <IconButton>
               <Iconify icon={'eva:share-fill'} />
             </IconButton>
@@ -89,7 +89,7 @@ export default function InvoiceToolbar({ invoice }) {
           startIcon={<Iconify icon={'eva:checkmark-fill'} />}
           sx={{ alignSelf: 'flex-end' }}
         >
-          标记为已交易
+          Mark as Paid
         </Button>
       </Stack>
 

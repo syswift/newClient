@@ -29,7 +29,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
 
   const theme = useTheme();
 
-  const { customerId, termId, providerId, boxId, boxType, amount, boxName, created_at} = row;
+  const { goodsCode, supplierCode, supplierName, companyCode, turnoverBoxCode, turnoverBoxNmae, supplyNumber, createTime } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -48,26 +48,14 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="center">{customerId}</TableCell>
-      <TableCell align="center">{termId}</TableCell>
-      <TableCell align="center">{providerId}</TableCell>
-      <TableCell align="center">{boxId}</TableCell>
-      <TableCell align="center">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (boxType === true && 'success') ||
-            (boxType === false && 'warning') ||
-            'default'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {boxType === true? '正常库存' : '非正常库存'}
-        </Label>
-      </TableCell>
-      <TableCell align="center">{amount}</TableCell>
-      <TableCell align="center">{boxName}</TableCell>
-      <TableCell align="center">{created_at}</TableCell>
+      <TableCell align="center">{goodsCode}</TableCell>
+      <TableCell align="center">{supplierCode}</TableCell>
+      <TableCell align="center">{supplierName}</TableCell>
+      <TableCell align="center">{companyCode}</TableCell>
+      <TableCell align="center">{turnoverBoxCode}</TableCell>
+      <TableCell align="center">{turnoverBoxNmae}</TableCell>
+      <TableCell align="center">{supplyNumber}</TableCell>
+      <TableCell align="center">{createTime}</TableCell>
       <TableCell align="right">
         <TableMoreMenu
           open={openMenu}

@@ -16,9 +16,9 @@ import { _invoiceAddressFrom } from '../../../../_mock';
 // components
 import { FormProvider } from '../../../../components/hook-form';
 //
-import InvoiceNewEditDetails from './InvoiceNewEditDetails';
-import InvoiceNewEditAddress from './InvoiceNewEditAddress';
-import InvoiceNewEditStatusDate from './InvoiceNewEditStatusDate';
+import TeriminalCustomerFormMandatory from './InvoiceNewEditAddress';
+import TeriminalCustomerFormOptional1 from './InvoiceNewEditStatusDate';
+import TeriminalCustomerFormOptional2 from './InvoiceNewEditDetails';
 
 // ----------------------------------------------------------------------
 
@@ -113,9 +113,9 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
   return (
     <FormProvider methods={methods}>
       <Card>
-        <InvoiceNewEditAddress />
-        <InvoiceNewEditStatusDate />
-        <InvoiceNewEditDetails />
+        <TeriminalCustomerFormMandatory />
+        <TeriminalCustomerFormOptional1 />
+        <TeriminalCustomerFormOptional2 />
       </Card>
 
       <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ mt: 3 }}>

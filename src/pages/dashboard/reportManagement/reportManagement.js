@@ -23,6 +23,8 @@ import {
   TableContainer,
   TablePagination,
   FormControlLabel,
+  Typography,
+  TextField
 } from '@mui/material';
   // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -217,13 +219,13 @@ export default function ReportManagement() {
             { name: '报表管理', herf: PATH_DASHBOARD.reportManagement.reportManagement },
             { name: '报表管理'},
           ]}
-          action={
-            <NextLink href={PATH_DASHBOARD.reportManagement.newReport} passHref>
-                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增报表
-                </Button>
-            </NextLink>
-          }
+          // action={
+          //   <NextLink href={PATH_DASHBOARD.reportManagement.newReport} passHref>
+          //       <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+          //           新增报表
+          //       </Button>
+          //   </NextLink>
+          // }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -259,6 +261,24 @@ export default function ReportManagement() {
             </Stack>
           </Scrollbar>
         </Card>
+
+        <Card sx={{ mb: 3,p:3}}>
+          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
+            新增报表信息
+          </Typography>
+          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
+          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+            <TextField name="statementNumber" label="结算单号" />
+            <TextField name="statementCode" label="结算代码" />
+            <TextField name="note" label="备注" />
+            <TextField name="operationPerson" label="操作人" /> 
+            <TextField name="operationTime" label="操作时间" /> 
+            <Button variant="contained">
+                提交
+            </Button>
+          </Stack>
+        </Card>
+
         <Card>
           <Tabs
             allowScrollButtonsMobile

@@ -24,7 +24,7 @@ import {
   TablePagination,
   FormControlLabel,
   Typography,
-  TextField,
+  TextField
 } from '@mui/material';
   // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -45,7 +45,7 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/settlementManagement/settlementManagement';
+import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/supplierSupply';
 import { supabase } from '../../../../api';
 
 // ----------------------------------------------------------------------
@@ -58,24 +58,28 @@ const SERVICE_OPTIONS = [
   'ui/ux design',
   'front end development',
 ];
+
 const TABLE_HEAD = [
-  { id: 'statementNumber', label: '结算单号', align: 'center', width: 100 },
-  { id: 'statementCode', label: '结算代码', align: 'center', width: 100  },
-  { id: 'note', label: '备注', align: 'center' , width: 100 },
-  { id: 'operationPerson', label: '操作人', align: 'center', width: 100 },
-  { id: 'operationTime', label: '操作时间', align: 'center', width: 50 },
-  { id: '' , width: 100 },
+  { id: 'goodsCode', label: '商品代码', align: 'center' },
+  { id: 'supplierCode', label: '供应商代码', align: 'center' },
+  { id: 'supplierName', label: '供应商名称', align: 'center' },
+  { id: 'companyCode', label: '公司编码', align: 'center' },
+  { id: 'turnoverBoxCode', label: '周转箱代码', align: 'center', width: 140 },
+  { id: 'turnoverBoxNmae', label: '周转箱名称', align: 'center' },
+  { id: 'supplyNumber', label: '数量', align: 'center' },
+  { id: 'createTime', label: '操作时间', align: 'center' },
+  { id: '',label:'操作', align: 'center' },
 ];
 
 // ----------------------------------------------------------------------
 
-SettlementManagement.getLayout = function getLayout(page) {
+SupplierSupply.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
 // ----------------------------------------------------------------------
 
-export default function SettlementManagement() {
+export default function SupplierSupply() {
   const theme = useTheme();
 
   const { themeStretch } = useSettings();
@@ -205,24 +209,24 @@ export default function SettlementManagement() {
 
   const TABS = [
     { value: 'all', label: '全部', color: 'info', count: allTrans.length },
-    { value: 'paid', label: '正常', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: '暂不可用', color: 'warning', count: getLengthByStatus('paid') },
+    { value: 'paid', label: '正常库存', color: 'success', count: getLengthByStatus('paid') },
+    { value: 'unpaid', label: '非正常库存', color: 'warning', count: getLengthByStatus('paid') },
   ];
 
   return (
-    <Page title="结算管理">
+    <Page title="供应商来货">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="结算管理"
+          heading="供应商来货"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '结算管理', herf: PATH_DASHBOARD.settlementManagement.settlementManagement1 },
-            { name: '结算管理'},
+            { name: '库存管理', herf: PATH_DASHBOARD.turnoverManagement.supplierSupply },
+            { name: '供应商来货', herf: PATH_DASHBOARD.turnoverManagement.supplierSupply },
           ]}
           // action={
-          //   <NextLink href={PATH_DASHBOARD.settlementManagement.newSettlement} passHref>
+          //   <NextLink href={PATH_DASHBOARD.turnoverManagement.newSupply} passHref>
           //       <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-          //           新增结算
+          //           新增供应商来货
           //       </Button>
           //   </NextLink>
           // }
@@ -243,7 +247,7 @@ export default function SettlementManagement() {
                 color={theme.palette.info.main}
               />
               <InvoiceAnalytic
-                title="正常"
+                title="正常库存"
                 total={getLengthByStatus('paid')}
                 percent={getPercentByStatus('paid')}
                 price={getTotalPriceByStatus('paid')}
@@ -251,7 +255,7 @@ export default function SettlementManagement() {
                 color={theme.palette.success.main}
               />
               <InvoiceAnalytic
-                title="暂不可用"
+                title="非正常库存"
                 total={getLengthByStatus('unpaid')}
                 percent={getPercentByStatus('unpaid')}
                 price={getTotalPriceByStatus('unpaid')}
@@ -261,20 +265,26 @@ export default function SettlementManagement() {
             </Stack>
           </Scrollbar>
         </Card>
-
         <Card sx={{ mb: 3,p:3}}>
           <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-            新增结算信息
+            新增供应商来货信息
           </Typography>
           <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
           <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-            <TextField name="statementNumber" label="结算单号" />
-            <TextField name="statementCode" label="结算代码" />
-            <TextField name="note" label="备注" />
-            <TextField name="operationPerson" label="操作人" /> 
-            <TextField name="operationTime" label="操作时间" /> 
-            <Button variant="contained">
-                提交
+            <TextField name="goodsCode" label="商品代码" fullWidth/>
+            <TextField name="supplierCode" label="供应商代码" fullWidth/>
+            <TextField name="supplierName" label="供应商名称" fullWidth/>
+            <TextField name="companyCode" label="公司编码" fullWidth/>
+          </Stack>
+          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+            <TextField name="turnoverBoxCode" label="周转箱代码" fullWidth/>
+            <TextField name="turnoverBoxNmae" label="周转箱名称" fullWidth/>
+            <TextField name="supplyNumber" label="数量" fullWidth/>
+            <TextField name="createTime" label="操作时间" fullWidth/>
+          </Stack>
+          <Stack alignItems="flex-end" sx={{ mt: 1 }}>
+            <Button type="submit" variant="contained">
+              {'提交'}
             </Button>
           </Stack>
         </Card>
@@ -318,7 +328,7 @@ export default function SettlementManagement() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 500, position: 'relative' , overflow:'unset'}}>
+            <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
               {selected.length > 0 && (
                 <TableSelectedActions
                   dense={dense}

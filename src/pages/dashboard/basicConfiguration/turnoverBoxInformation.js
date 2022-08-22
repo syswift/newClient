@@ -23,6 +23,8 @@ import {
   TableContainer,
   TablePagination,
   FormControlLabel,
+  TextField,
+  Typography
 } from '@mui/material';
   // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -81,6 +83,8 @@ export default function TurnoverBoxInformation() {
 
   const [allTrans, setallTrans] = useState([]);
 
+  
+
   useEffect(()=>{
     async function fetchData()
     {
@@ -89,7 +93,6 @@ export default function TurnoverBoxInformation() {
         try {
 
             const all = await supabase.from('boxInfo').select();
-
             setallTrans(all.data);
         } catch (error) {
             console.log(error);
@@ -192,6 +195,7 @@ export default function TurnoverBoxInformation() {
     { value: 'unpaid', label: '不可用', color: 'warning', count: getLengthByStatus('paid') },
   ];
 
+
   return (
     <Page title="周转箱信息">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -202,13 +206,6 @@ export default function TurnoverBoxInformation() {
             { name: '基础配置', herf: PATH_DASHBOARD.basicConfiguration.turnoverBoxInformation },
             { name: '周转箱信息'},
           ]}
-          action={
-            <NextLink href={PATH_DASHBOARD.basicConfiguration.newTurnoverBox} passHref>
-                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增周转箱
-                </Button>
-            </NextLink>
-          }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -244,6 +241,23 @@ export default function TurnoverBoxInformation() {
             </Stack>
           </Scrollbar>
         </Card>
+
+        <Card sx={{ mb: 3,p:3}}>
+          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
+            新增周转箱信息
+          </Typography>
+          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
+          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
+            <TextField name="boxId" label="编号" />
+            <TextField name="created_at" label="创建时间" />
+            <TextField name="supplierId" label="供应商" />
+            <TextField name="boxName" label="箱子名称" /> 
+            <Button variant="contained">
+                提交新增
+            </Button>
+          </Stack>
+        </Card>
+
         <Card>
           <Tabs
             allowScrollButtonsMobile

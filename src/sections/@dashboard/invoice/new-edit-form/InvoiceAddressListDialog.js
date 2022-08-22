@@ -24,7 +24,7 @@ export default function InvoiceAddressListDialog({ open, selected, onClose, onSe
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 2.5, px: 3 }}>
-        <Typography variant="h6"> 选择地址 </Typography>
+        <Typography variant="h6"> Select address </Typography>
 
         <Button
           size="small"
@@ -32,7 +32,7 @@ export default function InvoiceAddressListDialog({ open, selected, onClose, onSe
           startIcon={<Iconify icon="eva:plus-fill" />}
           sx={{ alignSelf: 'flex-end' }}
         >
-          添加新增
+          Add New
         </Button>
       </Stack>
 

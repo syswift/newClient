@@ -20,6 +20,7 @@ import {
   ListItemButton,
   ListItemAvatar,
   ListItemSecondaryAction,
+  Typography,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../../routes/paths';
@@ -100,7 +101,7 @@ export default function NewSupplier() {
     {
       //获得当前用户
       const all = await fetchTable('customer',id);
-      //console.log(all);
+      console.log(all);
       setcus(all.data);
 
       //获得所有终端
@@ -122,9 +123,27 @@ export default function NewSupplier() {
             { name: '绑定终端' },
           ]}
         />
-        <Card>
-        <Block title='勾选要绑定给此客户的终端'>
-          {'客户代码: '+cus.customerId+' '+'客户名称: '+cus.customerName}
+        <Card sx={{ mb: 3,p:3}}>
+        <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
+          请选择该客户绑定的终端
+        </Typography>
+        <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
+        <table>
+            <tr style={{textAlign:'center'}} fullWidth>
+                <td style={{ width: '25%', textAlign: 'center',fontSize: '20px' }}>
+                    客户代码:
+                </td>
+                <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold',fontSize: '20px' }}>
+                    {cus.customerId}
+                </td>
+                <td style={{ width: '25%', textAlign: 'left',fontSize: '20px' }}>
+                    客户名称:
+                </td>
+                <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold' ,fontSize: '20px'}}>
+                    {cus.customerName}
+                </td>
+            </tr>
+        </table>
               <ListWrapperStyle>
                 <List>
                   {allTerm.map((value) => {
@@ -151,7 +170,7 @@ export default function NewSupplier() {
                   })}
                 </List>
               </ListWrapperStyle>
-            </Block>
+            {/* </Block> */}
         </Card>
       </Container>
     </Page>

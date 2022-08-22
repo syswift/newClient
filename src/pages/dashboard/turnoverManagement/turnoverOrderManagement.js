@@ -45,7 +45,7 @@ import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } fr
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
 import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/trans/list';
 import { supabase } from '../../../../api';
-import * as ReactDOM from 'react-dom';
+import LoadingScreen from '../../../components/LoadingScreen';
 
 // ----------------------------------------------------------------------
 
@@ -78,11 +78,12 @@ export default function TurnoverOrderManagement() {
   const { push } = useRouter();
 
   const [allTrans, setallTrans] = useState([]);
+  const [isInitialized, setisInitialized] = useState(true);
 
   useEffect(()=>{
     async function fetchData()
     {
-        //console.log(supabase.auth.user().id);
+        setisInitialized(false);
         const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
         try {
             let all = {};
@@ -103,43 +104,7 @@ export default function TurnoverOrderManagement() {
                 });
             }
             setallTrans(all.data);
-
-            /*
-            //get all customer
-            let all2 = {};
-
-            if(processObj.body.currentProject)
-            {
-              all2 = await supabase.from('customer').select().match({
-                processPer: processObj.body.name,
-                projectName: processObj.body.currentProject
-              });
-            }
-            else if(await processObj.body.auth_level === '管理')
-            {
-              all2 = await supabase.from('customer').select();
-            }
-            else{
-              all2 = await supabase.from('customer').select().match({
-                processPer: processObj.body.name
-              });
-            }
-
-            for(const cus of all2.data)
-            {
-                CUSTOMER_OPTIONS.push(cus.customerId);
-            }
-            
-            for(const tran of allTrans)
-            {
-              if(!CUSTOMER_OPTIONS.find(el => el === tran.customerId))
-              {
-                CUSTOMER_OPTIONS.push(tran.customerId);
-              }
-            }
-            
-            console.log(CUSTOMER_OPTIONS);*/
-            //console.log(allTrans);
+            setisInitialized(true);
 
         } catch (error) {
             console.log(error);
@@ -242,6 +207,11 @@ export default function TurnoverOrderManagement() {
     { value: '新增', label: '新增', color: 'warning', count: getLengthByStatus(true) },
   ];
 
+  if (!isInitialized) {
+    return <LoadingScreen />;
+  }
+
+  else{
   return (
     <Page title="周转单管理">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -433,6 +403,7 @@ export default function TurnoverOrderManagement() {
       </Container>
     </Page>
   );
+  }
 }
 
 // ----------------------------------------------------------------------

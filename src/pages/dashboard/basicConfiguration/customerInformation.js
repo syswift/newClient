@@ -45,6 +45,7 @@ import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } fr
 import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
 import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/basicConfiguration/customerInformationList';
 import { supabase } from '../../../../api';
+import LoadingScreen from '../../../components/LoadingScreen'; //import载入画面
 
 // ----------------------------------------------------------------------
 
@@ -94,11 +95,14 @@ export default function CustomerInformation() {
   const { push } = useRouter();
 
   const [allTrans, setallTrans] = useState([]);
+  const [isInitialized, setisInitialized] = useState(true);  //判断是否在loading
 
   useEffect(()=>{
     async function fetchData()
     {
         //console.log(supabase.auth.user().id);
+        setisInitialized(false); //await抓取database数据前改成false
+
         const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
         try {
             let all = {};
@@ -119,6 +123,8 @@ export default function CustomerInformation() {
                 });
             }
             setallTrans(all.data);
+
+            setisInitialized(true); //await都运行完了改成true
         } catch (error) {
             console.log(error);
         }
@@ -221,6 +227,11 @@ export default function CustomerInformation() {
     { value: false, label: '不可用', color: 'warning', count: getLengthByStatus(false) },
   ];
 
+  //如果没载入好显示loading页面
+  if (!isInitialized) {
+    return <LoadingScreen />;
+  }
+  else{
   return (
     <Page title="客户信息">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -412,6 +423,7 @@ export default function CustomerInformation() {
       </Container>
     </Page>
   );
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -460,39 +472,3 @@ function applySortFilter({
 
   return allTrans;
 }
-
-/*
-export async function getServerSideProps() {
-
-  const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
-  let allTrans = [];
-
-  try {       
-        if(processObj.body.currentProject !== '')
-        {
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name,
-            projectName: processObj.body.currentProject
-          });
-        }
-        else if(await processObj.data.name === '管理')
-        {
-          allTrans = await supabase.from('trans').select();
-        }
-        else{
-          allTrans = await supabase.from('trans').select().match({
-            processPer: processObj.body.name
-          });
-        }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  console.log(allTrans);
-
-  return {
-    props: {allTrans}, // will be passed to the page component as props
-  }
-}
-*/

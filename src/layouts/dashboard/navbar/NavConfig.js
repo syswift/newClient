@@ -49,7 +49,7 @@ const navConfig = [
       //-------------------------------------------新增-------------------------------------------------//
       // 基础配置
       {
-        title: '基础配置',
+        title: 'Basic_Configuration',
         path: PATH_DASHBOARD.basicConfiguration.root,
         icon: ICONS.user,
         children: [

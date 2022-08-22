@@ -56,6 +56,9 @@ const en = {
   other_cases: `other cases`,
   item_by_roles: `item by roles`,
   only_admin_can_see_this_item: `Only admin can see this item`,
+  
+  //中文菜单翻译
+  basicConfiguration: `basic configuration`,
 };
 
 export default en;

@@ -56,6 +56,7 @@ const cn = {
   other_cases: `其他情况`,
   item_by_roles: `按角色逐项`,
   only_admin_can_see_this_item: `只有管理员可以看到这个项目`,
+  Basic_Configuration: `基础设置`,
 };
 
 export default cn;

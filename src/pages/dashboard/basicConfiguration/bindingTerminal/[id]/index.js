@@ -35,6 +35,7 @@ import {supabase} from '../../../../../../api';
 import {fetchTable} from '../../../../../../api/fetchTable';
 import { Block } from '../../../../../sections/overview/Block';
 import Iconify from '../../../../../components/Iconify';
+import LoadingScreen from '../../../../../components/LoadingScreen';
 
 NewSupplier.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
@@ -59,13 +60,15 @@ export default function NewSupplier() {
   const [cus, setcus] = useState({});
   const [allTerm, setallTerm] = useState([]);
   const [checked, setChecked] = useState([0]);
+  const [isInitialized, setisInitialized] = useState(true);
 
   const handleCheck = (value) => async () => {
+    console.log(checked);
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
 
-    const element = document.getElementById(value);
-    console.log(value,element.checked);
-
-    if (element.checked) {
+    setisInitialized(false);
+    if (currentIndex === -1) {
      try {
         const error = await supabase.from('terminal').update({
           customerId: cus.customerId
@@ -76,9 +79,8 @@ export default function NewSupplier() {
       } catch (error) {
         console.log(error);
       }
-      const temp = allTerm;
-      console.log(temp);
-      element.checked = true;
+      //const temp = allTerm;
+      newChecked.push(value);
     } else {
       try {
         const error = await supabase.from('terminal').update({
@@ -90,60 +92,97 @@ export default function NewSupplier() {
       } catch (error) {
         console.log(error);
       }
-      element.checked = false; 
+      newChecked.splice(currentIndex, 1); 
     }
-    Router.reload();
+    setisInitialized(true);
+    setChecked(newChecked);
+    //Router.reload();
   };
 
   useEffect(()=>{
+    
     async function fetchData()
     {
+      setisInitialized(false);
       //获得当前用户
       const all = await fetchTable('customer',id);
-      console.log(all);
+      //console.log(all);
       setcus(all.data);
 
       //获得所有终端
       const all2 = await fetchTable('terminal');
       //console.log(all2);
       setallTerm(all2.data);
+
+      setisInitialized(true);
+
+      const newChecked = [...checked];
+      for(const term of all2.data)
+      {
+        //console.log(all.data.customerId,term.customerId);
+        if (all.data.customerId === term.customerId) {
+          newChecked.push(term.id);
+        } 
+      }
+      setChecked(newChecked);
+      console.log(checked);
     }
 
     fetchData();
+    
     },[]);
 
-  return (
-    <Page title="绑定终端">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading="绑定终端"
-          links={[
-            { name: '基础配置', href: PATH_DASHBOARD.root },
-            { name: '终端客户信息', href: PATH_DASHBOARD.basicConfiguration.customerInformation },
-            { name: '绑定终端' },
-          ]}
-        />
-        <Card sx={{ mb: 3,p:3}}>
-        <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-          请选择该客户绑定的终端
-        </Typography>
-        <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
-        <table>
-            <tr style={{textAlign:'center'}} fullWidth>
-                <td style={{ width: '25%', textAlign: 'center',fontSize: '20px' }}>
-                    客户代码:
-                </td>
-                <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold',fontSize: '20px' }}>
-                    {cus.customerId}
-                </td>
-                <td style={{ width: '25%', textAlign: 'left',fontSize: '20px' }}>
-                    客户名称:
-                </td>
-                <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold' ,fontSize: '20px'}}>
-                    {cus.customerName}
-                </td>
-            </tr>
-        </table>
+    const handleCheck1 = (value) => () => {
+      const currentIndex = checked.indexOf(value);
+      const newChecked = [...checked];
+      if (currentIndex === -1) {
+        newChecked.push(value);
+      } else {
+        newChecked.splice(currentIndex, 1);
+      }
+      setChecked(newChecked);
+    };
+  
+
+    if (!isInitialized) {
+      return <LoadingScreen />;
+    }
+
+    else{
+    return ( 
+      <Page title="绑定终端">
+        <Container maxWidth={themeStretch ? false : 'lg'}>
+        
+          <HeaderBreadcrumbs
+            heading="绑定终端"
+            links={[
+              { name: '基础配置', href: PATH_DASHBOARD.root },
+              { name: '终端客户信息', href: PATH_DASHBOARD.basicConfiguration.customerInformation },
+              { name: '绑定终端' },
+            ]}
+          />
+          <Card sx={{ mb: 3,p:3}}>
+          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
+            请选择该客户绑定的终端
+          </Typography>
+          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
+          <table >
+              <tr style={{textAlign:'center'}} fullWidth>
+                  <td style={{ width: '25%', textAlign: 'center',fontSize: '20px' }}>
+                      客户代码:
+                  </td>
+                  <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold',fontSize: '20px' }}>
+                      {cus.customerId}
+                  </td>
+                  <td style={{ width: '25%', textAlign: 'left',fontSize: '20px' }}>
+                      客户名称:
+                  </td>
+                  <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold' ,fontSize: '20px'}}>
+                      {cus.customerName}
+                  </td>
+              </tr>
+          </table>
+          <Block title="终端列表">
               <ListWrapperStyle>
                 <List>
                   {allTerm.map((value) => {
@@ -153,8 +192,7 @@ export default function NewSupplier() {
                         <ListItemIcon>
                           <Checkbox
                             edge="start"
-                            id = {value.id}
-                            checked={value.customerId === cus.customerId}
+                            checked={checked.indexOf(value.id) !== -1}
                             tabIndex={-1}
                             disableRipple
                             inputProps={{ 'aria-labelledby': labelId }}
@@ -171,9 +209,11 @@ export default function NewSupplier() {
                   })}
                 </List>
               </ListWrapperStyle>
-            {/* </Block> */}
-        </Card>
-      </Container>
-    </Page>
-  );
+            </Block>
+              {/* </Block> */}
+          </Card>
+        </Container>
+      </Page>
+    );
+    }
 }

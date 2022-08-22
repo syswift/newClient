@@ -70,7 +70,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
 
   const values = watch();
 
-  console.log('values', values);
+  //console.log('values', values);
 
   useEffect(() => {
     if (isEdit && currentInvoice) {

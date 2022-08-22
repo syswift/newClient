@@ -9,7 +9,7 @@ import { Box, Stack, Button, Divider, Typography, InputAdornment, MenuItem,
 import { fNumber, fCurrency } from '../../../../utils/formatNumber';
 // components
 import Iconify from '../../../../components/Iconify';
-import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import { RHFSelect, RHFTextField, RHFUploadSingleFile } from '../../../../components/hook-form';
 import { fetchBox } from '../../../../../api/fetchBox';
 import { UploadSingleFile } from '../../../../components/upload';
 
@@ -68,12 +68,8 @@ export default function InvoiceNewEditDetails() {
 
   const handleAdd = () => {
     append({
-      title: '',
-      description: '',
-      service: '',
+      boxid: '',
       quantity: 1,
-      price: 0,
-      total: 0,
     });
   };
 
@@ -126,7 +122,7 @@ export default function InvoiceNewEditDetails() {
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
 
               <RHFSelect
-                name={`items[${index}].service`}
+                name={`items[${index}].boxid`}
                 size="small"
                 label="周转箱代码"
                 InputLabelProps={{ shrink: true }}
@@ -211,7 +207,7 @@ export default function InvoiceNewEditDetails() {
       <Card>
       <CardHeader title="合同上传" />
             <CardContent>
-                <UploadSingleFile file={file} onDrop={handleDropSingleFile} />
+                <RHFUploadSingleFile id="file" name="file" file={file} maxSize={3145728} onDrop={handleDropSingleFile} />
             </CardContent>
       </Card>
       </Stack>

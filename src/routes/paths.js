@@ -75,7 +75,6 @@ export const PATH_DASHBOARD = {
   // 周转管理
   turnoverManagement: {
     root: path(ROOTS_DASHBOARD, '/turnoverManagement'),
-    turnoverManagement: path(ROOTS_DASHBOARD, '/turnoverManagement/turnoverOrderManagement'),
     turnoverOrderManagement: path(ROOTS_DASHBOARD, '/turnoverManagement/turnoverOrderManagement'),
     new: path(ROOTS_DASHBOARD, '/turnoverManagement/new'),
     viewTurnoverOrder: path(ROOTS_DASHBOARD, '/turnoverManagement/viewTurnoverOrder'),

@@ -34,9 +34,11 @@ const navConfig = [
     items: [
       { title: '控制台1', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: '控制台2', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
+      /*
       { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
       { title: 'booking', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking },
+      */
     ],
   },
 
@@ -131,6 +133,7 @@ const navConfig = [
         ],
       },
 
+      /*
       // E-COMMERCE
       {
         title: 'ecommerce',
@@ -145,6 +148,7 @@ const navConfig = [
           { title: 'checkout', path: PATH_DASHBOARD.eCommerce.checkout },
         ],
       },
+      */
 
       // INVOICE
       {
@@ -159,6 +163,7 @@ const navConfig = [
         ],
       },
 
+      /*
       // BLOG
       {
         title: 'blog',
@@ -169,10 +174,10 @@ const navConfig = [
           { title: 'post', path: PATH_DASHBOARD.blog.demoView },
           { title: 'create', path: PATH_DASHBOARD.blog.new },
         ],
-      },
+      },*/
     ],
   },
-
+/*
   // APP
   // ----------------------------------------------------------------------
   {
@@ -258,7 +263,8 @@ const navConfig = [
       },
       { title: 'item_external_link', path: 'https://www.google.com/', icon: ICONS.menuItem },
     ],
-  },
+  },*/
+  
 ];
 
 export default navConfig;

@@ -61,10 +61,11 @@ export default function NewSupplier() {
   const [checked, setChecked] = useState([0]);
 
   const handleCheck = (value) => async () => {
-    const currentIndex = checked.indexOf(value);
-    console.log(currentIndex);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
+
+    const element = document.getElementById(value);
+    console.log(value,element.checked);
+
+    if (element.checked) {
      try {
         const error = await supabase.from('terminal').update({
           customerId: cus.customerId
@@ -77,8 +78,7 @@ export default function NewSupplier() {
       }
       const temp = allTerm;
       console.log(temp);
-      newChecked.push(value);
-      //Router.reload();
+      element.checked = true;
     } else {
       try {
         const error = await supabase.from('terminal').update({
@@ -90,10 +90,9 @@ export default function NewSupplier() {
       } catch (error) {
         console.log(error);
       }
-      newChecked.splice(currentIndex, 1);
-      //Router.reload();
+      element.checked = false; 
     }
-    setChecked(newChecked);
+    Router.reload();
   };
 
   useEffect(()=>{
@@ -109,6 +108,7 @@ export default function NewSupplier() {
       //console.log(all2);
       setallTerm(all2.data);
     }
+
     fetchData();
     },[]);
 
@@ -153,6 +153,7 @@ export default function NewSupplier() {
                         <ListItemIcon>
                           <Checkbox
                             edge="start"
+                            id = {value.id}
                             checked={value.customerId === cus.customerId}
                             tabIndex={-1}
                             disableRipple

@@ -183,7 +183,7 @@ export default function CustomerInformation() {
 
   const handleViewRow = (id) => {
     // push(PATH_DASHBOARD.invoice.view(id));
-    push(PATH_DASHBOARD.basicConfiguration.bindingTerminal);
+    push(PATH_DASHBOARD.basicConfiguration.bindingTerminal(id));
   };
 
   const dataFiltered = applySortFilter({

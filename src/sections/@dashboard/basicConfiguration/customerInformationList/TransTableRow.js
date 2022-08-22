@@ -100,7 +100,7 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
                   handleCloseMenu();
                 }}>
                 <Iconify icon={'eva:eye-fill'} />
-                  绑定
+                  绑定终端
               </MenuItem>
             </>
           }

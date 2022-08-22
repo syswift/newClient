@@ -69,7 +69,7 @@ export const PATH_DASHBOARD = {
     newTerminalCustomer: path(ROOTS_DASHBOARD, '/basicConfiguration/newTerminalCustomer'),
     newPrice: path(ROOTS_DASHBOARD, '/basicConfiguration/newPrice'),
     newTurnoverBox: path(ROOTS_DASHBOARD, '/basicConfiguration/newTurnoverBox'),
-    bindingTerminal: path(ROOTS_DASHBOARD, '/basicConfiguration/bindingTerminal'),
+    bindingTerminal:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/bindingTerminal/${id}`),
   },
   // 周转管理
   turnoverManagement: {

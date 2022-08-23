@@ -2,17 +2,20 @@
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography, Card, Stack, Divider, Autocomplete, TextField ,Button} from '@mui/material';
 // hooks
-import useSettings from '../../hooks/useSettings';
+import useSettings from '../../../hooks/useSettings';
 // layouts
-import Layout from '../../layouts';
+import Layout from '../../../layouts';
 // components
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 // sections
-import  AnalyticsWebsiteVisits  from '../../sections/@dashboard/alterChartResources/AnalyticsWebsiteVisits';
-import  AnalyticsWidgetSummary from '../../sections/@dashboard/alterChartResources/AnalyticsWidgetSummary';
-import  AppCurrentDownload  from '../../sections/@dashboard/alterChartResources/AppCurrentDownload';
-import  BookingTotalIncomes  from '../../sections/@dashboard/alterChartResources/BookingTotalIncomes';
-import  EcommerceWidgetSummary  from '../../sections/@dashboard/chartResources/EcommerceWidgetSummary';
+import  AnalyticsWebsiteVisits  from '../../../sections/@dashboard/alterChartResources/AnalyticsWebsiteVisits';
+import  AnalyticsWidgetSummary from '../../../sections/@dashboard/alterChartResources/AnalyticsWidgetSummary';
+import  AppCurrentDownload  from '../../../sections/@dashboard/alterChartResources/AppCurrentDownload';
+import  BookingTotalIncomes  from '../../../sections/@dashboard/alterChartResources/BookingTotalIncomes';
+import  EcommerceWidgetSummary  from '../../../sections/@dashboard/chartResources/EcommerceWidgetSummary';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../../../api';
+import LoadingScreen from '../../../components/LoadingScreen'; //import载入画面
 
 // ----------------------------------------------------------------------
 
@@ -26,14 +29,43 @@ export default function GeneralAnalytics() {
   const theme = useTheme();
 
   const { themeStretch } = useSettings();
-  const projectChoice = [
-    { label: '项目1', year: 1994 },
-    { label: '项目2', year: 1972 },
-  ];
-  const customerChoice = [
-    { label: '客户1', year: 1994 },
-    { label: '客户2', year: 1972 },
-  ];
+  const [ PROJECTS , setPROJECTS ] = useState([]);
+  const [ CUSTOMERS , setCUSTOMERS ] = useState([]);
+  const [ projectChoice , setprojectChoice ] = useState([]);
+
+  const [ customerChoice , setcustomerChoice ] = useState([]);
+
+  useEffect(()=>{
+    async function fetchData()
+    {
+      const processPer = supabase.auth.user().id;
+      const all = await supabase.from('project').select();
+      //console.log(all.data);
+
+      setPROJECTS(all.data);
+
+      const temp = [];
+      for(const project of all.data)
+      {     
+        temp.push(project.projectName);
+      }
+      setprojectChoice(temp);
+
+      const all2 = await supabase.from('customer').select();
+      //console.log(all.data);
+
+      setCUSTOMERS(all2.data);
+
+      const temp2 = [];
+      for(const customer of all2.data)
+      {     
+        temp2.push(customer.customerId);
+      }
+      setcustomerChoice(temp2);
+    }
+    fetchData();
+  },[]);
+
   return (
     <Page title="General: Analytics">
       <Container maxWidth={themeStretch ? false : 'xl'}>

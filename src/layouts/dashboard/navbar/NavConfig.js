@@ -34,7 +34,7 @@ const navConfig = [
     items: [
       { title: '控制台1', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: '控制台2', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
-      { title: '项目分离', path: PATH_DASHBOARD.general.projectSeparation, icon: ICONS.booking },
+      { title: '项目', path: PATH_DASHBOARD.general.projectSeparation, icon: ICONS.booking },
       /*
       { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },

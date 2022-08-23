@@ -70,7 +70,7 @@ export const PATH_DASHBOARD = {
     newTerminalCustomer: path(ROOTS_DASHBOARD, '/basicConfiguration/newTerminalCustomer'),
     newPrice: path(ROOTS_DASHBOARD, '/basicConfiguration/newPrice'),
     newTurnoverBox: path(ROOTS_DASHBOARD, '/basicConfiguration/newTurnoverBox'),
-    bindingTerminal:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/bindingTerminal/${id}`),
+    bindingTerminal:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/customerInformation/bindingTerminal/${id}`),
     editCustomer:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/editCustomer/${id}`),
   },
   // 周转管理

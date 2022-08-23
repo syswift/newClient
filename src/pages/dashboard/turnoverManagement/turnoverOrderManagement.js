@@ -219,8 +219,8 @@ export default function TurnoverOrderManagement() {
           heading="周转单管理"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '周转管理', herf: PATH_DASHBOARD.turnoverManagement.root },
-            { name: '周转单管理', herf: PATH_DASHBOARD.turnoverManagement.turnoverOrderManagement },
+            { name: '周转管理', href: PATH_DASHBOARD.turnoverManagement.root },
+            { name: '周转单管理', href: PATH_DASHBOARD.turnoverManagement.turnoverOrderManagement },
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.turnoverManagement.new} passHref>

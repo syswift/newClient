@@ -25,27 +25,27 @@ import {
   FormControlLabel,
 } from '@mui/material';
   // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
   // hooks
-import useTabs from '../../../hooks/useTabs';
-import useSettings from '../../../hooks/useSettings';
-import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+import useTabs from '../../../../hooks/useTabs';
+import useSettings from '../../../../hooks/useSettings';
+import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
   // _mock_
-import { _invoices } from '../../../_mock';
+import { _invoices } from '../../../../_mock';
   // layouts
-import Layout from '../../../layouts';
+import Layout from '../../../../layouts';
   // components
-import Page from '../../../components/Page';
-import Label from '../../../components/Label';
-import Iconify from '../../../components/Iconify';
-import Scrollbar from '../../../components/Scrollbar';
-import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
+import Page from '../../../../components/Page';
+import Label from '../../../../components/Label';
+import Iconify from '../../../../components/Iconify';
+import Scrollbar from '../../../../components/Scrollbar';
+import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../../components/table';
 // sections
-import InvoiceAnalytic from '../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../sections/@dashboard/basicConfiguration/customerInformationList';
-import { supabase } from '../../../../api';
-import LoadingScreen from '../../../components/LoadingScreen'; //import载入画面
+import InvoiceAnalytic from '../../../../sections/@dashboard/invoice/InvoiceAnalytic';
+import {TransTableRow, TransTableToolbar} from '../../../../sections/@dashboard/basicConfiguration/customerInformationList';
+import { supabase } from '../../../../../api';
+import LoadingScreen from '../../../../components/LoadingScreen'; //import载入画面
 
 // ----------------------------------------------------------------------
 
@@ -239,7 +239,7 @@ export default function CustomerInformation() {
           heading="客户信息"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '基础配置', herf: PATH_DASHBOARD.customerInformation },
+            { name: '基础配置', href: PATH_DASHBOARD.customerInformation },
             { name: '客户信息'},
           ]}
           action={

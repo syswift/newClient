@@ -35,9 +35,13 @@ export default function GeneralAnalytics() {
 
   const [ customerChoice , setcustomerChoice ] = useState([]);
 
+  const [isInitialized, setisInitialized] = useState(true); 
+
   useEffect(()=>{
     async function fetchData()
     {
+      setisInitialized(false);
+
       const processPer = supabase.auth.user().id;
       const all = await supabase.from('project').select();
       //console.log(all.data);
@@ -62,10 +66,53 @@ export default function GeneralAnalytics() {
         temp2.push(customer.customerId);
       }
       setcustomerChoice(temp2);
+
+      setisInitialized(true);
     }
     fetchData();
   },[]);
 
+  const submitProject = async () =>{
+    const projectSelected = document.getElementById('project').value;
+
+    console.log(projectSelected);
+
+    const id = supabase.auth.user().id;
+
+    try {
+      const{data, error} = await supabase.from('profiles').update({currentProject: projectSelected}).match({id: id});
+
+      if(error) throw error;
+      else{
+        alert('选择成功');
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const leaveProject = async () =>{
+
+    const id = supabase.auth.user().id;
+
+    try {
+      const{data, error} = await supabase.from('profiles').update({currentProject:''}).match({id: id});
+
+      if(error) throw error;
+      else{
+        alert('离开项目成功');
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (!isInitialized) {
+    return <LoadingScreen />;
+  }
+  else{
   return (
     <Page title="General: Analytics">
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -98,11 +145,11 @@ export default function GeneralAnalytics() {
             <Card sx={{ py: 3 }}>
                     <Stack direction="row" divider={<Divider orientation="vertical" flexItem />}>
                         <Stack width={1} textAlign="center">
-                            <Typography variant="h4">项目查看</Typography>
+                            <Typography variant="h4">项目选择</Typography>
                             <Typography variant="body2" sx={{ mb: 3,p:3}}>
                                 <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
                                     <Autocomplete
-                                            disablePortal
+                                            //disablePortal
                                             id="combo-box-demo"
                                             options={projectChoice}
                                             sx={{ width: 350 }}
@@ -110,10 +157,10 @@ export default function GeneralAnalytics() {
                                             />}
                                         />
                                     <Button type="submit" variant="contained" sx={{ width: 100 }}>
-                                        {'查看'}
+                                        {'选择'}
                                     </Button>
                                     <Button type="submit" variant="contained" sx={{ width: 100 }}>
-                                        {'重置'}
+                                        {'离开项目'}
                                     </Button>
                                 </Stack>
                             </Typography>
@@ -125,7 +172,7 @@ export default function GeneralAnalytics() {
                                 <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
                                     <TextField name="projectName" label="项目名称" sx={{ width: 300 }}/>
                                     <Autocomplete
-                                            disablePortal
+                                            //disablePortal
                                             id="combo-box-demo"
                                             options={customerChoice}
                                             sx={{ width: 300 }}
@@ -199,4 +246,5 @@ export default function GeneralAnalytics() {
       </Container>
     </Page>
   );
+  }
 }

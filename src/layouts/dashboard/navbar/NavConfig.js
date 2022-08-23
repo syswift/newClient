@@ -34,7 +34,6 @@ const navConfig = [
     items: [
       { title: '控制台1', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: '控制台2', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
-      { title: '项目', path: PATH_DASHBOARD.general.projectSeparation, icon: ICONS.booking },
       /*
       { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
@@ -48,11 +47,21 @@ const navConfig = [
     subheader: '管理',
     items: [
       //-------------------------------------------新增-------------------------------------------------//
+      // 项目管理
+      {
+        title: '项目管理',
+        path: PATH_DASHBOARD.projectManagement.root,
+        icon: ICONS.booking,
+        children: [
+          { title: '查看项目', path: PATH_DASHBOARD.projectManagement.projectView },
+          { title: '新建项目', path: PATH_DASHBOARD.projectManagement.newProject },
+        ],
+      },
       // 基础配置
       {
-        title: 'Basic_Configuration',
+        title: '基础配置',
         path: PATH_DASHBOARD.basicConfiguration.root,
-        icon: ICONS.user,
+        icon: ICONS.menuItem,
         children: [
           { title: '客户信息', path: PATH_DASHBOARD.basicConfiguration.customerInformation },
           { title: '供应商信息', path: PATH_DASHBOARD.basicConfiguration.supplierInformation },
@@ -65,7 +74,7 @@ const navConfig = [
       {
         title: '周转管理',
         path: PATH_DASHBOARD.turnoverManagement.root,
-        icon: ICONS.user,
+        icon: ICONS.analytics,
         children: [
           { title: '周转单管理', path: PATH_DASHBOARD.turnoverManagement.turnoverOrderManagement },
           { title: '供应商来货', path: PATH_DASHBOARD.turnoverManagement.supplierSupply },
@@ -75,7 +84,7 @@ const navConfig = [
       {
         title: '库存管理',
         path: PATH_DASHBOARD.inventoryManagement.root,
-        icon: ICONS.user,
+        icon: ICONS.banking,
         children: [
           { title: '库存查询', path: PATH_DASHBOARD.inventoryManagement.inventoryQuery },
         ],
@@ -84,7 +93,7 @@ const navConfig = [
       {
         title: '结算管理',
         path: PATH_DASHBOARD.settlementManagement.root,
-        icon: ICONS.user,
+        icon: ICONS.cart,
         children: [
           { title: '结算管理', path: PATH_DASHBOARD.settlementManagement.settlementManagement1 },
         ],
@@ -93,7 +102,7 @@ const navConfig = [
       {
         title: '工单管理',
         path: PATH_DASHBOARD.workOrderManagement.root,
-        icon: ICONS.user,
+        icon: ICONS.invoice,
         children: [
           { title: '工单管理', path: PATH_DASHBOARD.workOrderManagement.workOrderManagement1 },
         ],
@@ -102,7 +111,7 @@ const navConfig = [
       {
         title: '报表管理',
         path: PATH_DASHBOARD.reportManagement.root,
-        icon: ICONS.user,
+        icon: ICONS.mail,
         children: [
           { title: '报表管理', path: PATH_DASHBOARD.reportManagement.reportManagement },
         ],
@@ -111,7 +120,7 @@ const navConfig = [
       {
         title: '系统管理',
         path: PATH_DASHBOARD.systemManagement.root,
-        icon: ICONS.user,
+        icon: ICONS.kanban,
         children: [
           { title: '文件上传', path: PATH_DASHBOARD.systemManagement.fileUpload },
           { title: '文件下载', path: PATH_DASHBOARD.systemManagement.fileDownload },
@@ -175,10 +184,11 @@ const navConfig = [
           { title: 'post', path: PATH_DASHBOARD.blog.demoView },
           { title: 'create', path: PATH_DASHBOARD.blog.new },
         ],
-      },*/
+      },
+      */
     ],
   },
-/*
+
   // APP
   // ----------------------------------------------------------------------
   {
@@ -195,7 +205,7 @@ const navConfig = [
       { title: 'kanban', path: PATH_DASHBOARD.kanban, icon: ICONS.kanban },
     ],
   },
-
+/*
   // DEMO MENU STATES
   {
     subheader: 'Other cases',
@@ -264,7 +274,8 @@ const navConfig = [
       },
       { title: 'item_external_link', path: 'https://www.google.com/', icon: ICONS.menuItem },
     ],
-  },*/
+  },
+  */
   
 ];
 

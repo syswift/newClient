@@ -30,8 +30,6 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useTabs from '../../../../hooks/useTabs';
 import useSettings from '../../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
-  // _mock_
-import { _invoices } from '../../../../_mock';
   // layouts
 import Layout from '../../../../layouts';
   // components
@@ -232,197 +230,197 @@ export default function CustomerInformation() {
     return <LoadingScreen />;
   }
   else{
-  return (
-    <Page title="客户信息">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading="客户信息"
-          links={[
-            { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '基础配置', href: PATH_DASHBOARD.customerInformation },
-            { name: '客户信息'},
-          ]}
-          action={
-            <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
-                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                    新增客户
-                </Button>
-            </NextLink>
-          }
-        />
-        <Card sx={{ mb: 3 }}>
-          <Scrollbar>
-            <Stack
-              direction="row"
-              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
-              sx={{ py: 2 }}
-            >
-              <InvoiceAnalytic
-                title="合计"
-                total={allTrans.length}
-                percent={100}
-                price={sumBy(allTrans, 'totalPrice')}
-                icon="ic:round-receipt"
-                color={theme.palette.info.main}
-              />
-              <InvoiceAnalytic
-                title="可用"
-                total={getLengthByStatus(true)}
-                percent={getPercentByStatus(true)}
-                price={getTotalPriceByStatus(true)}
-                icon="eva:checkmark-circle-2-fill"
-                color={theme.palette.success.main}
-              />
-              <InvoiceAnalytic
-                title="不可用"
-                total={getLengthByStatus(false)}
-                percent={getPercentByStatus(false)}
-                price={getTotalPriceByStatus(false)}
-                icon="eva:clock-fill"
-                color={theme.palette.warning.main}
-              />
-            </Stack>
-          </Scrollbar>
-        </Card>
-        <Card>
-          <Tabs
-            allowScrollButtonsMobile
-            variant="scrollable"
-            scrollButtons="auto"
-            value={filterStatus}
-            onChange={onFilterStatus}
-            sx={{ px: 2, bgcolor: 'background.neutral' }}
-          >
-            {TABS.map((tab) => (
-              <Tab
-                disableRipple
-                key={tab.value}
-                value={tab.value}
-                icon={<Label color={tab.color}> {tab.count} </Label>}
-                label={tab.label}
-              />
-            ))}
-          </Tabs>
-
-          <Divider />
-
-          <TransTableToolbar
-            filterName={filterName}
-            filterService={filterService}
-            filterStartDate={filterStartDate}
-            filterEndDate={filterEndDate}
-            onFilterName={handleFilterName}
-            onFilterService={handleFilterService}
-            onFilterStartDate={(newValue) => {
-              setFilterStartDate(newValue);
-            }}
-            onFilterEndDate={(newValue) => {
-              setFilterEndDate(newValue);
-            }}
-            optionsService={SERVICE_OPTIONS}
+    return (
+      <Page title="客户信息">
+        <Container maxWidth={themeStretch ? false : 'lg'}>
+          <HeaderBreadcrumbs
+            heading="客户信息"
+            links={[
+              { name: '主页', href: PATH_DASHBOARD.root },
+              { name: '基础配置', herf: PATH_DASHBOARD.customerInformation },
+              { name: '客户信息'},
+            ]}
+            action={
+              <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
+                  <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+                      新增客户
+                  </Button>
+              </NextLink>
+            }
           />
-
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 2000, position: 'relative' }}>
-              {selected.length > 0 && (
-                <TableSelectedActions
-                  dense={dense}
-                  numSelected={selected.length}
-                  rowCount={allTrans.length}
-                  onSelectAllRows={(checked) =>
-                    onSelectAllRows(
-                      checked,
-                      allTrans.map((row) => row.id)
-                    )
-                  }
-                  actions={
-                    <Stack spacing={1} direction="row">
-                      <Tooltip title="Sent">
-                        <IconButton color="primary">
-                          <Iconify icon={'ic:round-send'} />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="Download">
-                        <IconButton color="primary">
-                          <Iconify icon={'eva:download-outline'} />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="Print">
-                        <IconButton color="primary">
-                          <Iconify icon={'eva:printer-fill'} />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="Delete">
-                        <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
-                          <Iconify icon={'eva:trash-2-outline'} />
-                        </IconButton>
-                      </Tooltip>
-                    </Stack>
-                  }
+          <Card sx={{ mb: 3 }}>
+            <Scrollbar>
+              <Stack
+                direction="row"
+                divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+                sx={{ py: 2 }}
+              >
+                <InvoiceAnalytic
+                  title="合计"
+                  total={allTrans.length}
+                  percent={100}
+                  price={sumBy(allTrans, 'totalPrice')}
+                  icon="ic:round-receipt"
+                  color={theme.palette.info.main}
                 />
-              )}
-
-              <Table size={dense ? 'small' : 'medium'}>
-                <TableHeadCustom
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={allTrans.length}
-                  numSelected={selected.length}
-                  onSort={onSort}
-                  onSelectAllRows={(checked) =>
-                    onSelectAllRows(
-                      checked,
-                      allTrans.map((row) => row.id)
-                    )
-                  }
+                <InvoiceAnalytic
+                  title="可用"
+                  total={getLengthByStatus(true)}
+                  percent={getPercentByStatus(true)}
+                  price={getTotalPriceByStatus(true)}
+                  icon="eva:checkmark-circle-2-fill"
+                  color={theme.palette.success.main}
                 />
+                <InvoiceAnalytic
+                  title="不可用"
+                  total={getLengthByStatus(false)}
+                  percent={getPercentByStatus(false)}
+                  price={getTotalPriceByStatus(false)}
+                  icon="eva:clock-fill"
+                  color={theme.palette.warning.main}
+                />
+              </Stack>
+            </Scrollbar>
+          </Card>
+          <Card>
+            <Tabs
+              allowScrollButtonsMobile
+              variant="scrollable"
+              scrollButtons="auto"
+              value={filterStatus}
+              onChange={onFilterStatus}
+              sx={{ px: 2, bgcolor: 'background.neutral' }}
+            >
+              {TABS.map((tab) => (
+                <Tab
+                  disableRipple
+                  key={tab.value}
+                  value={tab.value}
+                  icon={<Label color={tab.color}> {tab.count} </Label>}
+                  label={tab.label}
+                />
+              ))}
+            </Tabs>
 
-                <TableBody>
-                  {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <TransTableRow
-                      key={row.id}
-                      row={row}
-                      selected={selected.includes(row.id)}
-                      onSelectRow={() => onSelectRow(row.id)}
-                      onViewRow={() => handleViewRow(row.id)}
-                      onEditRow={() => handleEditRow(row.id)}
-                      onDeleteRow={() => handleDeleteRow(row.id)}
-                    />
-                  ))}
+            <Divider />
 
-                  <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, allTrans.length)} />
-
-                  <TableNoData isNotFound={isNotFound} />
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
-          <Box sx={{ position: 'relative' }}>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={dataFiltered.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={onChangePage}
-              onRowsPerPageChange={onChangeRowsPerPage}
+            <TransTableToolbar
+              filterName={filterName}
+              filterService={filterService}
+              filterStartDate={filterStartDate}
+              filterEndDate={filterEndDate}
+              onFilterName={handleFilterName}
+              onFilterService={handleFilterService}
+              onFilterStartDate={(newValue) => {
+                setFilterStartDate(newValue);
+              }}
+              onFilterEndDate={(newValue) => {
+                setFilterEndDate(newValue);
+              }}
+              optionsService={SERVICE_OPTIONS}
             />
 
-            <FormControlLabel
-              control={<Switch checked={dense} onChange={onChangeDense} />}
-              label="紧凑"
-              sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
-            />
-          </Box>
-        </Card>
-      </Container>
-    </Page>
-  );
+            <Scrollbar>
+              <TableContainer sx={{ minWidth: 2000, position: 'relative' }}>
+                {selected.length > 0 && (
+                  <TableSelectedActions
+                    dense={dense}
+                    numSelected={selected.length}
+                    rowCount={allTrans.length}
+                    onSelectAllRows={(checked) =>
+                      onSelectAllRows(
+                        checked,
+                        allTrans.map((row) => row.id)
+                      )
+                    }
+                    actions={
+                      <Stack spacing={1} direction="row">
+                        <Tooltip title="Sent">
+                          <IconButton color="primary">
+                            <Iconify icon={'ic:round-send'} />
+                          </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Download">
+                          <IconButton color="primary">
+                            <Iconify icon={'eva:download-outline'} />
+                          </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Print">
+                          <IconButton color="primary">
+                            <Iconify icon={'eva:printer-fill'} />
+                          </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Delete">
+                          <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
+                            <Iconify icon={'eva:trash-2-outline'} />
+                          </IconButton>
+                        </Tooltip>
+                      </Stack>
+                    }
+                  />
+                )}
+
+                <Table size={dense ? 'small' : 'medium'}>
+                  <TableHeadCustom
+                    order={order}
+                    orderBy={orderBy}
+                    headLabel={TABLE_HEAD}
+                    rowCount={allTrans.length}
+                    numSelected={selected.length}
+                    onSort={onSort}
+                    onSelectAllRows={(checked) =>
+                      onSelectAllRows(
+                        checked,
+                        allTrans.map((row) => row.id)
+                      )
+                    }
+                  />
+
+                  <TableBody>
+                    {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                      <TransTableRow
+                        key={row.id}
+                        row={row}
+                        selected={selected.includes(row.id)}
+                        onSelectRow={() => onSelectRow(row.id)}
+                        onViewRow={() => handleViewRow(row.id)}
+                        onEditRow={() => handleEditRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
+                      />
+                    ))}
+
+                    <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, allTrans.length)} />
+
+                    <TableNoData isNotFound={isNotFound} />
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Scrollbar>
+
+            <Box sx={{ position: 'relative' }}>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={dataFiltered.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={onChangePage}
+                onRowsPerPageChange={onChangeRowsPerPage}
+              />
+
+              <FormControlLabel
+                control={<Switch checked={dense} onChange={onChangeDense} />}
+                label="紧凑"
+                sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+              />
+            </Box>
+          </Card>
+        </Container>
+      </Page>
+    );
   }
 }
 

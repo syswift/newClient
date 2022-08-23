@@ -37,7 +37,7 @@ export default function LoadingScreen() {
           repeat: Infinity,
         }}
       >
-        <Logo disabledLink sx={{ width: 104, height: 104 }} />
+        <Logo disabledLink sx={{ width: 64, height: 64 }} />
       </m.div>
 
       <Box
@@ -50,8 +50,8 @@ export default function LoadingScreen() {
         }}
         transition={{ ease: 'linear', duration: 3.2, repeat: Infinity }}
         sx={{
-          width: 150,
-          height: 150,
+          width: 100,
+          height: 100,
           borderRadius: '25%',
           position: 'absolute',
           border: (theme) => `solid 3px ${alpha(theme.palette.primary.dark, 0.24)}`,

@@ -39,7 +39,6 @@ export const PATH_DASHBOARD = {
   general: {
     app: path(ROOTS_DASHBOARD, '/app'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
-    projectSeparation: path(ROOTS_DASHBOARD, '/projectSeparation'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
     banking: path(ROOTS_DASHBOARD, '/banking'),
     booking: path(ROOTS_DASHBOARD, '/booking'),
@@ -57,6 +56,12 @@ export const PATH_DASHBOARD = {
   kanban: path(ROOTS_DASHBOARD, '/kanban'),
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
   //-----------------------------------新增-----------------------------------//
+  // 项目管理
+  projectManagement: {
+    root: path(ROOTS_DASHBOARD, '/projectManagement'),
+    newProject: path(ROOTS_DASHBOARD, '/projectManagement/newProject'),
+    projectView: path(ROOTS_DASHBOARD, '/projectManagement/projectView'),
+  },
   // 基础配置
   basicConfiguration: {
     root: path(ROOTS_DASHBOARD, '/basicConfiguration'),
@@ -70,7 +75,7 @@ export const PATH_DASHBOARD = {
     newTerminalCustomer: path(ROOTS_DASHBOARD, '/basicConfiguration/newTerminalCustomer'),
     newPrice: path(ROOTS_DASHBOARD, '/basicConfiguration/newPrice'),
     newTurnoverBox: path(ROOTS_DASHBOARD, '/basicConfiguration/newTurnoverBox'),
-    bindingTerminal:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/customerInformation/bindingTerminal/${id}`),
+    bindingTerminal:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/bindingTerminal/${id}`),
     editCustomer:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/editCustomer/${id}`),
   },
   // 周转管理

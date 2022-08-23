@@ -1,22 +1,24 @@
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography, Card, Stack, Divider, Autocomplete, TextField ,Button,MenuItem} from '@mui/material';
+import { Grid, Container, Typography, Card, Stack, Divider, Autocomplete, TextField ,Button} from '@mui/material';
 // hooks
-import useSettings from '../../../hooks/useSettings';
+import useSettings from '../../../../hooks/useSettings';
 // layouts
-import Layout from '../../../layouts';
+import Layout from '../../../../layouts';
 // components
-import Page from '../../../components/Page';
+import Page from '../../../../components/Page';
 // sections
-import  AnalyticsWebsiteVisits  from '../../../sections/@dashboard/alterChartResources/AnalyticsWebsiteVisits';
-import  AnalyticsWidgetSummary from '../../../sections/@dashboard/alterChartResources/AnalyticsWidgetSummary';
-import  AppCurrentDownload  from '../../../sections/@dashboard/alterChartResources/AppCurrentDownload';
-import  BookingTotalIncomes  from '../../../sections/@dashboard/alterChartResources/BookingTotalIncomes';
-import  EcommerceWidgetSummary  from '../../../sections/@dashboard/chartResources/EcommerceWidgetSummary';
+import  AnalyticsWebsiteVisits  from '../../../../sections/@dashboard/alterChartResources/AnalyticsWebsiteVisits';
+import  AnalyticsWidgetSummary from '../../../../sections/@dashboard/alterChartResources/AnalyticsWidgetSummary';
+import  AppCurrentDownload  from '../../../../sections/@dashboard/alterChartResources/AppCurrentDownload';
+import  BookingTotalIncomes  from '../../../../sections/@dashboard/alterChartResources/BookingTotalIncomes';
+import  EcommerceWidgetSummary  from '../../../../sections/@dashboard/chartResources/EcommerceWidgetSummary';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../../api';
-import LoadingScreen from '../../../components/LoadingScreen'; //import载入画面
-
+import { supabase } from '../../../../../api';
+import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+import LoadingScreen from '../../../../components/LoadingScreen'; //import载入画面
+  // routes
+  import { PATH_DASHBOARD } from '../../../../routes/paths';
 // ----------------------------------------------------------------------
 
 GeneralAnalytics.getLayout = function getLayout(page) {
@@ -34,10 +36,8 @@ export default function GeneralAnalytics() {
   const [ projectChoice , setprojectChoice ] = useState([]);
 
   const [ customerChoice , setcustomerChoice ] = useState([]);
-  const [ projectSelect , setprojectSelect ] = useState([]);
 
   const [isInitialized, setisInitialized] = useState(true); 
-  //const { resetField } = useFormContext();
 
   useEffect(()=>{
     async function fetchData()
@@ -111,10 +111,6 @@ export default function GeneralAnalytics() {
     }
   }
 
-  const handleSelect = (option) => {
-      setprojectSelect(option);
-  }
-
   if (!isInitialized) {
     return <LoadingScreen />;
   }
@@ -122,53 +118,25 @@ export default function GeneralAnalytics() {
   return (
     <Page title="General: Analytics">
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        {/* <Typography variant="h4" sx={{ mb: 5 }}>
-          项目分离
-        </Typography> */}
-
+      <HeaderBreadcrumbs
+          heading="查看项目"
+          links={[
+            { name: '主页', href: PATH_DASHBOARD.root },
+            { name: '项目管理', herf: PATH_DASHBOARD.projectManagement.projectView },
+            { name: '查看项目'},
+          ]}
+          action={
+            <Autocomplete
+            //disablePortal
+            id="combo-box-demo"
+            options={projectChoice}
+            sx={{ width: 200 }}
+            renderInput={(params) => <TextField {...params} label="项目名" 
+            />}
+        />
+          }
+        />
         <Grid container spacing={3}>
-          {/* <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary title="年度运营额" total={71400000} icon={'ant-design:android-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary title="年度用户增长量" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary
-              title="年度周转量"
-              total={1723315}
-              color="warning"
-              icon={'ant-design:windows-filled'}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary title="年度利润率" total={23.4} color="error" icon={'ant-design:bug-filled'} />
-          </Grid> */}
-          <Grid item xs={12} md={6} lg={12}>
-            <Card sx={{ py: 3 }}>
-                    <Stack direction="row" divider={<Divider orientation="vertical" flexItem />}>
-                        <Stack width={1} textAlign="center">
-                            <Typography variant="body2" sx={{ mb: 3,p:3}}>
-                                <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-                                    <Autocomplete
-                                            //disablePortal
-                                            id="combo-box-demo"
-                                            options={projectChoice}
-                                            sx={{ width: 350 }}
-                                            renderInput={(params) => <TextField {...params} label="请选择项目" 
-                                            />}
-                                        />
-                                </Stack>
-                            </Typography>
-                        </Stack>
-                    </Stack>
-                </Card>
-          </Grid>
-
-
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentDownload
               title="项目结算"

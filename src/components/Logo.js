@@ -25,7 +25,7 @@ const Logo = forwardRef(({ disabledLink = false, sx }, ref) => {
       component="img"
       src="/logo/logo_single.svg" 
       // => your path
-      sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
+      sx={{ width: 60, height: 60, cursor: 'pointer', ...sx }}
     />
   );
 

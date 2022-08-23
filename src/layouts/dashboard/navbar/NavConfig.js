@@ -177,7 +177,7 @@ const navConfig = [
       },*/
     ],
   },
-/*
+
   // APP
   // ----------------------------------------------------------------------
   {
@@ -194,7 +194,7 @@ const navConfig = [
       { title: 'kanban', path: PATH_DASHBOARD.kanban, icon: ICONS.kanban },
     ],
   },
-
+/*
   // DEMO MENU STATES
   {
     subheader: 'Other cases',

@@ -55,7 +55,7 @@ const TABLE_HEAD = [
   { id: 'projectName', label: '项目名称', align: 'center' },
   { id: 'customerId', label: '客户代码', align: 'center' },
   { id: 'salesTeam', label: '销售团队', align: 'center', width: 140 },
-  { id: 'mTeam', label: '运营团队', align: 'center' },
+  { id: 'operationsTeam', label: '运营团队', align: 'center' },
   { id: '' ,align:'center'},
 ];
 
@@ -216,8 +216,8 @@ export default function TurnoverOrderManagement() {
           heading="查看项目"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '项目管理', href: PATH_DASHBOARD.projectManagement.root },
-            { name: '查看项目'},
+            { name: '项目管理', href: PATH_DASHBOARD.projectManagement.projectView},
+            { name: '查看项目', href: PATH_DASHBOARD.projectManagement.projectView},
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.projectManagement.newProject} passHref>

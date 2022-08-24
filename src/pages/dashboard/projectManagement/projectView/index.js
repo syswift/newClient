@@ -43,7 +43,7 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../../sections/@dashboard/trans/list';
+import {TransTableRow, TransTableToolbar} from '../../../../sections/@dashboard/projectView/list';
 import { supabase } from '../../../../../api';
 import LoadingScreen from '../../../../components/LoadingScreen';
 
@@ -52,11 +52,12 @@ import LoadingScreen from '../../../../components/LoadingScreen';
 const CUSTOMER_OPTIONS = [];
 
 const TABLE_HEAD = [
-  { id: 'projectName', label: '项目名称', align: 'center' },
-  { id: 'customerId', label: '客户代码', align: 'center' },
+  { id: 'projectName', label: '项目名称', align: 'left' },
+  { id: 'customerId', label: '客户', align: 'center' },
   { id: 'salesTeam', label: '销售团队', align: 'center', width: 140 },
-  { id: 'processPer', label: '创建人', align: 'center', width: 140 },
   { id: 'operationsTeam', label: '运营团队', align: 'center' },
+  { id: 'state', label: '状态', align: 'center' },
+  { id: 'created_at', label: '创建时间', align: 'center' },
   { id: '' ,align:'center'},
 ];
 
@@ -128,7 +129,7 @@ export default function TurnoverOrderManagement() {
     onChangeDense,
     onChangePage,
     onChangeRowsPerPage,
-  } = useTable({ defaultOrderBy: 'processPer' });
+  } = useTable({ defaultOrderBy: 'customerId' });
 
   const [filterName, setFilterName] = useState('');
 
@@ -166,8 +167,7 @@ export default function TurnoverOrderManagement() {
   };
 
   const handleViewRow = (row) => {
-    // push(PATH_DASHBOARD.invoice.view(id));
-    push(PATH_DASHBOARD.turnoverManagement.viewTurnoverOrder);
+    //push(PATH_DASHBOARD.turnoverManagement.viewTurnoverOrder);
   };
 
   const dataFiltered = applySortFilter({
@@ -189,7 +189,7 @@ export default function TurnoverOrderManagement() {
     (!dataFiltered.length && !!filterEndDate) ||
     (!dataFiltered.length && !!filterStartDate);
 
-  const getLengthByStatus = (status) => allTrans.filter((item) => item.transState === status).length;
+  const getLengthByStatus = (status) => allTrans.filter((item) => item.state === status).length;
 
   const getTotalPriceByStatus = (status) =>
     sumBy(
@@ -201,8 +201,8 @@ export default function TurnoverOrderManagement() {
 
   const TABS = [    //filter的值
     { value: 'all', label: '全部', color: 'info', count: allTrans.length },
-    { value: '完成', label: '完成', color: 'success', count: getLengthByStatus(false) },
-    { value: '新增', label: '新增', color: 'warning', count: getLengthByStatus(true) },
+    { value: '可用', label: '可用', color: 'success', count: getLengthByStatus(true) },
+    { value: '不可用', label: '不可用', color: 'warning', count: getLengthByStatus(false) },
   ];
 
   if (!isInitialized) {
@@ -244,18 +244,18 @@ export default function TurnoverOrderManagement() {
                 color={theme.palette.info.main}
               />
               <InvoiceAnalytic
-                title="完成"
-                total={getLengthByStatus(false)}
-                percent={getPercentByStatus(false)}
-                price={getTotalPriceByStatus(false)}
+                title="可用"
+                total={getLengthByStatus(true)}
+                percent={getPercentByStatus(true)}
+                price={getTotalPriceByStatus(true)}
                 icon="eva:checkmark-circle-2-fill"
                 color={theme.palette.success.main}
               />
               <InvoiceAnalytic
-                title="新增"
-                total={getLengthByStatus(true)}
-                percent={getPercentByStatus(true)}
-                price={getTotalPriceByStatus(true)}
+                title="不可用"
+                total={getLengthByStatus(false)}
+                percent={getPercentByStatus(false)}
+                price={getTotalPriceByStatus(false)}
                 icon="eva:clock-fill"
                 color={theme.palette.warning.main}
               />
@@ -429,18 +429,15 @@ function applySortFilter({
   if (filterName) {
     allTrans = allTrans.filter(
       (item) =>
-        item.transId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.processPer.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.customerId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.termId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        item.transType.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.projectName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        item.customerId.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 
     );
   }
 
   //console.log(filterStatus);
 
   if (filterStatus !== 'all') {
-    allTrans = allTrans.filter((item) => (item.transState === true ? '新增' : '完成') === filterStatus);
+    allTrans = allTrans.filter((item) => (item.state === true ? '可用' : '不可用') === filterStatus);
   }
 
   if (filterService !== 'all') {

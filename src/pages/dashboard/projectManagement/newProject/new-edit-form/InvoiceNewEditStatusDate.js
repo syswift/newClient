@@ -93,7 +93,7 @@ export default function InvoiceNewEditDetails() {
               <RHFSelect
                 name={`items[${index}].customerCode`}
                 size="small"
-                label="客户代码"
+                label="客户"
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
                 sx={{ width: '25%' }}

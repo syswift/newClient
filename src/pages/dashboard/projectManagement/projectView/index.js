@@ -52,13 +52,10 @@ import LoadingScreen from '../../../../components/LoadingScreen';
 const CUSTOMER_OPTIONS = [];
 
 const TABLE_HEAD = [
-  { id: 'invoiceNumber', label: '周转单号', align: 'center' },
-  { id: 'createDate', label: '创建日期', align: 'center' },
-  { id: 'dueDate', label: '客户代码', align: 'center' },
-  { id: 'price', label: '终端代码', align: 'center', width: 140 },
-  { id: 'sent', label: '周转单类型', align: 'center', width: 140 },
-  { id: 'status', label: '周转单状态', align: 'center' },
-  { id: 'processPer', label: '创建人', align: 'center' },
+  { id: 'projectName', label: '项目名称', align: 'center' },
+  { id: 'customerId', label: '客户代码', align: 'center' },
+  { id: 'salesTeam', label: '销售团队', align: 'center', width: 140 },
+  { id: 'mTeam', label: '运营团队', align: 'center' },
   { id: '' ,align:'center'},
 ];
 

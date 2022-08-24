@@ -39,7 +39,7 @@ export const PATH_DASHBOARD = {
   general: {
     app: path(ROOTS_DASHBOARD, '/app'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
-    analytics: path(ROOTS_DASHBOARD, '/analytics'),
+    analytics: path(ROOTS_DASHBOARD, '/projectSeparation'),
     banking: path(ROOTS_DASHBOARD, '/banking'),
     booking: path(ROOTS_DASHBOARD, '/booking'),
   },
@@ -58,7 +58,7 @@ export const PATH_DASHBOARD = {
   //-----------------------------------新增-----------------------------------//
   // 项目管理
   projectManagement: {
-    root: path(ROOTS_DASHBOARD, '/projectManagement'),
+    root: path(ROOTS_DASHBOARD, '/projectManagement/projectView'),
     newProject: path(ROOTS_DASHBOARD, '/projectManagement/newProject'),
     projectView: path(ROOTS_DASHBOARD, '/projectManagement/projectView'),
   },

@@ -55,6 +55,7 @@ const TABLE_HEAD = [
   { id: 'projectName', label: '项目名称', align: 'center' },
   { id: 'customerId', label: '客户代码', align: 'center' },
   { id: 'salesTeam', label: '销售团队', align: 'center', width: 140 },
+  { id: 'processPer', label: '创建人', align: 'center', width: 140 },
   { id: 'operationsTeam', label: '运营团队', align: 'center' },
   { id: '' ,align:'center'},
 ];
@@ -86,17 +87,17 @@ export default function TurnoverOrderManagement() {
             let all = {};
             if(processObj.body.currentProject)
             {
-                all = await supabase.from('trans').select().match({
+                all = await supabase.from('project').select().match({
                     processPer: processObj.body.name,
                     projectName: processObj.body.currentProject
                 });
             }
             else if(await processObj.body.auth_level === '管理')
             {
-                all = await supabase.from('trans').select();
+                all = await supabase.from('project').select();
             }
             else{
-                all = await supabase.from('trans').select().match({
+                all = await supabase.from('project').select().match({
                     processPer: processObj.body.name
                 });
             }

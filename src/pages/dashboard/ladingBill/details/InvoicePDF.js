@@ -2,10 +2,10 @@
 import PropTypes from 'prop-types';
 import { Page, View, Text, Image, Document } from '@react-pdf/renderer';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
-import { fDate } from '../../../utils/formatTime';
+import { fCurrency } from '../../../../utils/formatNumber';
+import { fDate } from '../../../../utils/formatTime';
 //
-import styles from './InvoiceStyle';
+import styles from '../../../../components/InvoiceStyle';
 
 // ----------------------------------------------------------------------
 

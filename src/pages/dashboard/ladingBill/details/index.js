@@ -15,12 +15,12 @@ import {
   TableContainer,
 } from '@mui/material';
 // utils
-import { fDate } from '../../../utils/formatTime';
-import { fCurrency } from '../../../utils/formatNumber';
+import { fDate } from '../../../../utils/formatTime';
+import { fCurrency } from '../../../../utils/formatNumber';
 // components
-import Label from '../../Label';
-import Image from '../../Image';
-import Scrollbar from '../../Scrollbar';
+import Label from '../../../../components/Label';
+import Image from '../../../../components/Image';
+import Scrollbar from '../../../../components/Scrollbar';
 //
 import InvoiceToolbar from './InvoiceToolbar';
 

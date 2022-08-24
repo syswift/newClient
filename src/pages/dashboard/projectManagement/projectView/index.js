@@ -53,7 +53,7 @@ const CUSTOMER_OPTIONS = [];
 
 const TABLE_HEAD = [
   { id: 'projectName', label: '项目名称', align: 'left' },
-  { id: 'customerId', label: '客户', align: 'center' },
+  { id: 'customerId', label: '客户代码', align: 'center' },
   { id: 'salesTeam', label: '销售团队', align: 'center', width: 140 },
   { id: 'operationsTeam', label: '运营团队', align: 'center' },
   { id: 'state', label: '状态', align: 'center' },

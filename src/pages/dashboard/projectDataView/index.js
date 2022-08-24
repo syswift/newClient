@@ -29,10 +29,10 @@ export default function ProjectDataView() {
 
   const { themeStretch } = useSettings();
   const [ PROJECTS , setPROJECTS ] = useState([]);
-  const [ CUSTOMERS , setCUSTOMERS ] = useState([]);
   const [ projectChoice , setprojectChoice ] = useState([]);
 
-  const [ customerChoice , setcustomerChoice ] = useState([]);
+  const [ allTrans , setallTrans ] = useState([]);
+  const [ newTrans , setnewTrans ] = useState([]);
 
   const [isInitialized, setisInitialized] = useState(true); 
 
@@ -45,8 +45,6 @@ export default function ProjectDataView() {
       const all = await supabase.from('project').select();
       //console.log(all.data);
 
-      setPROJECTS(all.data);
-
       const temp = [];
       for(const project of all.data)
       {     
@@ -54,59 +52,44 @@ export default function ProjectDataView() {
       }
       setprojectChoice(temp);
 
-      const all2 = await supabase.from('customer').select();
-      //console.log(all.data);
-
-      setCUSTOMERS(all2.data);
-
-      const temp2 = [];
-      for(const customer of all2.data)
-      {     
-        temp2.push(customer.customerId);
-      }
-      setcustomerChoice(temp2);
 
       setisInitialized(true);
+      submitProject();
     }
     fetchData();
   },[]);
 
-  const submitProject = async () =>{
-    const projectSelected = document.getElementById('project').value;
+  const submitProject = async (event, values) =>{
 
-    console.log(projectSelected);
+    setPROJECTS(values);
+    //console.log(values);
 
-    const id = supabase.auth.user().id;
-
-    try {
-      const{data, error} = await supabase.from('profiles').update({currentProject: projectSelected}).match({id: id});
-
-      if(error) throw error;
-      else{
-        alert('选择成功');
-      }
-      
-    } catch (error) {
-      console.log(error);
+    let all = [];
+    setisInitialized(false);
+    if(values)
+    {
+      all = await supabase.from('trans').select().match({
+        projectName: values
+      });
     }
+    else{
+      all = await supabase.from('trans').select();
+    }
+    setisInitialized(true);
+
+    const temp1 = [];
+
+    for(const tran of all.data)
+    {
+      if(tran.transState === true) temp1.push(tran);
+    }
+    console.log(temp1.length);
+    console.log(all.data.length);
+    setnewTrans(temp1);
+    setallTrans(all.data);
+    
   }
 
-  const leaveProject = async () =>{
-
-    const id = supabase.auth.user().id;
-
-    try {
-      const{data, error} = await supabase.from('profiles').update({currentProject:''}).match({id: id});
-
-      if(error) throw error;
-      else{
-        alert('离开项目成功');
-      }
-      
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   if (!isInitialized) {
     return <LoadingScreen />;
@@ -125,7 +108,9 @@ export default function ProjectDataView() {
             <Autocomplete
             //disablePortal
             id="combo-box-demo"
+            value={PROJECTS === [] ? null : PROJECTS}
             options={projectChoice}
+            onChange={submitProject}
             sx={{ width: 200 }}
             renderInput={(params) => <TextField {...params} label="项目名" 
             />}
@@ -174,13 +159,35 @@ export default function ProjectDataView() {
                   name: '新增周转单',
                   type: 'area',
                   fill: 'gradient',
-                  data: [10, 11, 20, 40, 45, 50, 52, 60, 67, 75, 100, 150],
+                  data: [Math.ceil(newTrans.length*0.25),
+                    Math.ceil(newTrans.length*0.37), 
+                    Math.ceil(newTrans.length*0.43), 
+                    Math.ceil(newTrans.length*0.54), 
+                    Math.ceil(newTrans.length*0.6), 
+                    Math.ceil(newTrans.length*0.65), 
+                    Math.ceil(newTrans.length*0.7), 
+                    Math.ceil(newTrans.length*0.75), 
+                    Math.ceil(newTrans.length*0.8), 
+                    Math.ceil(newTrans.length*0.85), 
+                    Math.ceil(newTrans.length*0.9), 
+                        newTrans.length],
                 },
                 {
-                  name: '已完成周转单',
+                  name: '所有周转单',
                   type: 'area',
                   fill: 'gradient',
-                  data: [23, 25, 100, 150, 175, 180, 200, 230, 270, 300, 350, 420],
+                  data: [Math.ceil(allTrans.length*0.25),
+                    Math.ceil(allTrans.length*0.3), 
+                    Math.ceil(allTrans.length*0.4), 
+                    Math.ceil(allTrans.length*0.5), 
+                    Math.ceil(allTrans.length*0.6), 
+                    Math.ceil(allTrans.length*0.65),
+                    Math.ceil(allTrans.length*0.7), 
+                    Math.ceil(allTrans.length*0.75), 
+                    Math.ceil(allTrans.length*0.8), 
+                    Math.ceil(allTrans.length*0.85),
+                    Math.ceil(allTrans.length*0.9), 
+                        allTrans.length],
                 },
               ]}
             />

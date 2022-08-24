@@ -6,6 +6,7 @@ import { Stack, Divider, Typography, Button } from '@mui/material';
 // hooks
 import useResponsive from '../../../../hooks/useResponsive';
 import useToggle from '../../../../hooks/useToggle';
+import useLocales from '../../../../hooks/useLocales';
 // _mock
 import { _invoiceAddressFrom, _invoiceAddressTo } from '../../../../_mock';
 // components
@@ -26,6 +27,8 @@ export default function InvoiceNewEditAddress() {
 
   const values = watch();
 
+  const { translate } = useLocales();
+
   const { toggle: openFrom, onOpen: onOpenFrom, onClose: onCloseFrom } = useToggle();
 
   const { toggle: openTo, onOpen: onOpenTo, onClose: onCloseTo } = useToggle();
@@ -42,11 +45,11 @@ export default function InvoiceNewEditAddress() {
       <Stack sx={{ width: 1 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
           <Typography variant="h6" sx={{ color: 'text.disabled' }}>
-            From:
+            {translate('main.Ifrom')}
           </Typography>
 
           <Button size="small" startIcon={<Iconify icon="eva:edit-fill" />} onClick={onOpenFrom}>
-            Change
+            {translate('main.Change')}
           </Button>
 
           <InvoiceAddressListDialog
@@ -64,7 +67,7 @@ export default function InvoiceNewEditAddress() {
       <Stack sx={{ width: 1 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
           <Typography variant="h6" sx={{ color: 'text.disabled' }}>
-            To:
+            {translate('main.Ito')}
           </Typography>
 
           <Button
@@ -72,7 +75,7 @@ export default function InvoiceNewEditAddress() {
             startIcon={<Iconify icon={invoiceTo ? 'eva:edit-fill' : 'eva:plus-fill'} />}
             onClick={onOpenTo}
           >
-            {invoiceTo ? 'Change' : 'Add'}
+            {invoiceTo ? (translate('main.Change')) : (translate('main.New'))}
           </Button>
 
           <InvoiceAddressListDialog

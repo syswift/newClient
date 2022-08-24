@@ -30,7 +30,7 @@ export default function InvoiceCreate() {
           heading="新建项目"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '项目管理', href: PATH_DASHBOARD.projectManagement.root },
+            { name: '项目管理'},
             { name: '新建项目'}
           ]}
         />

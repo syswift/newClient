@@ -66,7 +66,7 @@ const TABLE_HEAD = [
   { id: 'inventoryNumber', label: '数量', align: 'center' },
   { id: 'turnoverBoxNmae', label: '周转箱名称', align: 'center' },
   { id: 'createTime', label: '操作时间', align: 'center' },
-  { id: '',label:'操作', align: 'center' },
+  { id: '', align: 'center' },
 ];
 
 // ----------------------------------------------------------------------

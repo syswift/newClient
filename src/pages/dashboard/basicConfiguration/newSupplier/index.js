@@ -31,6 +31,7 @@ export default function NewSupplier() {
         <HeaderBreadcrumbs
           heading="新增供应商"
           links={[
+            { name: '主页', href: PATH_DASHBOARD.root },
             { name: '基础配置', href: PATH_DASHBOARD.root },
             { name: '供应商信息', href: PATH_DASHBOARD.basicConfiguration.supplierInformation },
             { name: '新增供应商' },

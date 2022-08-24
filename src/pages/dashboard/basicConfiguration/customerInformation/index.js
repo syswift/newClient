@@ -65,16 +65,16 @@ const TABLE_HEAD = [
   { id: 'district', label: '区', align: 'center', width: 50  },
   { id: 'address', label: '地址', align: 'center', width: 100  },
   { id: 'country', label: '国家', align: 'center', width: 50  },
-  { id: 'countryCode', label: '国家代码', align: 'center', width: 80  },
-  { id: 'contact1', label: '联系人1', align: 'center' , width: 80 },
+  { id: 'countryCode', label: '国家代码', align: 'center', width: 100  },
+  { id: 'contact1', label: '联系人1', align: 'center' , width: 100 },
   { id: 'position1', label: '职位1', align: 'center' , width: 80 },
   { id: 'phone1', label: '联系方式1', align: 'center' , width: 100 },
   { id: 'email1', label: '邮箱1', align: 'center' , width: 80 },
-  { id: 'contact2', label: '联系人2', align: 'center' , width: 80 },
+  { id: 'contact2', label: '联系人2', align: 'center' , width: 100 },
   { id: 'position2', label: '职位2', align: 'center', width: 80  },
   { id: 'phone2', label: '联系方式2', align: 'center', width: 100  },
   { id: 'email2', label: '邮箱2', align: 'center', width: 80  },
-  { id: '' , width: 100 },
+  { id: '' ,align: 'center'},
 ];
 
 // ----------------------------------------------------------------------
@@ -321,7 +321,7 @@ export default function CustomerInformation() {
             />
 
             <Scrollbar>
-              <TableContainer sx={{ minWidth: 2000, position: 'relative' }}>
+              <TableContainer sx={{ minWidth: 1750, position: 'relative' }}>
                 {selected.length > 0 && (
                   <TableSelectedActions
                     dense={dense}

@@ -12,7 +12,8 @@ import Label from '../../../../components/Label';
 import Avatar from '../../../../components/Avatar';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
-
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 InvoiceTableRow.propTypes = {
@@ -26,6 +27,8 @@ InvoiceTableRow.propTypes = {
 
 export default function InvoiceTableRow({ row, selected, onSelectRow, onViewRow, onEditRow, onDeleteRow }) {
   const theme = useTheme();
+
+  const { translate } = useLocales();
 
   const { sent, invoiceNumber, createDate, dueDate, status, invoiceTo, totalPrice } = row;
 
@@ -101,7 +104,7 @@ export default function InvoiceTableRow({ row, selected, onSelectRow, onViewRow,
                 sx={{ color: 'error.main' }}
               >
                 <Iconify icon={'eva:trash-2-outline'} />
-                Delete
+                {translate('main.Delete')}
               </MenuItem>
 
               <MenuItem
@@ -111,7 +114,7 @@ export default function InvoiceTableRow({ row, selected, onSelectRow, onViewRow,
                 }}
               >
                 <Iconify icon={'eva:eye-fill'} />
-                View
+                {translate('main.View')}
               </MenuItem>
 
               <MenuItem
@@ -121,7 +124,7 @@ export default function InvoiceTableRow({ row, selected, onSelectRow, onViewRow,
                 }}
               >
                 <Iconify icon={'eva:edit-fill'} />
-                Edit
+                {translate('main.Edit')}
               </MenuItem>
             </>
           }

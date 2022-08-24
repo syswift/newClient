@@ -227,6 +227,13 @@ export default function SettlementManagement() {
             { name: '结算管理', herf: PATH_DASHBOARD.settlementManagement.settlementManagement1 },
             { name: '结算管理'},
           ]}
+          action={
+            <NextLink href={PATH_DASHBOARD.settlementManagement.newSettlement} passHref>
+                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+                    新增结算信息
+                </Button>
+            </NextLink>
+          }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -261,22 +268,6 @@ export default function SettlementManagement() {
               />
             </Stack>
           </Scrollbar>
-        </Card>
-
-        <Card sx={{ mb: 3,p:3}}>
-          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-            新增结算信息
-          </Typography>
-          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
-          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-            <TextField name="statementNumber" label="结算单号" sx={{width: '22%'}}/>
-            <TextField name="statementCode" label="结算代码" sx={{width: '22%'}}/>
-            <TextField name="note" label="备注" sx={{width: '22%'}}/>
-            <TextField name="operationPerson" label="操作人" sx={{width: '22%'}}/> 
-            <Button variant="contained"sx={{width: '10%'}}>
-                提交
-            </Button>
-          </Stack>
         </Card>
 
         <Card>

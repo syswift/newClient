@@ -19,6 +19,8 @@ import { FormProvider } from '../../../../components/hook-form';
 import InvoiceNewEditDetails from './InvoiceNewEditDetails';
 import InvoiceNewEditAddress from './InvoiceNewEditAddress';
 import InvoiceNewEditStatusDate from './InvoiceNewEditStatusDate';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,8 @@ InvoiceNewEditForm.propTypes = {
 
 export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
   const { push } = useRouter();
+
+  const { translate } = useLocales();
 
   const [loadingSave, setLoadingSave] = useState(false);
 
@@ -63,12 +67,12 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
 
   const {
     reset,
-    watch,
+    // watch,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
+  // const values = watch();
 
   //console.log('values', values);
 
@@ -128,7 +132,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
           loading={loadingSave && isSubmitting}
           onClick={handleSubmit(handleSaveAsDraft)}
         >
-          Save as Draft
+          {translate('main.SaveasDraft')}
         </LoadingButton>
 
         <LoadingButton
@@ -137,7 +141,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
           loading={loadingSend && isSubmitting}
           onClick={handleSubmit(handleCreateAndSend)}
         >
-          {isEdit ? 'Update' : 'Create'} & Send
+          {isEdit ? (translate('main.Update')) : (translate('main.New'))} & {translate('main.Send')}
         </LoadingButton>
       </Stack>
     </FormProvider>

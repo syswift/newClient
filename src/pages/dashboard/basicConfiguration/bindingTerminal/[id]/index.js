@@ -21,6 +21,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   Typography,
+  Grid,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../../routes/paths';
@@ -161,28 +162,32 @@ export default function NewSupplier() {
               { name: '绑定终端' },
             ]}
           />
-          <Card sx={{ mb: 3,p:3}}>
-          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-            请选择该客户绑定的终端
-          </Typography>
+          <Card sx={{ mb: 1,p:1}}>
+            <Grid container>
+              <Grid item xs={12} sm={3} sx={{ mb: 1, textAlign:'center' }}>
+                <Typography paragraph variant="h6">
+                  客户代码:
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={3} sx={{ mb: 1, textAlign:'center' }}>
+                <Typography paragraph variant="h6">
+                  {cus.customerId}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={3} sx={{ mb: 1, textAlign:'center' }}>
+                <Typography paragraph variant="h6">
+                  客户名称:
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={3} sx={{ mb: 1, textAlign:'center' }}>
+                <Typography paragraph variant="h6">
+                  {cus.customerName}
+                </Typography>
+              </Grid>
+            </Grid>
           <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
-          <table >
-              <tr style={{textAlign:'center'}} fullWidth>
-                  <td style={{ width: '25%', textAlign: 'center',fontSize: '20px' }}>
-                      客户代码:
-                  </td>
-                  <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold',fontSize: '20px' }}>
-                      {cus.customerId}
-                  </td>
-                  <td style={{ width: '25%', textAlign: 'left',fontSize: '20px' }}>
-                      客户名称:
-                  </td>
-                  <td style={{ width: '25%', textAlign: 'center' ,fontWeight:'bold' ,fontSize: '20px'}}>
-                      {cus.customerName}
-                  </td>
-              </tr>
-          </table>
-          <Block title="终端列表">
+
+          <Block title="请选择该客户绑定的终端">
               <ListWrapperStyle>
                 <List>
                   {allTerm.map((value) => {

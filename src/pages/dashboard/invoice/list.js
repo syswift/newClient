@@ -29,6 +29,7 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import useTabs from '../../../hooks/useTabs';
 import useSettings from '../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+import useLocales from '../../../hooks/useLocales';
 // _mock_
 import { _invoices } from '../../../_mock';
 // layouts
@@ -75,6 +76,8 @@ InvoiceList.getLayout = function getLayout(page) {
 
 export default function InvoiceList() {
   const theme = useTheme();
+
+  const { translate } = useLocales();
 
   const { themeStretch } = useSettings();
 
@@ -169,28 +172,30 @@ export default function InvoiceList() {
 
   const getPercentByStatus = (status) => (getLengthByStatus(status) / tableData.length) * 100;
 
+
+
   const TABS = [
-    { value: 'all', label: '全部', color: 'info', count: tableData.length },
-    { value: 'paid', label: '已支付', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: '未支付', color: 'warning', count: getLengthByStatus('unpaid') },
-    { value: 'overdue', label: '逾期', color: 'error', count: getLengthByStatus('overdue') },
-    { value: 'draft', label: '草稿', color: 'default', count: getLengthByStatus('draft') },
+    { value: 'all', label: (translate('main.All')), color: 'info', count: tableData.length },
+    { value: 'paid', label: (translate('main.Paid')), color: 'success', count: getLengthByStatus('paid') },
+    { value: 'unpaid', label: (translate('main.Unpaid')), color: 'warning', count: getLengthByStatus('unpaid') },
+    { value: 'overdue', label: (translate('main.Overdue')), color: 'error', count: getLengthByStatus('overdue') },
+    { value: 'draft', label: (translate('main.Draft')), color: 'default', count: getLengthByStatus('draft') },
   ];
 
   return (
-    <Page title="发票: 列表">
+    <Page title={translate('main.InvoiceList')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="发票列表"
+          heading={translate('main.InvoiceList')}
           links={[
-            { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '发票', href: PATH_DASHBOARD.invoice.root },
-            { name: '列表' },
+            { name: (translate('main.InvoiceList')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.Invoice')), href: PATH_DASHBOARD.invoice.root },
+            { name: (translate('main.List')) },
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.invoice.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                新发票
+                {translate('main.New')}
               </Button>
             </NextLink>
           }
@@ -204,7 +209,7 @@ export default function InvoiceList() {
               sx={{ py: 2 }}
             >
               <InvoiceAnalytic
-                title="总数"
+                title={translate('main.All')}
                 total={tableData.length}
                 percent={100}
                 price={sumBy(tableData, 'totalPrice')}
@@ -212,7 +217,7 @@ export default function InvoiceList() {
                 color={theme.palette.info.main}
               />
               <InvoiceAnalytic
-                title="已支付"
+                title={translate('main.Paid')}
                 total={getLengthByStatus('paid')}
                 percent={getPercentByStatus('paid')}
                 price={getTotalPriceByStatus('paid')}
@@ -220,7 +225,7 @@ export default function InvoiceList() {
                 color={theme.palette.success.main}
               />
               <InvoiceAnalytic
-                title="未支付"
+                title={translate('main.Unpaid')}
                 total={getLengthByStatus('unpaid')}
                 percent={getPercentByStatus('unpaid')}
                 price={getTotalPriceByStatus('unpaid')}
@@ -228,7 +233,7 @@ export default function InvoiceList() {
                 color={theme.palette.warning.main}
               />
               <InvoiceAnalytic
-                title="逾期"
+                title={translate('main.Overdue')}
                 total={getLengthByStatus('overdue')}
                 percent={getPercentByStatus('overdue')}
                 price={getTotalPriceByStatus('overdue')}
@@ -236,7 +241,7 @@ export default function InvoiceList() {
                 color={theme.palette.error.main}
               />
               <InvoiceAnalytic
-                title="草稿"
+                title={translate('main.Draft')}
                 total={getLengthByStatus('draft')}
                 percent={getPercentByStatus('draft')}
                 price={getTotalPriceByStatus('draft')}
@@ -300,25 +305,25 @@ export default function InvoiceList() {
                   }
                   actions={
                     <Stack spacing={1} direction="row">
-                      <Tooltip title="Sent">
+                      <Tooltip title={translate('main.Send')}>
                         <IconButton color="primary">
                           <Iconify icon={'ic:round-send'} />
                         </IconButton>
                       </Tooltip>
 
-                      <Tooltip title="Download">
+                      <Tooltip title={translate('main.Download')}>
                         <IconButton color="primary">
                           <Iconify icon={'eva:download-outline'} />
                         </IconButton>
                       </Tooltip>
 
-                      <Tooltip title="Print">
+                      <Tooltip title={translate('main.Print')}>
                         <IconButton color="primary">
                           <Iconify icon={'eva:printer-fill'} />
                         </IconButton>
                       </Tooltip>
 
-                      <Tooltip title="Delete">
+                      <Tooltip title={translate('main.Delete')}>
                         <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
                           <Iconify icon={'eva:trash-2-outline'} />
                         </IconButton>
@@ -378,7 +383,7 @@ export default function InvoiceList() {
 
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
-              label="紧凑"
+              label={translate('main.Dense')}
               sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
             />
           </Box>

@@ -25,8 +25,9 @@
           <HeaderBreadcrumbs
             heading="新增客户"
             links={[
+              { name: '主页', href: PATH_DASHBOARD.root },
               { name: '基础配置', href: PATH_DASHBOARD.root },
-              { name: '客户管理', href: PATH_DASHBOARD.basicConfiguration.customerInformation },
+              { name: '客户信息', href: PATH_DASHBOARD.basicConfiguration.customerInformation },
               { name: '新增客户' },
             ]}
           />

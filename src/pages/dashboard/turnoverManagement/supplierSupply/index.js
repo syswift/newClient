@@ -69,7 +69,7 @@ const TABLE_HEAD = [
   { id: 'turnoverBoxNmae', label: '周转箱名称', align: 'center' },
   { id: 'supplyNumber', label: '数量', align: 'center' },
   { id: 'createTime', label: '操作时间', align: 'center' },
-  { id: '',label:'操作', align: 'center' },
+  { id: '', align: 'center' },
 ];
 
 // ----------------------------------------------------------------------
@@ -228,9 +228,16 @@ export default function SupplierSupply() {
           heading="供应商来货"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '库存管理', herf: PATH_DASHBOARD.turnoverManagement.supplierSupply },
+            { name: '周转管理', herf: PATH_DASHBOARD.turnoverManagement.supplierSupply },
             { name: '供应商来货', herf: PATH_DASHBOARD.turnoverManagement.supplierSupply },
           ]}
+          action={
+            <NextLink href={PATH_DASHBOARD.turnoverManagement.newSupply} passHref>
+                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+                    新增来货信息
+                </Button>
+            </NextLink>
+          }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -265,28 +272,6 @@ export default function SupplierSupply() {
               />
             </Stack>
           </Scrollbar>
-        </Card>
-        <Card sx={{ mb: 3,p:3}}>
-          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-            新增供应商来货信息
-          </Typography>
-          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
-          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-            <TextField name="goodsCode" label="商品代码" sx={{width: '24%'}}/>
-            <TextField name="supplierCode" label="供应商代码" sx={{width: '24%'}}/>
-            <TextField name="supplierName" label="供应商名称" sx={{width: '24%'}}/>
-            <TextField name="companyCode" label="公司编码" sx={{width: '24%'}}/>
-          </Stack>
-          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-            <TextField name="turnoverBoxCode" label="周转箱代码" sx={{width: '24%'}}/>
-            <TextField name="turnoverBoxNmae" label="周转箱名称" sx={{width: '24%'}}/>
-            <TextField name="supplyNumber" label="数量" sx={{width: '24%'}}/>
-            <Stack alignItems="center" sx={{width: '24%'}}>
-              <Button type="submit" variant="contained" sx={{width: '50%',height:'100%'}}>
-                {'提交'}
-              </Button>
-            </Stack>
-          </Stack>
         </Card>
 
         <Card>

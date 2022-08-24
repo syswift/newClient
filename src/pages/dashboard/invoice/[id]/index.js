@@ -8,6 +8,8 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import { _invoices } from '../../../../_mock';
 // hooks
 import useSettings from '../../../../hooks/useSettings';
+import useLocales from '../../../../hooks/useLocales';
+
 // layouts
 import Layout from '../../../../layouts';
 // components
@@ -29,6 +31,8 @@ export default function InvoiceDetails() {
 
   const { query } = useRouter();
 
+  const { translate } = useLocales();
+
   const { id } = query;
 
   const invoice = _invoices.find((invoice) => invoice.id === id);
@@ -37,11 +41,11 @@ export default function InvoiceDetails() {
     <Page title="发票: 查询">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="发票详情"
+          heading={translate('main.Detail')}
           links={[
-            { name: '主页', href: PATH_DASHBOARD.root },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
             {
-              name: '发票',
+              name: (translate('main.Invoice')),
               href: PATH_DASHBOARD.invoice.root,
             },
             { name: `INV-${invoice?.invoiceNumber}` || '' },

@@ -3,7 +3,8 @@ import { Stack, InputAdornment, TextField, MenuItem } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 // components
 import Iconify from '../../../../components/Iconify';
-
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const INPUT_WIDTH = 160;
@@ -31,12 +32,14 @@ export default function InvoiceTableToolbar({
   onFilterStartDate,
   onFilterEndDate,
 }) {
+  const { translate } = useLocales();
+
   return (
     <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
       <TextField
         fullWidth
         select
-        label="Service type"
+        label={translate('main.Servtype')}
         value={filterService}
         onChange={onFilterService}
         SelectProps={{
@@ -67,7 +70,7 @@ export default function InvoiceTableToolbar({
       </TextField>
 
       <DatePicker
-        label="Start date"
+        label={translate('main.Startdate')}
         value={filterStartDate}
         onChange={onFilterStartDate}
         renderInput={(params) => (
@@ -82,7 +85,7 @@ export default function InvoiceTableToolbar({
       />
 
       <DatePicker
-        label="End date"
+        label={translate('main.Enddate')}
         value={filterEndDate}
         onChange={onFilterEndDate}
         renderInput={(params) => (
@@ -100,7 +103,7 @@ export default function InvoiceTableToolbar({
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="Search client or invoice number..."
+        placeholder={translate('main.SCIN')}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

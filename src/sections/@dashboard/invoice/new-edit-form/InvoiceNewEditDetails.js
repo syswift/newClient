@@ -9,6 +9,8 @@ import { fNumber, fCurrency } from '../../../../utils/formatNumber';
 // components
 import Iconify from '../../../../components/Iconify';
 import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,8 @@ export default function InvoiceNewEditDetails() {
     control,
     name: 'items',
   });
+
+  const { translate } = useLocales();
 
   const values = watch();
 
@@ -91,7 +95,7 @@ export default function InvoiceNewEditDetails() {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-        Details:
+        {translate('main.Detail')}
       </Typography>
 
       <Stack divider={<Divider flexItem sx={{ borderStyle: 'dashed' }} />} spacing={3}>
@@ -101,21 +105,21 @@ export default function InvoiceNewEditDetails() {
               <RHFTextField
                 size="small"
                 name={`items[${index}].title`}
-                label="Title"
+                label={translate('main.Title')}
                 InputLabelProps={{ shrink: true }}
               />
 
               <RHFTextField
                 size="small"
                 name={`items[${index}].description`}
-                label="Description"
+                label={translate('main.Description')}
                 InputLabelProps={{ shrink: true }}
               />
 
               <RHFSelect
                 name={`items[${index}].service`}
                 size="small"
-                label="Service"
+                label={translate('main.Servtype')}
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
                 sx={{ maxWidth: { md: 160 } }}
@@ -131,7 +135,7 @@ export default function InvoiceNewEditDetails() {
                     color: 'text.secondary',
                   }}
                 >
-                  None
+                  {translate('main.None')}
                 </MenuItem>
 
                 <Divider />
@@ -158,7 +162,7 @@ export default function InvoiceNewEditDetails() {
                 size="small"
                 type="number"
                 name={`items[${index}].quantity`}
-                label="Quantity"
+                label={translate('main.Qty')}
                 placeholder="0"
                 onChange={(event) => handleChangeQuantity(event, index)}
                 InputLabelProps={{ shrink: true }}
@@ -169,7 +173,7 @@ export default function InvoiceNewEditDetails() {
                 size="small"
                 type="number"
                 name={`items[${index}].price`}
-                label="Price"
+                label={translate('Price')}
                 placeholder="0"
                 onChange={(event) => handleChangePrice(event, index)}
                 InputProps={{
@@ -182,7 +186,7 @@ export default function InvoiceNewEditDetails() {
                 disabled
                 size="small"
                 name={`items[${index}].total`}
-                label="Total"
+                label={translate('main.Total')}
                 placeholder="0"
                 value={fNumber(totalOnRow[index])}
                 InputProps={{
@@ -198,7 +202,7 @@ export default function InvoiceNewEditDetails() {
               startIcon={<Iconify icon="eva:trash-2-outline" />}
               onClick={() => handleRemove(index)}
             >
-              Remove
+              {translate('main.Delete')}
             </Button>
           </Stack>
         ))}
@@ -212,13 +216,13 @@ export default function InvoiceNewEditDetails() {
         alignItems={{ xs: 'flex-start', md: 'center' }}
       >
         <Button size="small" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleAdd} sx={{ flexShrink: 0 }}>
-          Add new detail
+        {translate('main.Add')}
         </Button>
 
         <Stack spacing={2} justifyContent="flex-end" direction={{ xs: 'column', md: 'row' }} sx={{ width: 1 }}>
           <RHFTextField
             size="small"
-            label="Discount"
+            label={translate('main.Discount')}
             name="discount"
             onChange={(event) => setValue('discount', Number(event.target.value))}
             sx={{ maxWidth: { md: 200 } }}
@@ -226,7 +230,7 @@ export default function InvoiceNewEditDetails() {
 
           <RHFTextField
             size="small"
-            label="Taxes"
+            label={translate('main.Taxes')}
             name="taxes"
             onChange={(event) => setValue('taxes', Number(event.target.value))}
             sx={{ maxWidth: { md: 200 } }}
@@ -236,26 +240,26 @@ export default function InvoiceNewEditDetails() {
 
       <Stack spacing={2} sx={{ mt: 3 }}>
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>Subtotal :</Typography>
+          <Typography>{translate('main.Subtotal')} :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120 }}>{fCurrency(sum(totalOnRow))}</Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>Discount :</Typography>
+          <Typography>{translate('main.Discount')} :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120, ...(values.discount && { color: 'error.main' }) }}>
             {values.discount ? `- ${fCurrency(values.discount)}` : '-'}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography>Taxes :</Typography>
+          <Typography>{translate('main.Taxes')} :</Typography>
           <Typography sx={{ textAlign: 'right', width: 120 }}>
             {values.taxes ? fCurrency(values.taxes) : '-'}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography variant="h6">Total price :</Typography>
+          <Typography variant="h6">{translate('main.Total')} :</Typography>
           <Typography variant="h6" sx={{ textAlign: 'right', width: 120 }}>
             {fCurrency(totalPrice)}
           </Typography>

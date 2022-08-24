@@ -59,12 +59,12 @@ const SERVICE_OPTIONS = [
 ];
 
 const TABLE_HEAD = [
-  { id: 'id', label: 'ID', align: 'center' },
-  { id: 'userName', label: '用户名', align: 'center' },
-  { id: 'userType', label: '用户类型', align: 'center' },
-  { id: 'password', label: '密码', align: 'center', width: 140 },
-  { id: 'email', label: '注册邮箱', align: 'center', width: 140 },
-  { id: '',label:'操作', align: 'center' },
+  { id: 'id', label: 'ID', align: 'center' ,width: 200},
+  { id: 'userName', label: '用户名', align: 'center' ,width: 200},
+  { id: 'userType', label: '用户类型', align: 'center' ,width: 200},
+  { id: 'password', label: '密码', align: 'center', width: 200 },
+  { id: 'email', label: '注册邮箱', align: 'center', width: 200 },
+  { id: '', align: 'center' },
 ];
 
 // ----------------------------------------------------------------------

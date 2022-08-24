@@ -67,12 +67,24 @@ export default function TransTableRow({ row, selected, onSelectRow, onViewRow, o
       </TableCell>
       <TableCell align="center">{password}</TableCell>
       <TableCell align="center">{email}</TableCell>
-      <TableCell align="center">
-        <NextLink href={PATH_DASHBOARD.systemManagement.changeUserInformation} passHref>
-          <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'}  align="center"/>}>
-            编辑
-          </Button>
-        </NextLink>
+      <TableCell align="right">
+        <TableMoreMenu
+            open={openMenu}
+            onOpen={handleOpenMenu}
+            onClose={handleCloseMenu}
+            actions={
+              <>
+                <MenuItem
+                  onClick={() => {
+                    onEditRow();
+                    handleCloseMenu();
+                  }}>
+                  <Iconify icon={'eva:edit-fill'} />
+                    编辑
+                </MenuItem>
+              </>
+            }
+          />
       </TableCell>
     </TableRow> 
   );

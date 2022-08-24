@@ -52,11 +52,13 @@ import LoadingScreen from '../../../../components/LoadingScreen';
 const CUSTOMER_OPTIONS = [];
 
 const TABLE_HEAD = [
-  { id: 'projectName', label: '项目名称', align: 'center' },
-  { id: 'customer', label: '客户', align: 'center' },
-  { id: 'salesTeam', label: '销售团队', align: 'center' },
-  { id: 'operationsTeam', label: '运营团队', align: 'center', width: 140 },
-  { id: 'createDate', label: '创建时间', align: 'center', width: 140 },
+  { id: 'invoiceNumber', label: '周转单号', align: 'center' },
+  { id: 'createDate', label: '创建日期', align: 'center' },
+  { id: 'dueDate', label: '客户代码', align: 'center' },
+  { id: 'price', label: '终端代码', align: 'center', width: 140 },
+  { id: 'sent', label: '周转单类型', align: 'center', width: 140 },
+  { id: 'status', label: '周转单状态', align: 'center' },
+  { id: 'processPer', label: '创建人', align: 'center' },
   { id: '' ,align:'center'},
 ];
 
@@ -217,15 +219,9 @@ export default function TurnoverOrderManagement() {
           heading="查看项目"
           links={[
             { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '项目管理', herf: PATH_DASHBOARD.projectManagement.root },
+            { name: '项目管理'},
+            { name: '查看项目'},
           ]}
-          action={
-            <NextLink href={PATH_DASHBOARD.projectManagement.newProject} passHref>
-            <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-            新建项目
-            </Button>
-            </NextLink>
-          }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>

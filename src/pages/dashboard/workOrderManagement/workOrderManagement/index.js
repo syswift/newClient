@@ -216,14 +216,6 @@ export default function WorkOrderManagement() {
     { value: true, label: '完成', color: 'success', count: getLengthByStatus(true) },
     { value: false, label: '进行中', color: 'warning', count: getLengthByStatus(false) },
   ];
-  const dataStateChoice = [
-    { label: '完成', value: '完成' },
-    { label: '新增', value: '新增' },
-  ]
-  const jobTypeChoice = [
-    { label: '正常', value: '正常' },
-    { label: '报废', value: '报废' },
-  ]
   //如果没载入好显示loading页面
   if (!isInitialized) {
     return <LoadingScreen />;
@@ -239,6 +231,13 @@ export default function WorkOrderManagement() {
             { name: '工单管理', herf: PATH_DASHBOARD.workOrderManagement.workOrderManagement1 },
             { name: '工单管理',},
           ]}
+          action={
+            <NextLink href={PATH_DASHBOARD.workOrderManagement.newWorkOrder} passHref>
+                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+                    新增工单
+                </Button>
+            </NextLink>
+          }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -273,40 +272,6 @@ export default function WorkOrderManagement() {
               />
             </Stack>
           </Scrollbar>
-        </Card>
-
-        <Card sx={{ mb: 3,p:3}}>
-          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-            新增工单信息
-          </Typography>
-          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
-          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-            <TextField name="jobNumber" label="工单单号" sx={{width: '33%'}}/>
-            <TextField name="customerCode" label="客户名称" sx={{width: '33%'}}/>
-            <Autocomplete
-              // disablePortal
-              id="dataState"
-              options={dataStateChoice}
-              sx={{ width: '33%' }}
-              renderInput={(params) => <TextField {...params} label="工单状态" />}
-            />
-          </Stack>
-          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-            <Autocomplete
-              // disablePortal
-              id="jobType"
-              options={jobTypeChoice}
-              sx={{ width: '33%' }}
-              renderInput={(params) => <TextField {...params} label="工单类型" />}
-            />
-            <TextField name="jobAddition" label="工单备注" sx={{width: '33%'}}/>
-            <Stack alignItems="center" sx={{width: '33%'}}>
-              <Button type="submit" variant="contained" sx={{width: '50%',height:'100%'}}>
-                {'提交'}
-              </Button>
-            </Stack>
-          </Stack>
-
         </Card>
 
         <Card>

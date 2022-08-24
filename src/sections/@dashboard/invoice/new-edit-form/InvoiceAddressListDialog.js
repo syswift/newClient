@@ -4,6 +4,8 @@ import { Dialog, ListItemButton, Stack, Typography, Button } from '@mui/material
 // components
 import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -21,10 +23,12 @@ export default function InvoiceAddressListDialog({ open, selected, onClose, onSe
     onClose();
   };
 
+  const { translate } = useLocales();
+
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 2.5, px: 3 }}>
-        <Typography variant="h6"> Select address </Typography>
+        <Typography variant="h6"> {translate('main.Selectaddress')} </Typography>
 
         <Button
           size="small"
@@ -32,7 +36,7 @@ export default function InvoiceAddressListDialog({ open, selected, onClose, onSe
           startIcon={<Iconify icon="eva:plus-fill" />}
           sx={{ alignSelf: 'flex-end' }}
         >
-          Add New
+          {translate('main.New')}
         </Button>
       </Stack>
 

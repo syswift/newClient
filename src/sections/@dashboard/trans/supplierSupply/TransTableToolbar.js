@@ -33,7 +33,7 @@ export default function TransTableToolbar({
 }) {
   return (
     <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-      <TextField
+      {/* <TextField
         fullWidth
         select
         label="商品代码"
@@ -161,7 +161,7 @@ export default function TransTableToolbar({
             {option}
           </MenuItem>
         ))}
-      </TextField>
+      </TextField> */}
 
       <TextField
         fullWidth

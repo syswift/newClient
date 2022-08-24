@@ -6,6 +6,7 @@ import { Container } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
 import useSettings from '../../../../hooks/useSettings';
+import useLocales from '../../../../hooks/useLocales';
 // layouts
 import Layout from '../../../../layouts';
 // _mock_
@@ -27,6 +28,8 @@ InvoiceEdit.getLayout = function getLayout(page) {
 export default function InvoiceEdit() {
   const { themeStretch } = useSettings();
 
+  const { translate } = useLocales();
+
   const { query } = useRouter();
 
   const { id } = query;
@@ -37,10 +40,10 @@ export default function InvoiceEdit() {
     <Page title="发票: 编辑">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="编辑发票"
+          heading={translate('main.Edit')+" : "+translate('main.Invoice')}
           links={[
-            { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '发票', href: PATH_DASHBOARD.invoice.list },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.Invoice')), href: PATH_DASHBOARD.invoice.list },
             { name: `INV-${currentInvoice?.invoiceNumber}` || '' },
           ]}
         />

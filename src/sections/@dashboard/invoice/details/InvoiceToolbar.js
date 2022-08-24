@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Box, Stack, Button, Dialog, Tooltip, IconButton, DialogActions, CircularProgress } from '@mui/material';
 // hooks
 import useToggle from '../../../../hooks/useToggle';
+import useLocales from '../../../../hooks/useLocales';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
@@ -21,6 +22,8 @@ InvoiceToolbar.propTypes = {
 
 export default function InvoiceToolbar({ invoice }) {
   const { push } = useRouter();
+
+  const { translate } = useLocales();
 
   const { toggle: open, onOpen, onClose } = useToggle();
 
@@ -38,13 +41,13 @@ export default function InvoiceToolbar({ invoice }) {
         sx={{ mb: 5 }}
       >
         <Stack direction="row" spacing={1}>
-          <Tooltip title="Edit">
+          <Tooltip title={translate('main.Edit')}>
             <IconButton onClick={handleEdit}>
               <Iconify icon={'eva:edit-fill'} />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="View">
+          <Tooltip title={translate('main.View')}>
             <IconButton onClick={onOpen}>
               <Iconify icon={'eva:eye-fill'} />
             </IconButton>
@@ -56,7 +59,7 @@ export default function InvoiceToolbar({ invoice }) {
             style={{ textDecoration: 'none' }}
           >
             {({ loading }) => (
-              <Tooltip title="Download">
+              <Tooltip title={translate('main.Download')}>
                 <IconButton>
                   {loading ? <CircularProgress size={24} color="inherit" /> : <Iconify icon={'eva:download-fill'} />}
                 </IconButton>
@@ -64,19 +67,19 @@ export default function InvoiceToolbar({ invoice }) {
             )}
           </PDFDownloadLink>
 
-          <Tooltip title="Print">
+          <Tooltip title={translate('main.Print')}>
             <IconButton>
               <Iconify icon={'eva:printer-fill'} />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Send">
+          <Tooltip title={translate('main.Send')}>
             <IconButton>
               <Iconify icon={'ic:round-send'} />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Share">
+          <Tooltip title={translate('main.Share')}>
             <IconButton>
               <Iconify icon={'eva:share-fill'} />
             </IconButton>
@@ -89,7 +92,7 @@ export default function InvoiceToolbar({ invoice }) {
           startIcon={<Iconify icon={'eva:checkmark-fill'} />}
           sx={{ alignSelf: 'flex-end' }}
         >
-          Mark as Paid
+          {translate('main.MarkasPaid')}
         </Button>
       </Stack>
 

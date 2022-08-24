@@ -2,6 +2,7 @@ import sumBy from 'lodash/sumBy';
 import { useEffect, useState } from 'react';
 // next
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 // @mui
 import { useTheme } from '@mui/material/styles';
 // @mui
@@ -211,6 +212,13 @@ export default function TurnoverBoxInformation() {
             { name: '基础配置', herf: PATH_DASHBOARD.basicConfiguration.turnoverBoxInformation },
             { name: '周转箱信息'},
           ]}
+          action={
+            <NextLink href={PATH_DASHBOARD.basicConfiguration.newTurnoverBox} passHref>
+                <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+                    新增周转箱
+                </Button>
+            </NextLink>
+          }
         />
         <Card sx={{ mb: 3 }}>
           <Scrollbar>
@@ -245,21 +253,6 @@ export default function TurnoverBoxInformation() {
               />
             </Stack>
           </Scrollbar>
-        </Card>
-
-        <Card sx={{ mb: 3,p:3}}>
-          <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
-            新增周转箱信息
-          </Typography>
-          <Divider sx={{ my: 1, borderStyle: 'dashed' }} />
-          <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} sx={{ py: 2.5, px: 3 }}>
-            <TextField name="boxId" label="编号" sx={{width: '30%'}}/>
-            <TextField name="supplierId" label="供应商" sx={{width: '30%'}}/>
-            <TextField name="boxName" label="箱子名称" sx={{width: '30%'}}/> 
-            <Button variant="contained" sx={{width: '10%'}}>
-                提交新增
-            </Button>
-          </Stack>
         </Card>
 
         <Card>

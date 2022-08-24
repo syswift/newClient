@@ -4,6 +4,7 @@ import { Container } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
 import useSettings from '../../../hooks/useSettings';
+import useLocales from '../../../hooks/useLocales';
 // layouts
 import Layout from '../../../layouts';
 // components
@@ -23,15 +24,17 @@ InvoiceCreate.getLayout = function getLayout(page) {
 export default function InvoiceCreate() {
   const { themeStretch } = useSettings();
 
+  const { translate } = useLocales();
+
   return (
-    <Page title="发票: 创建新发票">
+    <Page title={"发票: 创建新发票"}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="创建新发票"
+          heading={translate('main.CreateNew')}
           links={[
-            { name: '主页', href: PATH_DASHBOARD.root },
-            { name: '发票', href: PATH_DASHBOARD.invoice.list },
-            { name: '新发票' },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.Invoice')), href: PATH_DASHBOARD.invoice.list },
+            { name: (translate('main.New')) },
           ]}
         />
 

@@ -44,16 +44,16 @@ export default function Mail() {
   }, [dispatch]);
 
   return (
-    <Page title="Mail">
+    <Page title="邮件">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <HeaderBreadcrumbs
-          heading="Mail"
+          heading="邮件"
           links={[
             {
-              name: 'Dashboard',
+              name: '主页',
               href: PATH_DASHBOARD.root,
             },
-            { name: 'Mail' },
+            { name: '邮件' },
           ]}
         />
         <Card

@@ -38,22 +38,22 @@ MailItemAction.propTypes = {
 export default function MailItemAction({ handleArchive, handleDelete, handleMarkRead, handleHidden, ...other }) {
   const MAIL_ACTIONS = [
     {
-      name: 'Archive',
+      name: '存档',
       icon: 'eva:archive-fill',
       action: handleArchive,
     },
     {
-      name: 'Delete',
+      name: '删除',
       icon: 'eva:trash-2-outline',
       action: handleDelete,
     },
     {
-      name: 'Mark Email Read',
+      name: '标为已读',
       icon: 'ic:round-mark-email-read',
       action: handleMarkRead,
     },
     {
-      name: 'Hidden Email',
+      name: '隐藏邮件',
       icon: 'eva:eye-off-fill',
       action: handleHidden,
     },

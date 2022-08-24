@@ -1,6 +1,6 @@
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography, Card, Stack, Divider, Autocomplete, TextField ,Button} from '@mui/material';
+import { Grid, Container, Autocomplete, TextField } from '@mui/material';
 // hooks
 import useSettings from '../../../hooks/useSettings';
 // layouts
@@ -9,10 +9,7 @@ import Layout from '../../../layouts';
 import Page from '../../../components/Page';
 // sections
 import  AnalyticsWebsiteVisits  from '../../../sections/@dashboard/alterChartResources/AnalyticsWebsiteVisits';
-import  AnalyticsWidgetSummary from '../../../sections/@dashboard/alterChartResources/AnalyticsWidgetSummary';
 import  AppCurrentDownload  from '../../../sections/@dashboard/alterChartResources/AppCurrentDownload';
-import  BookingTotalIncomes  from '../../../sections/@dashboard/alterChartResources/BookingTotalIncomes';
-import  EcommerceWidgetSummary  from '../../../sections/@dashboard/chartResources/EcommerceWidgetSummary';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../../api';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
@@ -21,13 +18,13 @@ import LoadingScreen from '../../../components/LoadingScreen'; //import载入画
   import { PATH_DASHBOARD } from '../../../routes/paths';
 // ----------------------------------------------------------------------
 
-GeneralAnalytics.getLayout = function getLayout(page) {
+ProjectDataView.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
 // ----------------------------------------------------------------------
 
-export default function GeneralAnalytics() {
+export default function ProjectDataView() {
   const theme = useTheme();
 
   const { themeStretch } = useSettings();

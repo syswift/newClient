@@ -55,7 +55,7 @@ export default function MailSidebar({ isOpenSidebar, onOpenCompose, onCloseSideb
           startIcon={<Iconify icon={'eva:plus-fill'} />}
           onClick={handleOpenCompose}
         >
-          Compose
+          新邮件
         </Button>
       </Box>
 

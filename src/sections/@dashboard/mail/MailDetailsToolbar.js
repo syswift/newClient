@@ -74,7 +74,7 @@ export default function MailDetailsToolbar({ mail, ...other }) {
           </Link>
 
           <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
-            To:&nbsp;
+            收件人:&nbsp;
             {mail.to.map((person) => (
               <Link color="inherit" key={person.email}>
                 {person.email}
@@ -91,7 +91,7 @@ export default function MailDetailsToolbar({ mail, ...other }) {
               {fDateTimeSuffix(mail.createdAt)}
             </Typography>
 
-            <Tooltip title="Reply">
+            <Tooltip title="回复">
               <IconButton>
                 <Iconify icon={'ic:round-reply'} width={20} height={20} />
               </IconButton>
@@ -99,7 +99,7 @@ export default function MailDetailsToolbar({ mail, ...other }) {
           </>
         )}
 
-        <Tooltip title="More options">
+        <Tooltip title="更多设置">
           <IconButton>
             <Iconify icon={'eva:more-vertical-fill'} width={20} height={20} />
           </IconButton>

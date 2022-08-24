@@ -97,7 +97,7 @@ export default function MailCompose({ isOpenCompose, onCloseCompose }) {
             alignItems: 'center',
           }}
         >
-          <Typography variant="h6">New Message</Typography>
+          <Typography variant="h6">新邮件</Typography>
           <Box sx={{ flexGrow: 1 }} />
 
           <IconButton onClick={fullScreen ? handleExitFullScreen : handleEnterFullScreen}>
@@ -111,16 +111,16 @@ export default function MailCompose({ isOpenCompose, onCloseCompose }) {
 
         <Divider />
 
-        <InputStyle disableUnderline placeholder="To" />
+        <InputStyle disableUnderline placeholder="收件人" />
 
-        <InputStyle disableUnderline placeholder="Subject" />
+        <InputStyle disableUnderline placeholder="主题" />
 
         <Editor
           simple
           id="compose-mail"
           value={message}
           onChange={handleChangeMessage}
-          placeholder="Type a message"
+          placeholder="输入正文"
           sx={{
             borderColor: 'transparent',
             flexGrow: 1,
@@ -130,7 +130,7 @@ export default function MailCompose({ isOpenCompose, onCloseCompose }) {
         <Divider />
 
         <Box sx={{ py: 2, px: 3, display: 'flex', alignItems: 'center' }}>
-          <Button variant="contained">Send</Button>
+          <Button variant="contained">发送</Button>
 
           <IconButton size="small" sx={{ ml: 2, mr: 1 }}>
             <Iconify icon={'ic:round-add-photo-alternate'} width={24} height={24} />

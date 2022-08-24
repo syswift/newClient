@@ -90,7 +90,7 @@ export default function MailItem({ mail, isDense, isSelected, onSelect, onDesele
         <Box sx={{ mr: 2, display: 'flex' }}>
           <Checkbox checked={isSelected} onChange={(event) => handleChangeCheckbox(event.target.checked)} />
 
-          <Tooltip title="Starred">
+          <Tooltip title="标记">
             <Checkbox
               color="warning"
               defaultChecked={mail.isStarred}
@@ -99,7 +99,7 @@ export default function MailItem({ mail, isDense, isSelected, onSelect, onDesele
             />
           </Tooltip>
 
-          <Tooltip title="Important">
+          <Tooltip title="重点">
             <Checkbox
               color="warning"
               defaultChecked={mail.isImportant}

@@ -5,10 +5,10 @@ import { useFormContext, useFieldArray } from 'react-hook-form';
 // @mui
 import { Box, Stack, Button, Divider, Typography, InputAdornment, MenuItem } from '@mui/material';
 // utils
-import { fNumber, fCurrency } from '../../../../utils/formatNumber';
+import { fNumber, fCurrency } from '../../../utils/formatNumber';
 // components
-import Iconify from '../../../../components/Iconify';
-import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import Iconify from '../../../components/Iconify';
+import { RHFSelect, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 

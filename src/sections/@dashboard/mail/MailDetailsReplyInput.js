@@ -27,7 +27,7 @@ export default function MailDetailsReplyInput() {
         minRows={2}
         maxRows={8}
         value={message}
-        placeholder="Type a message"
+        placeholder="输入正文"
         onChange={handleChangeMessage}
         sx={{ '& fieldset': { border: 'none !important' } }}
       />
@@ -49,7 +49,7 @@ export default function MailDetailsReplyInput() {
           <Iconify icon={'eva:attach-2-fill'} width={24} height={24} />
         </IconButton>
 
-        <Button variant="contained">Send</Button>
+        <Button variant="contained">发送</Button>
       </Box>
 
       <input type="file" ref={fileInputRef} style={{ display: 'none' }} />

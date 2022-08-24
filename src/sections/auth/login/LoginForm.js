@@ -27,8 +27,8 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string().email('邮箱地址必须真实').required('请输入邮箱地址'),
+    password: Yup.string().required('请输入密码'),
   });
 
   const defaultValues = {
@@ -68,11 +68,11 @@ export default function LoginForm() {
       <Stack spacing={3}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="email" label="邮箱地址" />
 
         <RHFTextField
           name="password"
-          label="Password"
+          label="密码"
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -87,14 +87,14 @@ export default function LoginForm() {
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <RHFCheckbox name="remember" label="Remember me" />
+        <RHFCheckbox name="remember" label="记住密码" />
         <NextLink href={PATH_AUTH.resetPassword} passHref>
-          <Link variant="subtitle2">Forgot password?</Link>
+          <Link variant="subtitle2">忘记密码?</Link>
         </NextLink>
       </Stack>
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-        Login
+        登录
       </LoadingButton>
     </FormProvider>
   );

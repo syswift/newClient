@@ -63,17 +63,17 @@ export default function MailToolbar({
             indeterminate={selectedSomeMails}
             onChange={(event) => handleSelectChange(event.target.checked)}
           />
-          <Tooltip title="Refresh">
+          <Tooltip title="刷新">
             <IconButton>
               <Iconify icon={'eva:refresh-fill'} width={20} height={20} />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Dense">
+          <Tooltip title="紧凑">
             <IconButton onClick={onToggleDense}>
               <Iconify icon={'eva:collapse-fill'} width={20} height={20} />
             </IconButton>
           </Tooltip>
-          <Tooltip title="More">
+          <Tooltip title="更多">
             <IconButton>
               <Iconify icon={'eva:more-vertical-fill'} width={20} height={20} />
             </IconButton>
@@ -86,7 +86,7 @@ export default function MailToolbar({
       <InputStyle
         stretchStart={180}
         size="small"
-        placeholder="Search mail…"
+        placeholder="查询邮件…"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -101,12 +101,12 @@ export default function MailToolbar({
           <Typography variant="body2" sx={{ mx: 2, color: 'text.secondary' }}>
             1 - {mails} of {mails}
           </Typography>
-          <Tooltip title="Next page">
+          <Tooltip title="上一页">
             <IconButton>
               <Iconify icon={'eva:arrow-ios-back-fill'} width={20} height={20} />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Previous page">
+          <Tooltip title="下一页">
             <IconButton>
               <Iconify icon={'eva:arrow-ios-forward-fill'} width={20} height={20} />
             </IconButton>

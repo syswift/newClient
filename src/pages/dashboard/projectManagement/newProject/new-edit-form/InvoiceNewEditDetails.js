@@ -60,21 +60,12 @@ export default function InvoiceNewEditDetails() {
 
   const values = watch();
 
-  const totalOnRow = values.items.map((item) => item.quantity * item.price);
-
-  const totalPrice = sum(totalOnRow) - values.discount + values.taxes;
-
-  useEffect(() => {
-    setValue('totalPrice', totalPrice);
-  }, [setValue, totalPrice]);
-
-
   return (
     <Box sx={{ p: 3 }}>
       <Divider sx={{ my: 3, borderStyle: 'dashed' }} />
       <Stack spacing={2} sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="合同上传" />
+          <CardHeader title="项目文件上传" />
           <CardContent>
               <RHFUploadSingleFile id="file" name="file" file={file} maxSize={3145728} onDrop={handleDropSingleFile} />
           </CardContent>

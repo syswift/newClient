@@ -36,21 +36,19 @@ export default function InvoiceNewEditForm({ isEdit, currentTrans }) {
   const [loadingSend, setLoadingSend] = useState(false);
 
   const NewUserSchema = Yup.object().shape({
-    transId: Yup.string().nullable().required('Create date is required'),
-    cusid: Yup.string().nullable().required('Create date is required'),
-    termid: Yup.string().nullable().required('Create date is required'),
-    type: Yup.string().nullable().required('Create date is required'),
+    projectName: Yup.string().nullable().required('请填写'),
+    cusid: Yup.string().nullable().required('请填写'),
+    salesTeam: Yup.string().nullable().required('请填写'),
+    operationsTeam: Yup.string().nullable().required('请填写'),
   });
 
   //传参在这
   const defaultValues = useMemo(
     () => ({
-      transId: currentTrans?.transId || '',
-      cusid: currentTrans?.cusid || '',
-      termid: currentTrans?.termid || '',
-      type: currentTrans?.type || '',
-      items: currentTrans?.items || [{boxid: '', quantity: 1 }],
-      file: currentTrans?.file || '',
+      projectName: currentTrans?.projectName || '',
+      cusid: currentTrans?.customerCode || '',
+      salesTeam: currentTrans?.salesTeam || '',
+      operationsTeam: currentTrans?.operationsTeam || '',
     }),
     [currentTrans]
   );
@@ -69,7 +67,7 @@ export default function InvoiceNewEditForm({ isEdit, currentTrans }) {
 
   const values = watch();
 
-  console.log('values', values);
+  //console.log('values', values);
 
   useEffect(() => {
     if (isEdit && currentTrans) {
@@ -106,63 +104,28 @@ export default function InvoiceNewEditForm({ isEdit, currentTrans }) {
   }
 
   const handleCreateAndSend = async (data) => {
-
-    const processObj = await supabase.from('profiles').select().eq('id',supabase.auth.user().id).single();
     setLoadingSend(true);
 
     try {
-      const currentDate = getDate();
-
-      const {data1,error} = await supabase.from('trans').insert({
-        transId: values.transId,
+      console.log('test');
+      const {data1,error} = await supabase.from('project').insert({
+        projectName: values.projectName,
         customerId: values.cusid,
-        termId: values.termid,
-        transState: true,
-        transType: values.type,
-        processPer: processObj.body.name,
-        createTime: currentDate,
-        projectName: processObj.body.currentProject
+        operationsTeam: values.operationsTeam,
+        salesTeam: values.salesTeam,
+        processPer: supabase.auth.user().id,
+        state: true,
       });
       if(error) throw error;
-      else console.log(data1);
-
-      for(const box of values.items)
-      {
-        const exit = await supabase.from('box_storage').select().match({
-          customerId: values.cusid,
-          termId: values.termid,
-          boxId: box.boxid
-        }).single();
-        console.log(exit);
-    
-        if(exit.body)
-        {
-              const{res , error1} = await supabase.from('box_storage').update({
-                  amount: Number(exit.data.amount)+box.quantity
-                }).match({
-                  customerId: values.cusid,
-                  termId: values.termid,
-                  boxId: box.boxid
-                });
-              if(error1) throw error1;
-        }
-        else{
-              const{res , error1} = await supabase.from('box_storage').insert({
-                customerId: values.cusid,
-                termId: values.termid,
-                boxId: box.boxid,
-                amount: box.quantity,
-                projectName: processObj.body.currentProject
-          });
-          if(error1) throw error1;
-        }
+      else
+      { console.log(data1);
       }
 
       const element = document.getElementById('file');
       console.log(element);
       reset();
       setLoadingSend(false);
-      push(PATH_DASHBOARD.turnoverManagement.turnoverOrderManagement);
+      push(PATH_DASHBOARD.projectManagement.projectView);
       console.log(JSON.stringify(data, null, 2));
     } catch (error) {
       console.error(error);

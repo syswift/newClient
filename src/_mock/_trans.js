@@ -57,7 +57,7 @@ export const _transAddressFrom = [...Array(5)].map((_, index) => ({
   phone: _mock.phoneNumber(index),
 }));
 
-export const _transAddressTo = [...Array(16)].map((_, index) => ({
+export const _invoiceAddressTo = [...Array(16)].map((_, index) => ({
   id: _mock.id(index + 1),
   name: _mock.name.fullName(index + 1),
   address: _mock.address.fullAddress(index + 1),

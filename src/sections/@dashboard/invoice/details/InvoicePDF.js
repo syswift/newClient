@@ -16,6 +16,8 @@ InvoicePDF.propTypes = {
 };
 
 export default function InvoicePDF({ invoice }) {
+  const { translate } = useLocales();
+
   const {
     items,
     taxes,
@@ -30,13 +32,11 @@ export default function InvoicePDF({ invoice }) {
     subTotalPrice,
   } = invoice;
 
-  const { translate } = useLocales();
-
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={[styles.gridContainer, styles.mb40]}>
-          <Image source="/logo/logo_full.jpg" style={{ height: 32 }} />
+          <Image source="/logo/logo_single.jpg" style={{ height: 32 }} />
           <View style={{ alignItems: 'flex-end', flexDirection: 'column' }}>
             <Text style={styles.h3}>{status}</Text>
             <Text> {`INV-${invoiceNumber}`} </Text>
@@ -61,7 +61,7 @@ export default function InvoicePDF({ invoice }) {
 
         <View style={[styles.gridContainer, styles.mb40]}>
           <View style={styles.col6}>
-            <Text style={[styles.overline, styles.mb8]}>{translate('main.Dcreate')}</Text>
+            <Text style={[styles.overline, styles.mb8]}>{translate('main.CreateDate')}</Text>
             <Text style={styles.body1}>{fDate(createDate)}</Text>
           </View>
           <View style={styles.col6}>
@@ -70,7 +70,7 @@ export default function InvoicePDF({ invoice }) {
           </View>
         </View>
 
-        <Text style={[styles.overline, styles.mb8]}>{translate('main.Detail')}</Text>
+        <Text style={[styles.overline, styles.mb8]}>{translate('main.Invoice')} {translate('main.Detail')}</Text>
 
         <View style={styles.table}>
           <View style={styles.tableHeader}>
@@ -175,7 +175,7 @@ export default function InvoicePDF({ invoice }) {
 
         {/* <View style={[styles.gridContainer, styles.footer]}>
           <View style={styles.col8}>
-            <Text style={styles.subtitle2}></Text>
+            <Text style={styles.subtitle2}>NOTES</Text>
             <Text>We appreciate your business. Should you need us to add VAT or extra notes let us know!</Text>
           </View>
           <View style={[styles.col4, styles.alignRight]}>

@@ -23,7 +23,8 @@ import Image from '../../../../components/Image';
 import Scrollbar from '../../../../components/Scrollbar';
 //
 import InvoiceToolbar from './InvoiceToolbar';
-
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const RowResultStyle = styled(TableRow)(({ theme }) => ({
@@ -42,37 +43,25 @@ InvoiceDetails.propTypes = {
 export default function InvoiceDetails({ invoice }) {
   const theme = useTheme();
 
+  const { translate } = useLocales();
+
   if (!invoice) {
     return null;
   }
 
   const {
     items,
+    taxes,
+    status,
+    dueDate,
+    discount,
+    invoiceTo,
+    createDate,
+    totalPrice,
+    invoiceFrom,
+    invoiceNumber,
+    subTotalPrice,
   } = invoice;
-  const ladingBillFrom={
-    name: '李先生',
-    address: '北京市昌平区',
-    information: '略'
-  }
-  const ladingBillTo={
-    companyName: '科技有限公司',
-    address: '上海市徐汇区',
-    name: '王先生',
-    phone: '152XXXXXXXX',
-  }
-  const ladingBillData={
-    notify: '李先生',
-    transportationMode: '空运',
-    paymentMethod: '预付款',
-    departurePort:'北京',
-    destinationPort: '上海',
-    tradeTerms: 'CFR',
-    ladingBill: '略',
-    marks: '略'
-  }
-  const tableData={
-    
-  }
 
   return (
     <>
@@ -86,67 +75,53 @@ export default function InvoiceDetails({ invoice }) {
 
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Box sx={{ textAlign: { sm: 'right' } }}>
-              <Typography variant="h6">TD-{'5146354'}</Typography>
+              <Label
+                variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+                color={
+                  (status === 'paid' && 'success') ||
+                  (status === 'unpaid' && 'warning') ||
+                  (status === 'overdue' && 'error') ||
+                  'default'
+                }
+                sx={{ textTransform: 'uppercase', mb: 1 }}
+              >
+                {status}
+              </Label>
+
+              <Typography variant="h6">{`INV-${invoiceNumber}`}</Typography>
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={12} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-              发货人信息
+          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
+            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
+              {translate('main.Ifrom')}
             </Typography>
-            <Typography variant="body1">名称:{ladingBillFrom.name}</Typography>
-            <Typography variant="body1">地址:{ladingBillFrom.address}</Typography>
-            <Typography variant="body1">详细资料: {ladingBillFrom.information}</Typography>
-          </Grid>
-
-          <Grid item xs={12} sm={12} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-              收货人信息
-            </Typography>
-            <Typography variant="body1">公司名称:{ladingBillTo.companyName}</Typography>
-            <Typography variant="body1">地址:{ladingBillTo.address}</Typography>
-            <Typography variant="body1">联系人:{ladingBillTo.name}</Typography>
-            <Typography variant="body1">联系电话: {ladingBillTo.phone}</Typography>
+            <Typography variant="body2">{invoiceFrom.name}</Typography>
+            <Typography variant="body2">{invoiceFrom.address}</Typography>
+            <Typography variant="body2">{translate('main.Phone')}: {invoiceFrom.phone}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-              通知人
+            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
+              {translate('main.Ito')}
             </Typography>
-            <Typography variant="body1">{ladingBillData.notify}</Typography>
-            {/* <Typography variant="body1">唛头:{ladingBillData.marks}</Typography> */}
-          </Grid>
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-              运输信息
-            </Typography>
-            <Typography variant="body1">运输方式:{ladingBillData.transportationMode}</Typography>
-            <Typography variant="body1">运费:{ladingBillData.paymentMethod}</Typography>
+            <Typography variant="body2">{invoiceTo.name}</Typography>
+            <Typography variant="body2">{invoiceTo.address}</Typography>
+            <Typography variant="body2">{translate('main.Phone')}: {invoiceTo.phone}</Typography>
           </Grid>
 
-          <Grid item xs={12} sm={3} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-              出货地
+          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
+            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
+              {translate('main.CreateDate')}
             </Typography>
-            <Typography variant="body1">{ladingBillData.departurePort}</Typography>
+            <Typography variant="body2">{fDate(createDate)}</Typography>
           </Grid>
-          <Grid item xs={12} sm={3} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-            目的地
+
+          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
+            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
+              {translate('main.Ddue')}
             </Typography>
-            <Typography variant="body1">{ladingBillData.destinationPort}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={3} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-            贸易条款
-            </Typography>
-            <Typography variant="body1">{ladingBillData.tradeTerms}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={3} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-            提单
-            </Typography>
-            <Typography variant="body1">{ladingBillData.ladingBill}</Typography>
+            <Typography variant="body2">{fDate(dueDate)}</Typography>
           </Grid>
         </Grid>
 
@@ -160,11 +135,11 @@ export default function InvoiceDetails({ invoice }) {
                 }}
               >
                 <TableRow>
-                  <TableCell width={90}>编号</TableCell>
-                  <TableCell align="center">商品描述</TableCell>
-                  <TableCell align="center">箱号</TableCell>
-                  <TableCell align="center">重量</TableCell>
-                  <TableCell align="center">尺寸</TableCell>
+                  <TableCell width={40}>#</TableCell>
+                  <TableCell align="left">{translate('main.Description')}</TableCell>
+                  <TableCell align="left">{translate('main.Qty')}</TableCell>
+                  <TableCell align="right">{translate('main.Uprice')}</TableCell>
+                  <TableCell align="right">{translate('main.Total')}</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -177,59 +152,80 @@ export default function InvoiceDetails({ invoice }) {
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell align="center">
+                    <TableCell align="left">
                       <Box sx={{ maxWidth: 560 }}>
-                        <Typography variant="subtitle2">{row.description}</Typography>
-
+                        <Typography variant="subtitle2">{row.title}</Typography>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                          {row.description}
+                        </Typography>
                       </Box>
                     </TableCell>
-                    <TableCell align="center">{row.quantity}</TableCell>
-                    <TableCell align="center">{row.quantity}</TableCell>
-                    <TableCell align="center">{row.quantity}</TableCell>
+                    <TableCell align="left">{row.quantity}</TableCell>
+                    <TableCell align="right">{fCurrency(row.price)}</TableCell>
+                    <TableCell align="right">{fCurrency(row.price * row.quantity)}</TableCell>
                   </TableRow>
                 ))}
 
                 <RowResultStyle>
                   <TableCell colSpan={3} />
                   <TableCell align="right">
-                    <Typography variant="h6">费用</Typography>
+                    <Box sx={{ mt: 2 }} />
+                    <Typography>{translate('main.Subtotal')}</Typography>
+                  </TableCell>
+                  <TableCell align="right" width={120}>
+                    <Box sx={{ mt: 2 }} />
+                    <Typography>{fCurrency(subTotalPrice)}</Typography>
+                  </TableCell>
+                </RowResultStyle>
+
+                <RowResultStyle>
+                  <TableCell colSpan={3} />
+                  <TableCell align="right">
+                    <Typography>{translate('main.Discount')}</Typography>
+                  </TableCell>
+                  <TableCell align="right" width={120}>
+                    <Typography sx={{ color: 'error.main' }}>{discount && fCurrency(-discount)}</Typography>
+                  </TableCell>
+                </RowResultStyle>
+
+                <RowResultStyle>
+                  <TableCell colSpan={3} />
+                  <TableCell align="right">
+                    <Typography>{translate('main.Taxes')}</Typography>
+                  </TableCell>
+                  <TableCell align="right" width={120}>
+                    <Typography>{taxes && fCurrency(taxes)}</Typography>
+                  </TableCell>
+                </RowResultStyle>
+
+                <RowResultStyle>
+                  <TableCell colSpan={3} />
+                  <TableCell align="right">
+                    <Typography variant="h6">{translate('main.Total')}</Typography>
                   </TableCell>
                   <TableCell align="right" width={140}>
-                    <Typography variant="h6">{'$89.05'}</Typography>
+                    <Typography variant="h6">{fCurrency(totalPrice)}</Typography>
                   </TableCell>
                 </RowResultStyle>
               </TableBody>
             </Table>
           </TableContainer>
         </Scrollbar>
-        <Grid container>
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }} >
-              唛头
-            </Typography>
-            <Typography variant="body1">{ladingBillData.marks}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6" sx={{ color: 'text.disabled' }}>
-            发货方单证联系人
-            </Typography>
-            <Typography variant="body1">{ladingBillData.notify}</Typography>
-          </Grid>
-        </Grid>
+
         <Divider sx={{ mt: 5 }} />
 
-        <Grid container>
+        {/* <Grid container>
           <Grid item xs={12} md={9} sx={{ py: 3 }}>
-            <Typography variant="subtitle2">补充</Typography>
+            <Typography variant="subtitle2">NOTES</Typography>
             <Typography variant="body2">
-              感谢您的信任。如果您需要我们增加增值税或额外的票据，请告诉我们!
+              We appreciate your business. Should you need us to add VAT or extra notes let us know!
             </Typography>
           </Grid>
           <Grid item xs={12} md={3} sx={{ py: 3, textAlign: 'right' }}>
-            <Typography variant="subtitle2">如有其它疑问</Typography>
-            <Typography variant="body2">请联系XXXXXX@163.COM</Typography>
+            <Typography variant="subtitle2">Have a Question?</Typography>
+            <Typography variant="body2">support@minimals.cc</Typography>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Card>
     </>
   );

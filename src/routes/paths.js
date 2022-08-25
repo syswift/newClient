@@ -59,7 +59,7 @@ export const PATH_DASHBOARD = {
   //-----------------------------------新增-----------------------------------//
   // 项目管理
   projectManagement: {
-    root: path(ROOTS_DASHBOARD, '/projectManagement/projectView'),
+    root: path(ROOTS_DASHBOARD, '/projectManagement'),
     newProject: path(ROOTS_DASHBOARD, '/projectManagement/newProject'),
     projectView: path(ROOTS_DASHBOARD, '/projectManagement/projectView'),
   },

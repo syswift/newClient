@@ -56,16 +56,6 @@ const SERVICE_OPTIONS = [
   'front end development',
 ];
 
-const TABLE_HEAD = [
-  { id: 'invoiceNumber', label: '用户', align: 'left' },
-  { id: 'createDate', label: '创建日期', align: 'left' },
-  { id: 'dueDate', label: '截止日期', align: 'left' },
-  { id: 'price', label: '合计', align: 'center', width: 140 },
-  { id: 'sent', label: '派送', align: 'center', width: 140 },
-  { id: 'status', label: '状态', align: 'left' },
-  { id: '' },
-];
-
 // ----------------------------------------------------------------------
 
 InvoiceList.getLayout = function getLayout(page) {
@@ -75,9 +65,20 @@ InvoiceList.getLayout = function getLayout(page) {
 // ----------------------------------------------------------------------
 
 export default function InvoiceList() {
-  const theme = useTheme();
 
   const { translate } = useLocales();
+
+  const TABLE_HEAD = [
+    { id: 'invoiceNumber', label:(translate('main.User')) , align: 'left' },
+    { id: 'createDate', label:(translate('main.Dcreate')), align: 'left' },
+    { id: 'dueDate', label:(translate('main.Ddue')), align: 'left' },
+    { id: 'price', label:(translate('main.Sum')), align: 'center', width: 140 },
+    { id: 'sent', label:(translate('main.Sent')), align: 'center', width: 140 },
+    { id: 'status', label:(translate('main.Status')), align: 'left' },
+    { id: '' },
+  ];
+
+  const theme = useTheme();
 
   const { themeStretch } = useSettings();
 

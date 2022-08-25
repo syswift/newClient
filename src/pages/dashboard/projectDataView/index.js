@@ -33,6 +33,8 @@ export default function ProjectDataView() {
 
   const [ allTrans , setallTrans ] = useState([]);
   const [ newTrans , setnewTrans ] = useState([]);
+  const [ completeTrans , setcompleteTrans ] = useState([]);
+  const [ TransState , setTransState ] = useState([]);
 
   const [isInitialized, setisInitialized] = useState(true); 
 
@@ -77,19 +79,39 @@ export default function ProjectDataView() {
     }
     setisInitialized(true);
 
-    const temp1 = [];
+    const temp1 = []; //new
+    const temp2 = []; //complete
 
     for(const tran of all.data)
     {
       if(tran.transState === true) temp1.push(tran);
+      else temp2.push(tran);
     }
-    console.log(temp1.length);
-    console.log(all.data.length);
+    //console.log(temp1.length);
+    //console.log(all.data.length);
     setnewTrans(temp1);
+    setcompleteTrans(temp2);
     setallTrans(all.data);
     
   }
 
+  const countPositive = (trans) => {
+    let count = 0;
+    for(const tran of trans)
+    {
+      if(tran.transType === '正向周转') count++; 
+    }
+    return count;
+  }
+
+  const countNegative = (trans) => {
+    let count = 0;
+    for(const tran of trans)
+    {
+      if(tran.transType === '逆向周转') count++; 
+    }
+    return count;
+  }
 
   if (!isInitialized) {
     return <LoadingScreen />;
@@ -120,7 +142,7 @@ export default function ProjectDataView() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentDownload
-              title="项目结算"
+              title="项目周转单构成"
               chartColors={[
                 theme.palette.primary.lighter,
                 theme.palette.primary.light,
@@ -128,10 +150,10 @@ export default function ProjectDataView() {
                 theme.palette.primary.dark,
               ]}
               chartData={[
-                { label: '预付款', value: 72244 },
-                { label: '中期款', value: 73345 },
-                { label: '尾款', value: 74313 },
-                { label: '维护费用', value: 32244 },
+                { label: '已完成逆向周转', value: countNegative(completeTrans) },
+                { label: '新增正向周转', value: countPositive(newTrans) },
+                { label: '新增逆向周转', value: countNegative(newTrans) },
+                { label: '已完成正向周转', value: countPositive(completeTrans) },              
               ]}
             />
           </Grid>

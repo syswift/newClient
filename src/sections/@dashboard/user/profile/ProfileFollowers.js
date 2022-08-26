@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Box, Grid, Card, Button, Avatar, Typography } from '@mui/material'; // @types
 // components
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -12,10 +14,12 @@ ProfileFollowers.propTypes = {
 };
 
 export default function ProfileFollowers({ followers }) {
+  const { translate } = useLocales();
+
   return (
     <Box sx={{ mt: 5 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Followers
+        {(translate('Followers'))}
       </Typography>
 
       <Grid container spacing={3}>
@@ -36,6 +40,8 @@ FollowerCard.propTypes = {
 };
 
 function FollowerCard({ follower }) {
+  const { translate } = useLocales();
+
   const { name, country, avatarUrl, isFollowed } = follower;
 
   const [toggle, setToogle] = useState(isFollowed);
@@ -65,7 +71,7 @@ function FollowerCard({ follower }) {
         startIcon={toggle && <Iconify icon={'eva:checkmark-fill'} />}
         sx={{ flexShrink: 0 }}
       >
-        {toggle ? 'Followed' : 'Follow'}
+        {toggle ? (translate('Followed')) : (translate('Follow'))}
       </Button>
     </Card>
   );

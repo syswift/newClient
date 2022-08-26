@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { Stack, InputAdornment, TextField, MenuItem } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -14,12 +16,14 @@ UserTableToolbar.propTypes = {
 };
 
 export default function UserTableToolbar({ filterName, filterRole, onFilterName, onFilterRole, optionsRole }) {
+  const { translate } = useLocales();
+  
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} sx={{ py: 2.5, px: 3 }}>
       <TextField
         fullWidth
         select
-        label="Role"
+        label={translate('Role')}
         value={filterRole}
         onChange={onFilterRole}
         SelectProps={{
@@ -53,7 +57,7 @@ export default function UserTableToolbar({ filterName, filterRole, onFilterName,
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="Search user..."
+        placeholder={translate('SU')}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

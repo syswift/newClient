@@ -8,6 +8,8 @@ import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../../components/hook-form';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +45,8 @@ AccountSocialLinks.propTypes = {
 
 export default function AccountSocialLinks({ myProfile }) {
   const { enqueueSnackbar } = useSnackbar();
+
+  const { translate } = useLocales();
 
   const defaultValues = {
     facebookLink: myProfile.facebookLink,
@@ -84,7 +88,7 @@ export default function AccountSocialLinks({ myProfile }) {
           ))}
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            Save Changes
+          {translate('Save')}{translate('main.Change')}
           </LoadingButton>
         </Stack>
       </FormProvider>

@@ -9,6 +9,7 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import useAuth from '../../../hooks/useAuth';
 import useTabs from '../../../hooks/useTabs';
 import useSettings from '../../../hooks/useSettings';
+import useLocales from '../../../hooks/useLocales';
 // _mock_
 import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from '../../../_mock';
 // layouts
@@ -53,6 +54,8 @@ UserProfile.getLayout = function getLayout(page) {
 // ----------------------------------------------------------------------
 
 export default function UserProfile() {
+  const { translate } = useLocales();
+
   const { themeStretch } = useSettings();
 
   const { user } = useAuth();
@@ -89,13 +92,13 @@ export default function UserProfile() {
   ];
 
   return (
-    <Page title="User: Profile">
+    <Page title="用户: 个人主页">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Profile"
+          heading={translate('profile')}
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.User')), href: PATH_DASHBOARD.user.root },
             { name: user?.displayName || '' },
           ]}
         />

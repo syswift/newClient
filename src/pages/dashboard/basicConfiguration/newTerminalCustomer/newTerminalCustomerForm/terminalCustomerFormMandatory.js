@@ -1,5 +1,3 @@
-import sum from 'lodash/sum';
-import { useCallback, useEffect } from 'react';
 // form
 import { useFormContext, useFieldArray } from 'react-hook-form';
 // @mui
@@ -9,15 +7,12 @@ import { RHFSelect, RHFTextField } from '../../../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
-const SERVICE_OPTIONS = [
-  { id: 1, name: '可用', price: 90.99 },
-  { id: 2, name: '暂不可用', price: 80.99 },
-];
+const STATE_OPTIONS = ['可用','暂不可用'];
 
 // ----------------------------------------------------------------------
 
 export default function InvoiceNewEditDetails() {
-  const { control, setValue, watch, resetField } = useFormContext();
+  const { control, watch } = useFormContext();
 
   const { fields } = useFieldArray({
     control,
@@ -25,31 +20,6 @@ export default function InvoiceNewEditDetails() {
   });
 
   const values = watch();
-
-  const totalOnRow = values.items.map((item) => item.quantity * item.price);
-
-  const totalPrice = sum(totalOnRow) - values.discount + values.taxes;
-
-  useEffect(() => {
-    setValue('totalPrice', totalPrice);
-  }, [setValue, totalPrice]);
-
-  const handleClearService = useCallback(
-    (index) => {
-      resetField(`items[${index}].quantity`);
-      resetField(`items[${index}].price`);
-      resetField(`items[${index}].total`);
-    },
-    [resetField]
-  );
-
-  const handleSelectService = useCallback(
-    (index, option) => {
-      setValue(`items[${index}].price`, SERVICE_OPTIONS.find((service) => service.name === option)?.price);
-      setValue(`items[${index}].total`, values.items.map((item) => item.quantity * item.price)[index]);
-    },
-    [setValue, values.items]
-  );
 
   return (
     <Box sx={{ p: 3 }}>
@@ -62,54 +32,40 @@ export default function InvoiceNewEditDetails() {
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
               <RHFTextField
                 size="small"
-                name={`items[${index}].customerCode`}
-                label="客户代码"
+                name="terminalCustomerCode"
+                label="终端客户代码"
                 InputLabelProps={{ shrink: true }}
+                value={values.terminalCustomerCode}
               />
 
               <RHFTextField
                 size="small"
-                name={`items[${index}].customerName`}
-                label="客户名称"
+                name="terminalCustomerName"
+                label="终端客户名称"
                 InputLabelProps={{ shrink: true }}
+                value={values.terminalCustomerName}
               />
 
               <RHFTextField
                 size="small"
-                name={`items[${index}].companyCode`}
+                name="companyCode"
                 label="公司编码"
                 InputLabelProps={{ shrink: true }}
+                value={values.companyCode}
               />
               
               <RHFSelect
-                name={`items[${index}].dataState`}
+                name="dataState"
                 size="small"
                 label="状态"
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: false, sx: { textTransform: 'capitalize' } }}
                 sx={{ maxWidth: { md: 160 } }}
               >
-                <MenuItem
-                  value=""
-                  onClick={() => handleClearService(index)}
-                  sx={{
-                    mx: 1,
-                    borderRadius: 0.75,
-                    typography: 'body2',
-                    fontStyle: 'italic',
-                    color: 'text.secondary',
-                  }}
-                >
-                  None
-                </MenuItem>
-
-                <Divider />
-
-                {SERVICE_OPTIONS.map((option) => (
+                {STATE_OPTIONS.map((option) => (
                   <MenuItem
-                    key={option.id}
-                    value={option.name}
-                    onClick={() => handleSelectService(index, option.name)}
+                    key={option}
+                    value={option}
                     sx={{
                       mx: 1,
                       my: 0.5,
@@ -118,12 +74,11 @@ export default function InvoiceNewEditDetails() {
                       textTransform: 'capitalize',
                     }}
                   >
-                    {option.name}
+                    {option}
                   </MenuItem>
                 ))}
               </RHFSelect>
             </Stack>
-
           </Stack>
         ))}
       </Stack>

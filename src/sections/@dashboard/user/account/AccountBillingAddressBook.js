@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Box, Card, Button, Typography, Stack, Paper } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -11,11 +13,13 @@ AccountBillingAddressBook.propTypes = {
 };
 
 export default function AccountBillingAddressBook({ addressBook }) {
+  const { translate } = useLocales();
+
   return (
     <Card sx={{ p: 3 }}>
       <Stack spacing={3} alignItems="flex-start">
         <Typography variant="overline" sx={{ color: 'text.secondary' }}>
-          Billing Info
+          {translate('Bill')}
         </Typography>
 
         {addressBook.map((address) => (
@@ -33,14 +37,14 @@ export default function AccountBillingAddressBook({ addressBook }) {
 
             <Typography variant="body2" gutterBottom>
               <Typography variant="body2" component="span" sx={{ color: 'text.secondary' }}>
-                Address: &nbsp;
+                {translate('Address')}: &nbsp;
               </Typography>
               {`${address.street}, ${address.city}, ${address.state}, ${address.country} ${address.zipCode}`}
             </Typography>
 
             <Typography variant="body2" gutterBottom>
               <Typography variant="body2" component="span" sx={{ color: 'text.secondary' }}>
-                Phone: &nbsp;
+              {translate('Phone')}: &nbsp;
               </Typography>
               {address.phone}
             </Typography>
@@ -53,17 +57,17 @@ export default function AccountBillingAddressBook({ addressBook }) {
                 onClick={() => {}}
                 sx={{ mr: 1 }}
               >
-                Delete
+                {translate('main.Delete')}
               </Button>
               <Button size="small" startIcon={<Iconify icon={'eva:edit-fill'} />} onClick={() => {}}>
-                Edit
+              {translate('main.Edit')}
               </Button>
             </Box>
           </Paper>
         ))}
 
         <Button size="small" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-          Add new address
+        {translate('Addn')}
         </Button>
       </Stack>
     </Card>

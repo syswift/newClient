@@ -11,8 +11,6 @@ import { LoadingButton } from '@mui/lab';
 import { Card, Stack } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../../routes/paths';
-// mock
-import { _invoiceAddressFrom } from '../../../../../_mock';
 // components
 import { FormProvider } from '../../../../../components/hook-form';
 //
@@ -35,23 +33,27 @@ export default function NewCustomerForm({ isEdit, currentInvoice }) {
   const [loadingSend, setLoadingSend] = useState(false);
 
   const NewUserSchema = Yup.object().shape({
-    createDate: Yup.string().nullable().required('Create date is required'),
-    dueDate: Yup.string().nullable().required('Due date is required'),
-    invoiceTo: Yup.mixed().nullable().required('Invoice to is required'),
+    customerCode: Yup.string().nullable().required('请完善相关信息！'),
+    customerName: Yup.string().nullable().required('请完善相关信息！'),
+    companyCode: Yup.mixed().nullable().required('请完善相关信息！'),
+    dataState: Yup.mixed().nullable().required('请完善相关信息！'),
+    address: Yup.mixed().nullable().required('请完善相关信息！'),
+    country: Yup.mixed().nullable().required('请完善相关信息！'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      invoiceNumber: currentInvoice?.invoiceNumber || '17099',
-      createDate: currentInvoice?.createDate || new Date(),
-      dueDate: currentInvoice?.dueDate || null,
-      taxes: currentInvoice?.taxes || 0,
-      status: currentInvoice?.status || 'draft',
-      discount: currentInvoice?.discount || 0,
-      invoiceFrom: currentInvoice?.invoiceFrom || _invoiceAddressFrom[0],
-      invoiceTo: currentInvoice?.invoiceTo || null,
-      items: currentInvoice?.items || [{ title: '', description: '', service: '', quantity: 1, price: 0, total: 0 }],
-      totalPrice: currentInvoice?.totalPrice || 0,
+      customerCode: currentInvoice?.customerCode || '',
+      customerName: currentInvoice?.customerName || '',
+      companyCode: currentInvoice?.companyCode || '',
+      dataState: currentInvoice?.dataState || '',
+      province: currentInvoice?.province || '',
+      city: currentInvoice?.city || '',
+      district: currentInvoice?.district || '',
+      address: currentInvoice?.address || '',
+      country: currentInvoice?.country || '',
+      countryCode: currentInvoice?.countryCode || '',
+      items: currentInvoice?.items || [{ contact: '', position: '', phone: '', email: ''}],
     }),
     [currentInvoice]
   );

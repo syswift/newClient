@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 // @mui
 import { Box, Stack, Button, Dialog, Tooltip, IconButton, DialogActions, CircularProgress } from '@mui/material';
 // hooks
-import useToggle from '../../../../hooks/useToggle';
+import useToggle from '../../../../../hooks/useToggle';
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../../../routes/paths';
 // components
-import Iconify from '../../../../components/Iconify';
+import Iconify from '../../../../../components/Iconify';
 //
 import InvoicePDF from './InvoicePDF';
 

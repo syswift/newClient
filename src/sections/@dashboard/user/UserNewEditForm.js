@@ -19,6 +19,8 @@ import { countries } from '../../../_mock';
 // components
 import Label from '../../../components/Label';
 import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+//hooks
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,8 @@ UserNewEditForm.propTypes = {
 
 export default function UserNewEditForm({ isEdit = false, currentUser }) {
   const { push } = useRouter();
+
+  const { translate } = useLocales();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -148,8 +152,8 @@ export default function UserNewEditForm({ isEdit = false, currentUser }) {
                       color: 'text.secondary',
                     }}
                   >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
+                    {translate('Allowed')} *.jpeg, *.jpg, *.png, *.gif
+                    <br /> {translate('maxsize')} {fData(3145728)}
                   </Typography>
                 }
               />
@@ -174,10 +178,10 @@ export default function UserNewEditForm({ isEdit = false, currentUser }) {
                 label={
                   <>
                     <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                      Banned
+                      {translate('Banned')}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Apply disable account
+                    {translate('ApplyDA')}
                     </Typography>
                   </>
                 }
@@ -191,10 +195,10 @@ export default function UserNewEditForm({ isEdit = false, currentUser }) {
               label={
                 <>
                   <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    Email Verified
+                    {translate('EmailVer')}
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the user a verification email
+                    {translate('EmailDoc')}
                   </Typography>
                 </>
               }
@@ -213,11 +217,11 @@ export default function UserNewEditForm({ isEdit = false, currentUser }) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
+              <RHFTextField name="name" label={translate('Fname')} />
+              <RHFTextField name="email" label={translate('EmailAdd')} />
+              <RHFTextField name="phoneNumber" label={translate('main.Phone')} />
 
-              <RHFSelect name="country" label="Country" placeholder="Country">
+              <RHFSelect name="country" label={translate('Country')} placeholder="Country">
                 <option value="" />
                 {countries.map((option) => (
                   <option key={option.code} value={option.label}>
@@ -226,17 +230,17 @@ export default function UserNewEditForm({ isEdit = false, currentUser }) {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="address" label="Address" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
-              <RHFTextField name="company" label="Company" />
-              <RHFTextField name="role" label="Role" />
+              <RHFTextField name="state" label={translate('State')} />
+              <RHFTextField name="city" label={translate('City')} />
+              <RHFTextField name="address" label={translate('Address')} />
+              <RHFTextField name="zipCode" label={translate('Zip')} />
+              <RHFTextField name="company" label={translate('Company')} />
+              <RHFTextField name="role" label={translate('Role')} />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create User' : 'Save Changes'}
+                {!isEdit ? (translate('create')) : (translate('Save'))}
               </LoadingButton>
             </Stack>
           </Card>

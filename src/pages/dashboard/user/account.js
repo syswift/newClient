@@ -1,4 +1,4 @@
-import { capitalCase } from 'change-case';
+// import { capitalCase } from 'change-case';
 // @mui
 import { Container, Tab, Box, Tabs } from '@mui/material';
 // routes
@@ -6,6 +6,7 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
 import useTabs from '../../../hooks/useTabs';
 import useSettings from '../../../hooks/useSettings';
+import useLocales from '../../../hooks/useLocales';
 // _mock_
 import { _userPayment, _userAddressBook, _userInvoices, _userAbout } from '../../../_mock';
 // layouts
@@ -33,6 +34,8 @@ UserAccount.getLayout = function getLayout(page) {
 
 export default function UserAccount() {
   const { themeStretch } = useSettings();
+
+  const { translate } = useLocales();
 
   const { currentTab, onChangeTab } = useTabs('general');
 
@@ -65,14 +68,14 @@ export default function UserAccount() {
   ];
 
   return (
-    <Page title="User: Account Settings">
+    <Page title="用户: 账号设置">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Account"
+          heading={translate('account')}
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'Account Settings' },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.User')), href: PATH_DASHBOARD.user.root },
+            { name: (translate('AS')) },
           ]}
         />
 
@@ -84,7 +87,10 @@ export default function UserAccount() {
           onChange={onChangeTab}
         >
           {ACCOUNT_TABS.map((tab) => (
-            <Tab disableRipple key={tab.value} label={capitalCase(tab.value)} icon={tab.icon} value={tab.value} />
+            <Tab disableRipple key={tab.value}
+              // label={translate(capitalCase(tab.value))}
+              label={translate(tab.value)}
+              icon={tab.icon} value={tab.value} />
           ))}
         </Tabs>
 

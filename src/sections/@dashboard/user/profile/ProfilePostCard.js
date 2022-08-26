@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 // hooks
 import useAuth from '../../../../hooks/useAuth';
+import useLocales from '../../../../hooks/useLocales';
 // utils
 import { fDate } from '../../../../utils/formatTime';
 import { fShortenNumber } from '../../../../utils/formatNumber';
@@ -36,6 +37,8 @@ ProfilePostCard.propTypes = {
 
 export default function ProfilePostCard({ post }) {
   const { user } = useAuth();
+
+  const { translate } = useLocales();
 
   const commentInputRef = useRef(null);
 
@@ -167,7 +170,7 @@ export default function ProfilePostCard({ post }) {
             size="small"
             value={message}
             inputRef={commentInputRef}
-            placeholder="Write a comment…"
+            placeholder={translate('WriteCom')}
             onChange={(event) => handleChangeMessage(event.target.value)}
             InputProps={{
               endAdornment: (

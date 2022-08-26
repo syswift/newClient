@@ -7,6 +7,7 @@ import { Container } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
 import useSettings from '../../../../hooks/useSettings';
+import useLocales from '../../../../hooks/useLocales';
 // _mock_
 import { _userList } from '../../../../_mock';
 // layouts
@@ -28,6 +29,8 @@ UserEdit.getLayout = function getLayout(page) {
 export default function UserEdit() {
   const { themeStretch } = useSettings();
 
+  const { translate } = useLocales();
+
   const { query } = useRouter();
 
   const { name } = query;
@@ -35,13 +38,13 @@ export default function UserEdit() {
   const currentUser = _userList.find((user) => paramCase(user.name) === name);
 
   return (
-    <Page title="User: Edit user">
+    <Page title="用户: 编辑">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Edit user"
+          heading={translate('EU')}
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.list },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.User')), href: PATH_DASHBOARD.user.list },
             { name: capitalCase(name) },
           ]}
         />

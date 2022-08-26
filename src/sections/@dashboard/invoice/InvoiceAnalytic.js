@@ -43,10 +43,10 @@ export default function InvoiceAnalytic({ title, total, icon, color, percent, pr
             个
           </Box>
         </Typography>
-
-        <Typography variant="subtitle2" sx={{ color }}>
+        {/* 这里修改后就不显示表格上方价值---gx */}
+        {/* <Typography variant="subtitle2" sx={{ color }}>
           {fCurrency(price)}
-        </Typography>
+        </Typography> */}
       </Stack>
     </Stack>
   );

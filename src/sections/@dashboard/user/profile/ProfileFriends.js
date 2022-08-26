@@ -8,7 +8,9 @@ import InputStyle from '../../../../components/InputStyle';
 import MenuPopover from '../../../../components/MenuPopover';
 import SocialsButton from '../../../../components/SocialsButton';
 import SearchNotFound from '../../../../components/SearchNotFound';
-
+// import { translateRect } from '@fullcalendar/common';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 ProfileFriends.propTypes = {
@@ -20,19 +22,21 @@ ProfileFriends.propTypes = {
 export default function ProfileFriends({ friends, findFriends, onFindFriends }) {
   const friendFiltered = applyFilter(friends, findFriends);
 
+  const { translate } = useLocales();
+
   const isNotFound = friendFiltered.length === 0;
 
   return (
     <Box sx={{ mt: 5 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Friends
+        {translate('Friends')}
       </Typography>
 
       <InputStyle
         stretchStart={240}
         value={findFriends}
         onChange={(event) => onFindFriends(event.target.value)}
-        placeholder="Find friends..."
+        placeholder={translate('Findf')}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -67,6 +71,8 @@ FriendCard.propTypes = {
 };
 
 function FriendCard({ friend }) {
+  const { translate } = useLocales();
+
   const { name, role, avatarUrl } = friend;
 
   const [open, setOpen] = useState(null);
@@ -119,12 +125,12 @@ function FriendCard({ friend }) {
           <>
             <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
               <Iconify icon={'eva:trash-2-outline'} />
-              Delete
+              {translate('main.Delete')}
             </MenuItem>
 
             <MenuItem onClick={handleEdit}>
               <Iconify icon={'eva:edit-fill'} />
-              Edit
+              {translate('main.Edit')}
             </MenuItem>
           </>
         }

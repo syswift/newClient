@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Link, Card, Typography, CardHeader, Stack } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -24,9 +26,11 @@ ProfileAbout.propTypes = {
 export default function ProfileAbout({ profile }) {
   const { quote, country, email, role, company, school } = profile;
 
+  const { translate } = useLocales();
+
   return (
     <Card>
-      <CardHeader title="About" />
+      <CardHeader title={translate('About')} />
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Typography variant="body2">{quote}</Typography>
@@ -34,7 +38,7 @@ export default function ProfileAbout({ profile }) {
         <Stack direction="row">
           <IconStyle icon={'eva:pin-fill'} />
           <Typography variant="body2">
-            Live at &nbsp;
+            {translate('Live')} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {country}
             </Link>
@@ -49,7 +53,7 @@ export default function ProfileAbout({ profile }) {
         <Stack direction="row">
           <IconStyle icon={'ic:round-business-center'} />
           <Typography variant="body2">
-            {role} at &nbsp;
+            {role} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {company}
             </Link>
@@ -59,7 +63,7 @@ export default function ProfileAbout({ profile }) {
         <Stack direction="row">
           <IconStyle icon={'ic:round-business-center'} />
           <Typography variant="body2">
-            Studied at &nbsp;
+          {translate('Studied')} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {school}
             </Link>

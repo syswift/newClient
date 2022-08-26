@@ -192,11 +192,15 @@ const navConfig = [
   {
     subheader: 'Bill',
     items: [
-      // 项目管理
+      // 提单管理
       {
         title: 'Bill',
         path: PATH_DASHBOARD.ladingBill.root,
         icon: ICONS.booking,
+        children: [
+          { title: 'BillView', path: PATH_DASHBOARD.ladingBill.billView },
+          { title: 'NewBill', path: PATH_DASHBOARD.ladingBill.newBill },
+        ],
       },
     ],
   },

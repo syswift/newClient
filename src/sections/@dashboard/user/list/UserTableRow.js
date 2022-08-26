@@ -7,6 +7,8 @@ import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mu
 import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +22,8 @@ UserTableRow.propTypes = {
 
 export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const theme = useTheme();
+
+  const { translate } = useLocales();
 
   const { name, avatarUrl, company, role, isVerified, status } = row;
 
@@ -89,7 +93,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
                 sx={{ color: 'error.main' }}
               >
                 <Iconify icon={'eva:trash-2-outline'} />
-                Delete
+                {translate('main.Delete')}
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -98,7 +102,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
                 }}
               >
                 <Iconify icon={'eva:edit-fill'} />
-                Edit
+                {translate('main.Edit')}
               </MenuItem>
             </>
           }

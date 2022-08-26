@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Card, Stack, Typography, Divider } from '@mui/material';
 // utils
 import { fNumber } from '../../../../utils/formatNumber';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -16,20 +18,22 @@ ProfileFollowInfo.propTypes = {
 export default function ProfileFollowInfo({ profile }) {
   const { follower, following } = profile;
 
+  const { translate } = useLocales();
+
   return (
     <Card sx={{ py: 3 }}>
       <Stack direction="row" divider={<Divider orientation="vertical" flexItem />}>
         <Stack width={1} textAlign="center">
           <Typography variant="h4">{fNumber(follower)}</Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Follower
+            {translate('Followers')}
           </Typography>
         </Stack>
 
         <Stack width={1} textAlign="center">
           <Typography variant="h4">{fNumber(following)}</Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Following
+          {translate('Following')}
           </Typography>
         </Stack>
       </Stack>

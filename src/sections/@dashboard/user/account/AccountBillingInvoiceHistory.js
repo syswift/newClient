@@ -6,6 +6,8 @@ import { fDate } from '../../../../utils/formatTime';
 import { fCurrency } from '../../../../utils/formatNumber';
 // components
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -14,10 +16,12 @@ AccountBillingInvoiceHistory.propTypes = {
 };
 
 export default function AccountBillingInvoiceHistory({ invoices }) {
+  const { translate } = useLocales();
+
   return (
     <Stack spacing={3} alignItems="flex-end">
       <Typography variant="subtitle1" sx={{ width: 1 }}>
-        Invoice History
+        {translate('main.Invoice')} {translate('History')}
       </Typography>
 
       <Stack spacing={2} sx={{ width: 1 }}>
@@ -33,7 +37,7 @@ export default function AccountBillingInvoiceHistory({ invoices }) {
       </Stack>
 
       <Button size="small" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-        All invoices
+      {translate('main.All')} {translate('main.Invoice')} 
       </Button>
     </Stack>
   );

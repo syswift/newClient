@@ -9,6 +9,8 @@ import { fShortenNumber } from '../../../../utils/formatNumber';
 import Image from '../../../../components/Image';
 import SocialsButton from '../../../../components/SocialsButton';
 import SvgIconStyle from '../../../../components/SvgIconStyle';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +32,8 @@ UserCard.propTypes = {
 
 export default function UserCard({ user }) {
   const { name, cover, position, follower, totalPost, avatarUrl, following } = user;
+
+  const { translate } = useLocales();
 
   return (
     <Card sx={{ textAlign: 'center' }}>
@@ -84,21 +88,21 @@ export default function UserCard({ user }) {
       <Box sx={{ py: 3, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
         <div>
           <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
-            Follower
+            {translate('Followers')}
           </Typography>
           <Typography variant="subtitle1">{fShortenNumber(follower)}</Typography>
         </div>
 
         <div>
           <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
-            Following
+          {translate('Following')}
           </Typography>
           <Typography variant="subtitle1">{fShortenNumber(following)}</Typography>
         </div>
 
         <div>
           <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
-            Total Post
+          {translate('TPost')}
           </Typography>
           <Typography variant="subtitle1">{fShortenNumber(totalPost)}</Typography>
         </div>

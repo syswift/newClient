@@ -132,6 +132,8 @@ export const PATH_DASHBOARD = {
   },
   ladingBill: {
     root: path(ROOTS_DASHBOARD, '/ladingBill'),
+    billView: path(ROOTS_DASHBOARD, '/ladingBill/billView'),
+    newBill: path(ROOTS_DASHBOARD, '/ladingBill/newBill'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),

@@ -13,6 +13,8 @@ import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
 import { UserCard } from '../../../sections/@dashboard/user/cards';
+//hooks
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -25,15 +27,17 @@ UserCards.getLayout = function getLayout(page) {
 export default function UserCards() {
   const { themeStretch } = useSettings();
 
+  const { translate } = useLocales();
+
   return (
-    <Page title="User: Cards">
+    <Page title="用户: 用户名片">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="User Cards"
+          heading={translate('UC')}
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'Cards' },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.User')), href: PATH_DASHBOARD.user.root },
+            { name: (translate('cards')) },
           ]}
         />
 

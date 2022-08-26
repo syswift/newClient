@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Link, Card, CardHeader, Stack } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +25,8 @@ ProfileSocialInfo.propTypes = {
 
 export default function ProfileSocialInfo({ profile }) {
   const { facebookLink, instagramLink, linkedinLink, twitterLink } = profile;
+
+  const { translate } = useLocales();
 
   const SOCIALS = [
     {
@@ -49,7 +53,7 @@ export default function ProfileSocialInfo({ profile }) {
 
   return (
     <Card>
-      <CardHeader title="Social" />
+      <CardHeader title={translate('Social')} />
       <Stack spacing={2} sx={{ p: 3 }}>
         {SOCIALS.map((link) => (
           <Stack key={link.name} direction="row" alignItems="center">

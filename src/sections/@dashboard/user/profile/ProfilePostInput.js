@@ -3,11 +3,15 @@ import { useRef } from 'react';
 import { Box, Card, Button, TextField, IconButton } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
 export default function ProfilePostInput() {
   const fileInputRef = useRef(null);
+
+  const { translate } = useLocales();
 
   const handleAttach = () => {
     fileInputRef.current?.click();
@@ -19,7 +23,7 @@ export default function ProfilePostInput() {
         multiline
         fullWidth
         rows={4}
-        placeholder="Share what you are thinking here..."
+        placeholder={translate('Sharethink')}
         sx={{
           '& fieldset': {
             borderWidth: `1px !important`,

@@ -5,6 +5,8 @@ import { LoadingButton } from '@mui/lab';
 // components
 import Image from '../../../../components/Image';
 import Iconify from '../../../../components/Iconify';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -16,10 +18,12 @@ AccountBillingPaymentMethod.propTypes = {
 };
 
 export default function AccountBillingPaymentMethod({ cards, isOpen, onOpen, onCancel }) {
+  const { translate } = useLocales();
+
   return (
     <Card sx={{ p: 3 }}>
       <Typography variant="overline" sx={{ mb: 3, display: 'block', color: 'text.secondary' }}>
-        Payment Method
+        {translate('Payment')} {translate('Method')}
       </Typography>
 
       <Stack spacing={2} direction={{ xs: 'column', md: 'row' }}>
@@ -58,7 +62,7 @@ export default function AccountBillingPaymentMethod({ cards, isOpen, onOpen, onC
 
       <Box sx={{ mt: 3 }}>
         <Button size="small" startIcon={<Iconify icon={'eva:plus-fill'} />} onClick={onOpen}>
-          Add new card
+          {translate('ANC')}
         </Button>
       </Box>
 
@@ -72,7 +76,7 @@ export default function AccountBillingPaymentMethod({ cards, isOpen, onOpen, onC
           }}
         >
           <Stack spacing={3}>
-            <Typography variant="subtitle1">Add new card</Typography>
+            <Typography variant="subtitle1">{translate('ANC')}</Typography>
 
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField fullWidth label="Name on card" />
@@ -88,10 +92,10 @@ export default function AccountBillingPaymentMethod({ cards, isOpen, onOpen, onC
 
             <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
               <Button color="inherit" variant="outlined" onClick={onCancel}>
-                Cancel
+                {translate('Cancel')}
               </Button>
               <LoadingButton type="submit" variant="contained" onClick={onCancel}>
-                Save Change
+                {translate('Save')} {translate('main.Change')}
               </LoadingButton>
             </Stack>
           </Stack>

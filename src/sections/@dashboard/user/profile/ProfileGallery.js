@@ -10,6 +10,8 @@ import cssStyles from '../../../../utils/cssStyles';
 import Image from '../../../../components/Image';
 import Iconify from '../../../../components/Iconify';
 import LightboxModal from '../../../../components/LightboxModal';
+//hooks
+import useLocales from '../../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +35,8 @@ ProfileGallery.propTypes = {
 export default function ProfileGallery({ gallery }) {
   const [openLightbox, setOpenLightbox] = useState(false);
 
+  const { translate } = useLocales();
+
   const [selectedImage, setSelectedImage] = useState(0);
 
   const imagesLightbox = gallery.map((img) => img.imageUrl);
@@ -45,7 +49,7 @@ export default function ProfileGallery({ gallery }) {
   return (
     <Box sx={{ mt: 5 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Gallery
+        {translate('Gallery')}
       </Typography>
 
       <Card sx={{ p: 3 }}>

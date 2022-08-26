@@ -1,5 +1,3 @@
-import sum from 'lodash/sum';
-import { useEffect } from 'react';
 // form
 import { useFormContext, useFieldArray } from 'react-hook-form';
 // @mui
@@ -11,8 +9,8 @@ import { RHFTextField } from '../../../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceNewEditDetails() {
-  const { control, setValue, watch } = useFormContext();
+export default function SupplierFormOptional2() {
+  const { control, watch } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -20,23 +18,12 @@ export default function InvoiceNewEditDetails() {
   });
 
   const values = watch();
-
-  const totalOnRow = values.items.map((item) => item.quantity * item.price);
-
-  const totalPrice = sum(totalOnRow) - values.discount + values.taxes;
-
-  useEffect(() => {
-    setValue('totalPrice', totalPrice);
-  }, [setValue, totalPrice]);
-
   const handleAdd = () => {
     append({
-      title: '',
-      description: '',
-      service: '',
-      quantity: 1,
-      price: 0,
-      total: 0,
+      contact: '',
+      position: '',
+      phone: '',
+      email: '',
     });
   };
 
@@ -60,24 +47,28 @@ export default function InvoiceNewEditDetails() {
                 name={`items[${index}].contact`}
                 label="联系人"
                 InputLabelProps={{ shrink: true }}
+                value={values.contact}
               />
               <RHFTextField
                 size="small"
                 name={`items[${index}].position`}
                 label="职位"
                 InputLabelProps={{ shrink: true }}
+                value={values.position}
               />
               <RHFTextField
                 size="small"
                 name={`items[${index}].phone`}
                 label="联系方式"
                 InputLabelProps={{ shrink: true }}
+                value={values.phone}
               />
               <RHFTextField
                 size="small"
                 name={`items[${index}].email`}
                 label="邮箱"
                 InputLabelProps={{ shrink: true }}
+                value={values.email}
               />
             </Stack>
             <Button

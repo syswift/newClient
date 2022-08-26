@@ -9,6 +9,7 @@ import { Box, Grid, Card, Stack, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../../../hooks/useAuth';
+import useLocales from '../../../../hooks/useLocales';
 // utils
 import { fData } from '../../../../utils/formatNumber';
 // _mock
@@ -19,12 +20,14 @@ import { FormProvider, RHFSwitch, RHFSelect, RHFTextField, RHFUploadAvatar } fro
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
+  const { translate } = useLocales();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const { user } = useAuth();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    displayName: Yup.string().required(translate('NR')),
   });
 
   const defaultValues = {
@@ -55,7 +58,7 @@ export default function AccountGeneral() {
   const onSubmit = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar('Update success!');
+      enqueueSnackbar(translate('US'));
     } catch (error) {
       console.error(error);
     }
@@ -97,13 +100,13 @@ export default function AccountGeneral() {
                     color: 'text.secondary',
                   }}
                 >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(3145728)}
+                  {translate('Allowed')} *.jpeg, *.jpg, *.png, *.gif
+                  <br /> {translate('maxsize')} {fData(3145728)}
                 </Typography>
               }
             />
 
-            <RHFSwitch name="isPublic" labelPlacement="start" label="Public Profile" sx={{ mt: 5 }} />
+            <RHFSwitch name="isPublic" labelPlacement="start" label={translate('PP')} sx={{ mt: 5 }} />
           </Card>
         </Grid>
 
@@ -117,13 +120,13 @@ export default function AccountGeneral() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="displayName" label="Name" />
-              <RHFTextField name="email" label="Email Address" />
+              <RHFTextField name="displayName" label={translate('Name')} />
+              <RHFTextField name="email" label={translate('EmailAdd')} />
 
-              <RHFTextField name="phoneNumber" label="Phone Number" />
-              <RHFTextField name="address" label="Address" />
+              <RHFTextField name="phoneNumber" label={translate('main.Phone')} />
+              <RHFTextField name="address" label={translate('Address')} />
 
-              <RHFSelect name="country" label="Country" placeholder="Country">
+              <RHFSelect name="country" label={translate('Country')} placeholder={translate('Country')}>
                 <option value="" />
                 {countries.map((option) => (
                   <option key={option.code} value={option.label}>
@@ -132,17 +135,17 @@ export default function AccountGeneral() {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="state" label="State/Region" />
+              <RHFTextField name="state" label={translate('State')} />
 
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
+              <RHFTextField name="city" label={translate('City')} />
+              <RHFTextField name="zipCode" label={translate('Zip')} />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <RHFTextField name="about" multiline rows={4} label="About" />
+              <RHFTextField name="about" multiline rows={4} label={translate('About')} />
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                Save Changes
+                {translate('Save')}{translate('main.Change')}
               </LoadingButton>
             </Stack>
           </Card>

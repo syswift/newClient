@@ -39,6 +39,8 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import { UserTableToolbar, UserTableRow } from '../../../sections/@dashboard/user/list';
+//hooks
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -57,15 +59,6 @@ const ROLE_OPTIONS = [
   'full stack developer',
 ];
 
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: 'company', label: 'Company', align: 'left' },
-  { id: 'role', label: 'Role', align: 'left' },
-  { id: 'isVerified', label: 'Verified', align: 'center' },
-  { id: 'status', label: 'Status', align: 'left' },
-  { id: '' },
-];
-
 // ----------------------------------------------------------------------
 
 UserList.getLayout = function getLayout(page) {
@@ -74,6 +67,8 @@ UserList.getLayout = function getLayout(page) {
 // ----------------------------------------------------------------------
 
 export default function UserList() {
+  const { translate } = useLocales();
+
   const {
     dense,
     page,
@@ -92,6 +87,15 @@ export default function UserList() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable();
+
+  const TABLE_HEAD = [
+    { id: 'name', label: (translate('Name')), align: 'left' },
+    { id: 'company', label: (translate('Company')), align: 'left' },
+    { id: 'role', label: (translate('Role')), align: 'left' },
+    { id: 'isVerified', label: (translate('Verified')), align: 'center' },
+    { id: 'status', label: (translate('main.Status')), align: 'left' },
+    { id: '' },
+  ];
 
   const { themeStretch } = useSettings();
 
@@ -146,19 +150,19 @@ export default function UserList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="User: List">
+    <Page title="用户: 列表">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="User List"
+          heading={translate('UL')}
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'List' },
+            { name: (translate('main.Dashboard')), href: PATH_DASHBOARD.root },
+            { name: (translate('main.User')), href: PATH_DASHBOARD.user.root },
+            { name: (translate('main.List')) },
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.user.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                New User
+                {translate('NU')}
               </Button>
             </NextLink>
           }
@@ -202,7 +206,7 @@ export default function UserList() {
                     )
                   }
                   actions={
-                    <Tooltip title="Delete">
+                    <Tooltip title={translate('main.Delete')}>
                       <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
                         <Iconify icon={'eva:trash-2-outline'} />
                       </IconButton>
@@ -260,7 +264,7 @@ export default function UserList() {
 
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
-              label="Dense"
+              label= {translate('main.Dense')}
               sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
             />
           </Box>

@@ -115,7 +115,7 @@ export default function Login() {
             </Stack>
 
             <Alert severity="info" sx={{ mb: 3 }}>
-              邮箱地址 : <strong>demo@minimals.cc</strong> / 密码 :<strong> demo1234</strong>
+              邮箱地址 : <strong>myworlddai97@gmail</strong> / 密码 :<strong> hszx986900</strong>
             </Alert>
 
             <LoginForm />

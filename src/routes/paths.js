@@ -78,6 +78,7 @@ export const PATH_DASHBOARD = {
     newTurnoverBox: path(ROOTS_DASHBOARD, '/basicConfiguration/newTurnoverBox'),
     bindingTerminal:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/bindingTerminal/${id}`),
     editCustomer:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/editCustomer/${id}`),
+    customerView:(id)=> path(ROOTS_DASHBOARD, `/basicConfiguration/customerView/${id}`),
   },
   // 周转管理
   turnoverManagement: {
@@ -134,6 +135,7 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/ladingBill'),
     billView: path(ROOTS_DASHBOARD, '/ladingBill/billView'),
     newBill: path(ROOTS_DASHBOARD, '/ladingBill/newBill'),
+    ladingBillMangement: path(ROOTS_DASHBOARD, '/ladingBill/ladingBillMangement'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),

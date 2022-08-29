@@ -10,20 +10,23 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Card, Stack } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../../../../routes/paths';
 // components
-import { FormProvider } from '../../../../../components/hook-form';
+import { FormProvider } from '../../../../../../components/hook-form';
 //
-import SettlementFormMandatory from './settlementFormMandatory';
+import CustomerFormMandatory from './customerFormMandatory';
+import CustomerFormOptional1 from './customerFormOptional1';
+import CustomerFormOptional2 from './CustomerFormOptional2';
 
 // ----------------------------------------------------------------------
 
-NewSettlementForm.propTypes = {
+NewCustomerForm.propTypes = {
   isEdit: PropTypes.bool,
   currentInvoice: PropTypes.object,
 };
 
-export default function NewSettlementForm({ isEdit, currentInvoice }) {
+export default function NewCustomerForm({ isEdit, currentInvoice }) {
+  
   const { push } = useRouter();
 
   const [loadingSave, setLoadingSave] = useState(false);
@@ -31,20 +34,27 @@ export default function NewSettlementForm({ isEdit, currentInvoice }) {
   const [loadingSend, setLoadingSend] = useState(false);
 
   const NewUserSchema = Yup.object().shape({
-    statementNumber: Yup.string().nullable().required('请完善相关信息！'),
-    statementCode: Yup.string().nullable().required('请完善相关信息！'),
-    note: Yup.mixed().nullable().required('请完善相关信息！'),
-    operationPerson: Yup.mixed().nullable().required('请完善相关信息！'),
-    operationTime: Yup.mixed().nullable().required('请完善相关信息！'),
+    customerCode: Yup.string().nullable().required('请完善相关信息！'),
+    customerName: Yup.string().nullable().required('请完善相关信息！'),
+    companyCode: Yup.mixed().nullable().required('请完善相关信息！'),
+    dataState: Yup.mixed().nullable().required('请完善相关信息！'),
+    address: Yup.mixed().nullable().required('请完善相关信息！'),
+    country: Yup.mixed().nullable().required('请完善相关信息！'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      statementNumber: currentInvoice?.statementNumber || '',
-      statementCode: currentInvoice?.statementCode || '',
-      note: currentInvoice?.note || '',
-      operationPerson: currentInvoice?.operationPerson || '',
-      operationTime: currentInvoice?.operationTime || '',
+      customerCode: currentInvoice?.customerCode || '',
+      customerName: currentInvoice?.customerName || '',
+      companyCode: currentInvoice?.companyCode || '',
+      dataState: currentInvoice?.dataState || '',
+      province: currentInvoice?.province || '',
+      city: currentInvoice?.city || '',
+      district: currentInvoice?.district || '',
+      address: currentInvoice?.address || '',
+      country: currentInvoice?.country || '',
+      countryCode: currentInvoice?.countryCode || '',
+      items: currentInvoice?.items || [{ contact: '', position: '', phone: '', email: ''}],
     }),
     [currentInvoice]
   );
@@ -106,7 +116,9 @@ export default function NewSettlementForm({ isEdit, currentInvoice }) {
   return (
     <FormProvider methods={methods}>
       <Card>
-        <SettlementFormMandatory />
+        <CustomerFormMandatory />
+        <CustomerFormOptional1 />
+        <CustomerFormOptional2 />
       </Card>
 
       <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ mt: 3 }}>

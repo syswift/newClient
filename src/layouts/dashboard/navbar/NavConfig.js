@@ -200,6 +200,7 @@ const navConfig = [
         children: [
           { title: 'BillView', path: PATH_DASHBOARD.ladingBill.billView },
           { title: 'NewBill', path: PATH_DASHBOARD.ladingBill.newBill },
+          { title: 'BillMangement', path: PATH_DASHBOARD.ladingBill.ladingBillMangement },
         ],
       },
     ],

@@ -12,6 +12,9 @@ export default function TurnoverBoxFormMandatory() {
 
   const values = watch();
   const SUPPLY_OPTIONS = ['供应商1','供应商2']
+
+  let time = new Date()
+  values.createTime = time.toLocaleString()
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
@@ -65,7 +68,7 @@ export default function TurnoverBoxFormMandatory() {
                   name="creatTime"
                   label="创建时间"
                   InputLabelProps={{ shrink: true }}
-                  value={'2022-08-26 07:56:57'}
+                  value={values.createTime}
                   disabled
                 />
             </Stack>

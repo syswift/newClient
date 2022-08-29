@@ -41,7 +41,7 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../../components/table';
 // sections
 import InvoiceAnalytic from '../../../../sections/@dashboard/invoice/InvoiceAnalytic';
-import {TransTableRow, TransTableToolbar} from '../../../../sections/@dashboard/basicConfiguration/customerInformationList';
+import {TransTableRow, TransTableToolbar} from '../../../../sections/@dashboard/ladingBill/ladingBillMangement';
 import { supabase } from '../../../../../api';
 import LoadingScreen from '../../../../components/LoadingScreen'; //import载入画面
 
@@ -56,36 +56,42 @@ const SERVICE_OPTIONS = [
   'front end development',
 ];
 const TABLE_HEAD = [
-  { id: 'customerCode', label: '客户代码', align: 'center', width: 100 },
-  { id: 'customerName', label: '客户名称', align: 'center', width: 100  },
-  { id: 'companyCode', label: '公司编码', align: 'center' , width: 100 },
-  { id: 'dataState', label: '状态', align: 'center', width: 100 },
-  { id: 'province', label: '省', align: 'center', width: 50 },
-  { id: 'city', label: '市', align: 'center', width: 50  },
-  { id: 'district', label: '区', align: 'center', width: 50  },
-  { id: 'address', label: '地址', align: 'center', width: 100  },
-  { id: 'country', label: '国家', align: 'center', width: 50  },
-  { id: 'countryCode', label: '国家代码', align: 'center', width: 100  },
-  { id: 'contact1', label: '联系人1', align: 'center' , width: 100 },
-  { id: 'position1', label: '职位1', align: 'center' , width: 80 },
-  { id: 'phone1', label: '联系方式1', align: 'center' , width: 100 },
-  { id: 'email1', label: '邮箱1', align: 'center' , width: 80 },
-  { id: 'contact2', label: '联系人2', align: 'center' , width: 100 },
-  { id: 'position2', label: '职位2', align: 'center', width: 80  },
-  { id: 'phone2', label: '联系方式2', align: 'center', width: 100  },
-  { id: 'email2', label: '邮箱2', align: 'center', width: 80  },
+  { id: 'shipperName', label: '发货人姓名', align: 'center', width: 150 },
+  { id: 'shipperAddress', label: '发货人地址', align: 'center', width: 150  },
+  { id: 'shipperData', label: '发货人详细信息', align: 'center' , width: 150 },
+  { id: 'consigneeCompanyName', label: '收货人公司名称', align: 'center', width: 150 },
+  { id: 'consigneeAddress', label: '收货人地址', align: 'center', width: 150 },
+  { id: 'consigneeContact', label: '收货联系人', align: 'center', width: 150  },
+  { id: 'consigneePhone', label: '收货人联系电话', align: 'center', width: 100  },
+  { id: 'departurePort', label: '出货地', align: 'center', width: 100  },
+  { id: 'destinationPort', label: '目的地', align: 'center', width: 100  },
+  { id: 'status', label: '贸易条款', align: 'center', width: 100  },
+  { id: 'landBillNumber', label: '提单', align: 'center' , width: 100 },
+  { id: 'boxDescription1', label: '商品描述1', align: 'center' , width: 100 },
+  { id: 'boxID1', label: '箱号1', align: 'center' , width: 100 },
+  { id: 'boxWeight1', label: '重量1', align: 'center' , width: 100 },
+  { id: 'boxSize1', label: '尺寸1', align: 'center' , width: 100 },
+  { id: 'boxDescription2', label: '商品描述2', align: 'center' , width: 100 },
+  { id: 'boxID2', label: '箱号2', align: 'center' , width: 100 },
+  { id: 'boxWeight2', label: '重量2', align: 'center' , width: 100 },
+  { id: 'boxSize2', label: '尺寸2', align: 'center' , width: 100 },
+  { id: 'priceTotal', label: '费用', align: 'center', width: 100  },
+  { id: 'shippingMarks', label: '唛头', align: 'center', width: 100  },
+  { id: 'transportationMode', label: '运输方式', align: 'center', width: 100  },
+  { id: 'payment', label: '运费', align: 'center', width: 100  },
+  { id: 'shipperContact', label: '发货方联系人', align: 'center', width: 100  },
   { id: '' ,align: 'center'},
 ];
 
 // ----------------------------------------------------------------------
 
-CustomerInformation.getLayout = function getLayout(page) {
+LadingBillMangement.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
 // ----------------------------------------------------------------------
 
-export default function CustomerInformation() {
+export default function LadingBillMangement() {
   const theme = useTheme();
 
   const { themeStretch } = useSettings();
@@ -182,8 +188,7 @@ export default function CustomerInformation() {
   };
 
   const handleEditRow = (id) => {
-    // push(PATH_DASHBOARD.basicConfiguration.editCustomer(id));
-    push(PATH_DASHBOARD.basicConfiguration.customerView(id));
+    push(PATH_DASHBOARD.basicConfiguration.editCustomer(id));
   };
 
   const handleViewRow = (id) => {
@@ -232,19 +237,19 @@ export default function CustomerInformation() {
   }
   else{
     return (
-      <Page title="客户信息">
+      <Page title="提单管理">
         <Container maxWidth={themeStretch ? false : 'lg'}>
           <HeaderBreadcrumbs
-            heading="客户信息"
+            heading="提单管理"
             links={[
               { name: '主页', href: PATH_DASHBOARD.root },
-              { name: '基础配置', herf: PATH_DASHBOARD.customerInformation },
-              { name: '客户信息'},
+              { name: '提单管理', herf: PATH_DASHBOARD.ladingBill.root },
+              { name: '提单管理'},
             ]}
             action={
-              <NextLink href={PATH_DASHBOARD.basicConfiguration.newCustomer} passHref>
+              <NextLink href={PATH_DASHBOARD.ladingBill.newBill} passHref>
                   <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                      新增客户
+                      新增提单
                   </Button>
               </NextLink>
             }
@@ -322,7 +327,7 @@ export default function CustomerInformation() {
             />
 
             <Scrollbar>
-              <TableContainer sx={{ minWidth: 1750, position: 'relative' }}>
+              <TableContainer sx={{ minWidth: 2800, position: 'relative' }}>
                 {selected.length > 0 && (
                   <TableSelectedActions
                     dense={dense}

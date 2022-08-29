@@ -14,10 +14,10 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
 import { FormProvider } from '../../../../components/hook-form';
 //
-import LandBillContactList from './landBillContactList';
-import LandBillGoodInformation from './landBillGoodInformation';
-import LandBillTrafficList from './landBillTrafficList';
-import LandBillBottom from './landBillBottom';
+import LadingBillContactList from './ladingBillContactList';
+import LadingBillGoodInformation from './ladingBillGoodInformation';
+import LadingBillTrafficList from './ladingBillTrafficList';
+import LadingBillBottom from './ladingBillBottom';
 
 
 // ----------------------------------------------------------------------
@@ -129,13 +129,13 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
   return (
     <FormProvider methods={methods}>
       <Card>
-        <LandBillContactList />
+        <LadingBillContactList />
 
-        <LandBillTrafficList />
+        <LadingBillTrafficList />
 
-        <LandBillGoodInformation />
+        <LadingBillGoodInformation />
 
-        <LandBillBottom />
+        <LadingBillBottom />
       </Card>
 
       <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ mt: 3 }}>

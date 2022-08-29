@@ -13,6 +13,8 @@ export default function SettlementFormMandatory() {
 
   const values = watch();
 
+  let time = new Date()
+  values.operationTime = time.toLocaleString()
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
@@ -49,6 +51,17 @@ export default function SettlementFormMandatory() {
                   label="操作人"
                   InputLabelProps={{ shrink: true }}
                   value={values.operationPerson}
+                />
+            </Stack>
+
+            <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
+              <RHFTextField
+                  name="operationTime"
+                  label="操作时间"
+                  InputLabelProps={{ shrink: true }}
+                  value={values.operationTime}
+                  disabled
+                  sx={{ width: '50%' }}
                 />
             </Stack>
           </Stack>

@@ -11,6 +11,8 @@ export default function SupplyFormMandatory() {
   const { control, watch } = useFormContext();
 
   const values = watch();
+  let time = new Date()
+  values.createTime = time.toLocaleString()
 
   return (
     <Box sx={{ p: 3 }}>
@@ -79,7 +81,7 @@ export default function SupplyFormMandatory() {
                   name="createTime"
                   label="操作时间"
                   InputLabelProps={{ shrink: true }}
-                  value={'2022-08-26 07:55:56'}
+                  value={values.createTime}
                   disabled
                 />
             </Stack>

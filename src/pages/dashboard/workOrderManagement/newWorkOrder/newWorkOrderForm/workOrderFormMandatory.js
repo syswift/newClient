@@ -12,6 +12,8 @@ export default function WorkOrderFormMandatory() {
 
 
   const values = watch();
+  let time = new Date()
+  values.createTime = time.toLocaleString();
   const STATE_OPTIONS = ['完成','新增']
   const TYPE_OPTIONS = ['正常','报废']
   return (
@@ -87,6 +89,7 @@ export default function WorkOrderFormMandatory() {
                 ))}
               </RHFSelect>
             </Stack>
+            <Divider />
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
               <RHFTextField
                   name="jobAddition"
@@ -100,8 +103,8 @@ export default function WorkOrderFormMandatory() {
                   name="createTime"
                   label="操作时间"
                   InputLabelProps={{ shrink: true }}
-                  value={'2022-08-26 07:56:58'}
-                  disabled
+                  value={values.createTime}
+                  // disabled
                   sx={{ width: '50%' }}
                 />
             </Stack>

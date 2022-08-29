@@ -207,6 +207,7 @@ const cn = {
   Bill: `提单管理`,
   BillView: `查看提单`,
   NewBill: `新建提单`,
+  BillMangement: `提单管理`,
 };
 
 export default cn;

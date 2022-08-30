@@ -22,10 +22,6 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
 
 export default function SettingColorPresets() {
   const { themeColorPresets, onChangeColor, colorOption } = useSettings();
-  // console.log(colorOption);
-  colorOption.splice(0,2,)
-  colorOption.splice(1,3,)
-
   return (
     <RadioGroup name="themeColorPresets" value={themeColorPresets} onChange={onChangeColor}>
       <Grid dir="ltr" container spacing={1.5}>

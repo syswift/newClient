@@ -32,8 +32,8 @@ export default function LoginForm() {
   });
 
   const defaultValues = {
-    email: 'myworlddai97@gmail.com',
-    password: 'hszx986900',
+    email: '',
+    password: '',
     remember: true,
   };
 

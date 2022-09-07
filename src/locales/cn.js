@@ -208,6 +208,8 @@ const cn = {
   BillView: `查看提单`,
   NewBill: `新建提单`,
   BillMangement: `提单管理`,
+  examinationAndApprovalAdministration: `审批管理`,
+  askForLeave: `请假申请`,
 };
 
 export default cn;

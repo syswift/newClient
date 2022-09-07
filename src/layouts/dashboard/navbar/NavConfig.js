@@ -126,6 +126,7 @@ const navConfig = [
           { title: 'FileUpload', path: PATH_DASHBOARD.systemManagement.fileUpload },
           { title: 'FileDownload', path: PATH_DASHBOARD.systemManagement.fileDownload },
           { title: 'UserManagement', path: PATH_DASHBOARD.systemManagement.userManagement },
+          { title: 'golang_test', path: PATH_DASHBOARD.systemManagement.golang_test },
         ],
       },
       //------------------------------------------------------------------------------------------------//
@@ -201,6 +202,21 @@ const navConfig = [
           { title: 'BillView', path: PATH_DASHBOARD.ladingBill.billView },
           { title: 'NewBill', path: PATH_DASHBOARD.ladingBill.newBill },
           { title: 'BillMangement', path: PATH_DASHBOARD.ladingBill.ladingBillMangement },
+        ],
+      },
+    ],
+  },
+
+  {
+    subheader: 'examinationAndApprovalAdministration',
+    items: [
+      // 提单管理
+      {
+        title: 'examinationAndApprovalAdministration',
+        path: PATH_DASHBOARD.examinationAndApprovalAdministration.root,
+        icon: ICONS.booking,
+        children: [
+          { title: 'askForLeave', path: PATH_DASHBOARD.examinationAndApprovalAdministration.askForLeave },
         ],
       },
     ],

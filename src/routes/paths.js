@@ -119,6 +119,7 @@ export const PATH_DASHBOARD = {
     fileDownload: path(ROOTS_DASHBOARD, '/systemManagement/fileDownload'),
     userManagement: path(ROOTS_DASHBOARD, '/systemManagement/userManagement'),
     changeUserInformation: path(ROOTS_DASHBOARD, '/systemManagement/changeUserInformation'),
+    golang_test: path(ROOTS_DASHBOARD, '/systemManagement/golang_test'),
   },
   //--------------------------------------------------------------------------//
   user: {
@@ -136,6 +137,10 @@ export const PATH_DASHBOARD = {
     billView: path(ROOTS_DASHBOARD, '/ladingBill/billView'),
     newBill: path(ROOTS_DASHBOARD, '/ladingBill/newBill'),
     ladingBillMangement: path(ROOTS_DASHBOARD, '/ladingBill/ladingBillMangement'),
+  },
+  examinationAndApprovalAdministration:{
+    root: path(ROOTS_DASHBOARD, '/examinationAndApprovalAdministration'),
+    askForLeave:path(ROOTS_DASHBOARD, '/examinationAndApprovalAdministration/askForLeave'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),

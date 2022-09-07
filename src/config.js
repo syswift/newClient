@@ -77,8 +77,7 @@ export const defaultSettings = {
   themeDirection: 'ltr',
   themeContrast: 'default',
   themeLayout: 'horizontal',
-  // themeColorPresets: 'default',
-  themeColorPresets: 'blue',
+  themeColorPresets: 'default',
   themeStretch: false,
 };
 

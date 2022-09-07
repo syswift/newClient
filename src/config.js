@@ -93,6 +93,13 @@ export const allLangs = [
     icon: '/assets/icons/flags/ic_flag_en.svg',
   },
   {
+    label: 'Chinese',
+    value: 'cn',
+    systemValue: zhCN,
+    icon: '/assets/icons/flags/ic_flag_cn.svg',
+  },
+  /*
+  {
     label: 'French',
     value: 'fr',
     systemValue: frFR,
@@ -105,17 +112,12 @@ export const allLangs = [
     icon: '/assets/icons/flags/ic_flag_vn.svg',
   },
   {
-    label: 'Chinese',
-    value: 'cn',
-    systemValue: zhCN,
-    icon: '/assets/icons/flags/ic_flag_cn.svg',
-  },
-  {
     label: 'Arabic (Sudan)',
     value: 'ar',
     systemValue: arSD,
     icon: '/assets/icons/flags/ic_flag_sa.svg',
   },
+  */
 ];
 
 export const defaultLang = allLangs[0]; // English
